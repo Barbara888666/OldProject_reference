@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>商品详情</title>
+</head>
+	<body>
+<dl class="head green">  
+                    <dt>购物商城</dt>  
+                    <dd>  
+                        <span>当前位置：<a href="<%linkurl("index","")%>">首页 </a>><a href="<%linkurl("goods","")%>">购物商城</a>{category_nav}</span>  
+                   
+                <div class="line20">  
+                </div>  
+                <!--商品图片-->  
+                <div class="left294">  
+                    <!--幻灯片开始-->  
+                    <div class="pictureDIV">  
+                        <div id="preview" class="spec-preview">  
+                            <span class="jqzoom">  
+                                <img /></span>  
+                        </div>  
+                        <!--缩图开始-->  
+                        <div class="spec-scroll">  
+                            <a class="prev"><</a> <a class="next">></a>  
+                            <div class="items">  
+                                <ul>  
+                                    <%if(model.albums!=null)%>  
+                                    <%foreach(DTcms.Model.goods_albums modelt in model.albums)%>  
+                                    <li>  
+                                        <img bimg="{modelt.original_path}" src="{modelt.thumb_path}" onmousemove="preview(this);" /></li>  
+                                    <%/foreach%>  
+                                    <%/if%>  
+                                </ul>  
+                            </div>  
+                        </div>  
+                        <!--缩图结束-->  
+                    </div>  
+                    <!--幻灯片结束-->  
+                </div>  
+                <!--/商品图片-->  
+                <!--商品属性-->  
+                <div class="pro-attr right356">  
+                    <h1>  
+                        {model.title}</h1>  
+                    <div class="pro-items">  
+                        <dl>  
+                            <dt>商品货号：</dt>  
+                            <dd>  
+                                {model.goods_no}  
+                                </dd>  
+                        </dl>  
+                        <dl>  
+                            <dt>销售价格：</dt>  
+                            <dd>&nbsp;</dd>  
+                        </dl>  
+                        <dl>  
+                            <dt>颜色选择：</dt>  
+                            <%if(yanse!=null)%>                              
+                            <dd>  
+                            <%for(int i=0;i<yanse.Length;i++)%>  
+                            <a id="<%=str[i]%>" href="javascript:void()" style="border: 1px solid #CCCCCC; margin-top:10px;"  
+                             onclick="selected(this.id);">  
+                            <b class="green" style="font-family:宋体; font-size:8;"><%=yanse[i]%></b>  
+                            </a>    
+                            <%/for%>                              
+                            </dd>                              
+                            <%else%>  
+                            <dd><b class="red">抱歉，该商品没有颜色选择</b></dd>  
+                            <%/if%>  
+                              <script>  
+                                  var count = 0;   
+                                  function selected(id) {  
+                                                                             
+                                      if (count != id) {  
+                                          $('#goods_color').val(id);  
+                                          var kk = document.getElementById(id);  
+                                          kk.style.border = "2px solid red";  
+                                            
+                                          if (parseInt(count) != 0) {  
+                                              var hh = document.getElementById(count);  
+                                              hh.style.border = "1px solid #CCCCCC";  
+                                          }  
+                                          count = id;                                   
+                                      }  
+                                      else {  }                                        
+                                  }  
+                              </script>  
+                        </dl>  
+                        <!--<dl>  
+                            <dt>会员价格：</dt>  
+                            <dd>  
+                                <%set decimal user_price=get_user_goods_price(model.id)%>  
+                                <%if(user_price>-1)%>  
+                                <b class="red">￥{user_price}</b>  
+                                <%else%>  
+                                登录可见  
+                                <%/if%>  
+                            </dd>  
+                        </dl>-->  
+                        <dl>  
+                            <dt>上架时间：</dt>  
+                            <dd>  
+                                {model.add_time}</dd>  
+                        </dl>  
+                    </div>  
+                    <div class="pro-btns">  
+                        <div class="input-box">  
+                            购买数量：<input name="goods_id" id="goods_id" type="hidden" value="{model.id}" /><input  
+                            <input name="goods_color" id="goods_color" type="hidden" value="" />  
+                            <input type="text" name="goods_quantity" id="goods_quantity" value="1" class="txt" style="ime-mode: disabled" />  
+                        </div>  
+                        <div class="btn-box">  
+                            <%if({model.stock_quantity}>0)%>  
+                            <a href="javascript:void(0);" class="add" onclick="CartAdd(this, '{config.webpath}', 0, '<%linkurl("shopping","cart")%>');">  
+                                加入购物车</a> <a href="javascript:void(0);" class="buy" onclick="CartAdd(this, '{config.webpath}', 1, '<%linkurl("shopping","confirm")%>');">  
+                                    立即购买</a>  
+                            <%else%>  
+                            <a title="该商品供货紧张，无法加入购物车" class="add-over">加入购物车</a> <a title="该商品供货紧张，无法立即购买" class="buy-over">  
+                                立即购买</a>  
+                            <%/if%>  
+                        </div>  
+                    </div>  
+                    <div class="line10">  
+                    </div>  
+                    <!--分享-->  
+                    <%template src="_share2_js.html"%>  
+                    <!--/分享-->  
+                </div>  
+                <!--/商品属性-->
+</body>
+</html>
