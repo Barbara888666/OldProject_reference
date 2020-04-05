@@ -1,0 +1,118 @@
+*{margin: 0px;
+padding: 0px;}
+
+.top{
+    width:100%;
+    height: 100px;
+    background-color:black ;
+}
+
+.title{
+    color:aliceblue;
+    font-size: 30px;
+    margin: 0px auto;
+    margin-left: 100px;
+    float: left;
+
+}
+.topcontent{
+    padding-bottom: 30px;
+    padding-top: 30px;
+    width:100%
+    height:30px
+    position:relative;
+}
+.topcontent ul{
+    margin-right: 40px;
+    float: right;
+    list-style-type: none;
+    padding-top:6px;
+    padding-bottom: 6px;
+
+}
+.topcontent li{
+    color: aliceblue;
+    padding-left: 10px;
+    display: inline;
+
+}
+a:link,a:visited{
+    font-weight: bold;
+    color: aliceblue;
+    text-align: center;
+    padding:6px;
+    text-decoration: none;
+}
+a:hover,a:active{
+    color: red;
+}
+.body{
+    width:75%;
+    height: 1000px;
+    background: aliceblue;
+    margin:0px auto;
+}
+.img img{
+    border-radius: 30px;
+    display: inline;
+    width: 46px;
+    height: 46px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+    float: right;
+    margin-right: 10px;
+}
+.spot form{
+    float: right;
+    width: 170px;
+    height: 26px;
+    position: relative;
+    margin-right: 80px;
+
+}
+form input{
+    height: 46px;
+    width: 200px;
+    border-radius: 30px;
+}
+
+.classification{
+    padding:30px;
+    width: auto;
+    height: auto;
+}
+.classification h3 {
+    font-size: 30px;
+}
+.hr{
+    float: left;
+    margin-left: 400px;
+    margin-top: 10px;
+    width:2px;
+    height:800px;
+}
+.clsf{
+    margin-top:20px;
+    margin-bottom: 20px;
+}
+.content1 img{
+    height: 90px;
+    width: 90px;
+}
+.tail{
+    background: #111111;
+    width: 100%;
+height: 100px;
+}
+.tail ul{
+    padding-top: 20px;
+    text-align: center;
+    font-size: 30px;
+    color: white;
+
+}
+.tail li{
+    float: left;
+    display: inline;
+   padding-left: 60px;
+margin-right: 10px;
+}
