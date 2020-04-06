@@ -49,7 +49,7 @@ a:hover,a:active{
 .body{
     width:75%;
     height: 1000px;
-    background: aliceblue;
+
     margin:0px auto;
 }
 .img img{
@@ -69,12 +69,24 @@ a:hover,a:active{
     margin-right: 80px;
 
 }
+.button{
+    float: right;
+    margin-top: 10px;
+    margin-right: 40px;
+}
 form input{
     height: 46px;
     width: 200px;
     border-radius: 30px;
 }
+.classification_board{
+    height: 1000px;
+    width: 40%;
+    background-color: white;
+    padding-right: 2px;
+    float: left;
 
+}
 .classification{
     padding:30px;
     width: auto;
@@ -90,13 +102,56 @@ form input{
     width:2px;
     height:800px;
 }
-.clsf{
+.classification_content{
     margin-top:20px;
     margin-bottom: 20px;
+    line-height: 50px;
 }
-.content1 img{
+.specificcontent{
+    width: 59%;
+    height: 1000px;
+    float: left;
+    background-color: azure;
+}
+.content{
+
+    height: 186px;
+    width: 650px;
+    margin: 10px ;
+    border-width: 1px;
+    border-style: dashed;
+    border-top-style: none;
+    border-left-style: none;
+    border-right-style: none;
+}
+.content img{
     height: 90px;
     width: 90px;
+    float: left;
+    margin: 10px;
+}
+.contents{
+    float: left;
+    margin: 10px;
+
+}
+.seller{
+    float: left;
+      margin-right: 10px;
+}
+.sellername{
+    float: left;
+    color: slateblue;
+}
+.credibility{
+    float: left;
+}
+.credibility_content{
+    float: left;
+    margin-left: 10px;
+}
+.descriptions{
+    color:slateblue;;
 }
 .tail{
     background: #111111;
@@ -106,13 +161,13 @@ height: 100px;
 .tail ul{
     padding-top: 20px;
     text-align: center;
-    font-size: 30px;
+    font-size: 20px;
     color: white;
 
 }
 .tail li{
     float: left;
     display: inline;
-   padding-left: 60px;
-margin-right: 10px;
+    padding-left: 60px;
+    margin-right: 10px;
 }
