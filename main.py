@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask,render_template
 #To run this app, set environment variable "FLASK_APP=main.py", FLASK_ENV="development" is optional, allowing debug features
 #use python -m flask run to run this app,--host=0.0.0.0 will set the website to public
 #dynamic editing is supported, which means you can chagne the code while the website is still running
@@ -18,3 +18,7 @@ def login():
 @app.route('/favorites')
 def favors():
     return app.send_static_file('favorites.html')
+@app.route('/search')
+def searchtest():
+    #图片和css无法显示
+    return app.send_static_file('search_web_page.html')
