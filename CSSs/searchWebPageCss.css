@@ -73,6 +73,9 @@ a:hover,a:active{
     float: right;
     margin-top: 10px;
     margin-right: 40px;
+
+
+
 }
 form input{
     height: 26px;
@@ -112,7 +115,7 @@ form input{
     width: 59%;
     height: 1000px;
     float: left;
-    background-color: azure;
+
 }
 .content{
 
