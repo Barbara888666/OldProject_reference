@@ -49,8 +49,8 @@ a:hover,a:active{
 .body{
     width:75%;
     height: 1000px;
-
-    margin:0px auto;
+    float: left;
+    margin:0px 80px;
 }
 .img img{
     border-radius: 30px;
@@ -72,10 +72,26 @@ a:hover,a:active{
 .button{
     float: right;
     margin-top: 10px;
-    margin-right: 40px;
+    margin-right: 30px;
+    width: 70px;
+    height: 30px;
+    background-color: slateblue;
+    border-radius: 10%;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
 
-
-
+}
+.button5:hover {
+    background-color: #555555;
+    color: white;
+}
+.button_content{
+    text-align: center;
+    margin: auto;
+    color: white;
 }
 form input{
     height: 26px;
@@ -95,9 +111,11 @@ form input{
     padding:30px;
     width: auto;
     height: auto;
+
 }
 .classification h3 {
     font-size: 30px;
+
 }
 .hr{
     float: left;
@@ -110,7 +128,10 @@ form input{
     margin-top:20px;
     margin-bottom: 20px;
     line-height: 50px;
+    color: slateblue;
 }
+
+
 .specificcontent{
     width: 59%;
     height: 1000px;
@@ -153,14 +174,21 @@ form input{
 .credibility_content{
     float: left;
     margin-left: 10px;
+    color: slateblue;
 }
 .descriptions{
     color:slateblue;;
+}
+.change_page{
+    float: left;
+    margin-top: 800px;
+    line-height: 60px;
 }
 .tail{
     background: #111111;
     width: 100%;
 height: 100px;
+    clear: left;
 }
 .tail ul{
     padding-top: 20px;
