@@ -1,4 +1,5 @@
 from flask import Flask,render_template
+
 #To run this app, set environment variable "FLASK_APP=main.py", FLASK_ENV="development" is optional, allowing debug features
 #use python -m flask run to run this app,--host=0.0.0.0 will set the website to public
 #dynamic editing is supported, which means you can chagne the code while the website is still running
@@ -23,3 +24,4 @@ def searchtest():
     #由后端传送文件的示范
     file="/images/test.jpg"
     return render_template('search_web_page.html',file=file)
+
