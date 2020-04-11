@@ -25,3 +25,6 @@ def searchtest():
     file="/images/test.jpg"
     return render_template('search_web_page.html',file=file)
 
+if __name__=="__main__":
+    app.environment="development"
+    app.run()
