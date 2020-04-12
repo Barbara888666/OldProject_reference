@@ -5,10 +5,10 @@ Our software is called `BJUT Second-Hand Market` on web devices, this software p
 - **Platform**: website
 - **Programming Language**:HTML,CSS,Javascript,Python
 
-#### Deployment
+#### Deployment（flask）
 ---
-- Download APACHE  [Click to download](http://www.apache.org/)
-- Install APACHE
-- Put code files in `~Apache/htdocs` folder
-- Open web browser enter`http//:localhost/your_file_name`(name is your file name)
-- Then you can run the program on this web page
+- Install flask
+- To run this app, set environment variable "FLASK_APP=main.py", FLASK_ENV="development" is optional, allowing debug features
+- open command and input
+`python -m flask run --host=127.0.0.1 `
+- open the address, default is `http://127.0.0.1:5000/`
