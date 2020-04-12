@@ -1,3 +1,6 @@
+*{
+    margin: 0;
+}
 #my{
     font-weight: bold;
     font-size: 50px;

@@ -46,7 +46,7 @@ padding: 0px;}
 }
 a:link,a:visited{
     font-weight: bold;
-    color: aliceblue;
+    color: black;
     text-align: center;
     padding:6px;
     text-decoration: none;
@@ -279,6 +279,7 @@ margin-top: 130px;
 }
 .main_cre_high_seller_name{
     font-size: 20px;
+    color: black;
 }
 .main_hot_production_list{
     margin-left:30px ;
