@@ -1,8 +1,6 @@
 from flask import Flask,render_template
-
-#To run this app, set environment variable "FLASK_APP=main.py", FLASK_ENV="development" is optional, allowing debug features
-#use python -m flask run to run this app,--host=0.0.0.0 will set the website to public
-#dynamic editing is supported, which means you can chagne the code while the website is still running
+import sqlite3
+sqlconnector=sqlite3.connect('db/users.db')
 app = Flask(__name__,static_url_path='',template_folder='htmls')
 #static folder means the folder for static html pages
 #route() method binds functions to the corresponded URLs
