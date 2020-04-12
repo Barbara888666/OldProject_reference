@@ -10,7 +10,7 @@ Our software is called `BJUT Second-Hand Market` on web devices, this software p
 - Install flask
 - To run this app, set environment variable "FLASK_APP=main.py", FLASK_ENV="development" is optional, allowing debug features
 - open command and input
-`python -m flask run ,--host=127.0.0.1 `
+`python -m flask run --host=127.0.0.1 `
 - open `http://127.0.0.1:5000/`
 
 
