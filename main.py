@@ -19,6 +19,24 @@ def login():
 @app.route('/favorites')
 def favors():
     return render_template('favorites.html')
+@app.route('/seller')
+def seller():
+    return render_template('seller_information.html')
+@app.route('/popular')
+def popular():
+    return render_template('popular_products.html')
+@app.route('/news')
+def news():
+    return render_template('my_news.html')
+@app.route('/highpre')
+def highpre():
+    return render_template('high_predibility_seller.html')
+@app.route('/detail')
+def detail():
+    return render_template('商品详情.html')
+@app.route('/notice')
+def notice():
+    return render_template('website_notice.html')
 @app.route('/search',methods=('GET', 'POST'))
 def searchtest():
     #由后端传送文件的示范
