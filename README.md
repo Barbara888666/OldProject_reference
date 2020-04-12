@@ -8,8 +8,7 @@ Our software is called `BJUT Second-Hand Market` on web devices, this software p
 #### Deployment（flask）
 ---
 - Install flask
-- Put code files in `~Apache/htdocs` folder
--To run this app, set environment variable "FLASK_APP=main.py", FLASK_ENV="development" is optional, allowing debug features
+- To run this app, set environment variable "FLASK_APP=main.py", FLASK_ENV="development" is optional, allowing debug features
 - open command and input
 `python -m flask run ,--host=127.0.0.1 `
 - open `http://127.0.0.1:5000/`
