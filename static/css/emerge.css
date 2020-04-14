@@ -36,15 +36,29 @@ padding: 0px;}
     display: inline;
 
 }
+
 a:link,a:visited{
     font-weight: bold;
-    color: aliceblue;
+    color: black;
     text-align: center;
     padding:6px;
     text-decoration: none;
 }
+
 a:hover,a:active{
     color: red;
+}
+#tail1{
+    color: #f1f4ff;
+}
+#tail2{
+    color: #f1f4ff;
+}
+#head{
+    color: #f1f4ff;
+}
+#h1{
+    color: #f1f4ff;
 }
 .body{
     width:75%;

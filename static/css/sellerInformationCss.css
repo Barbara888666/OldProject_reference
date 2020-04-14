@@ -41,13 +41,25 @@ padding: 0px;}
 }
 a:link,a:visited{
     font-weight: bold;
-    color: aliceblue;
+    color: #000000;
     text-align: center;
     padding:6px;
     text-decoration: none;
 }
 a:hover,a:active{
     color: red;
+}
+#h1{
+    color: white;
+}
+#h2{
+    color: white;
+}
+#t1{
+    color: white;
+}
+#t2{
+    color: white;
 }
 .img img{
     border-radius: 30px;

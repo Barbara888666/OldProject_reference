@@ -9,6 +9,7 @@ from util.favorites import favorites
 from util.emerge import emerge
 from util.detail import detail
 from util.seller import seller
+from util.personal import personal
 
 #To run this app, set environment variable "FLASK_APP=main.py", FLASK_ENV="development" is optional, allowing debug features
 #use python -m flask run to run this app,--host=0.0.0.0 will set the website to public
@@ -40,6 +41,7 @@ app.register_blueprint(detail)
 app.register_blueprint(news)
 app.register_blueprint(favorites)
 app.register_blueprint(seller)
+app.register_blueprint(personal)
 # @app.route('/register')
 # def register():
 #     return render_template('register.html')
