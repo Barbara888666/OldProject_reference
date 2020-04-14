@@ -1,16 +1,13 @@
 from flask import Flask,render_template
-from register import register
-from login import login
-from search import search
-from news import news
-from notice import notice
-from popular import popular
-from favorites import favorites
-from emerge import emerge
-from detail import detail
-
-
-from wsgiref.simple_server import make_server
+from util.register import register
+from util.login import login
+from util.search import search
+from util.news import news
+from util.notice import notice
+from util.popular import popular
+from util.favorites import favorites
+from util.emerge import emerge
+from util.detail import detail
 
 #To run this app, set environment variable "FLASK_APP=main.py", FLASK_ENV="development" is optional, allowing debug features
 #use python -m flask run to run this app,--host=0.0.0.0 will set the website to public
