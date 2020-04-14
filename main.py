@@ -25,6 +25,11 @@ app = Flask(__name__,static_url_path='',template_folder='htmls')
 @app.route('/')
 def main_page():
     return render_template('main_page.html')
+#紧急卖卖：卖品，卖品图片，卖家；买的东西，买的描述，买家
+#网站通知：最新通知
+#分类：分类列表
+#高信誉度卖家：卖家名字，卖家卖的最多的分类
+#最火的产品：产品名字，产品图片
 app.register_blueprint(login)
 app.register_blueprint(register)
 app.register_blueprint(search)
