@@ -4,6 +4,7 @@ from flask import Flask,render_template
 #use python -m flask run to run this app,--host=0.0.0.0 will set the website to public
 #dynamic editing is supported, which means you can chagne the code while the website is still running
 app = Flask(__name__,static_url_path='',template_folder='htmls')
+
 #static folder means the folder for static html pages
 #route() method binds functions to the corresponded URLs
 #e.g. /url means the function will preform when user visits yourwebsiteurl/url
@@ -16,6 +17,9 @@ def register():
 @app.route('/login')
 def login():
     return render_template('login.html')
+@app.route('/emerge')
+def emerge():
+    return render_template('emerge.html')
 @app.route('/favorites')
 def favors():
     return render_template('favorites.html')
@@ -46,3 +50,4 @@ def searchtest():
 if __name__=="__main__":
     app.environment="development"
     app.run()
+    app2.run()
