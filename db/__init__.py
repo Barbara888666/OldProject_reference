@@ -1,4 +1,4 @@
-import sqlite3,os
+import sqlite3,os,db.upload,db.search
 dbpath=os.path.join(os.path.expanduser('~'),'.market')
 filepath=os.path.join(dbpath,'info.db')
 if not os.path.exists(dbpath):
