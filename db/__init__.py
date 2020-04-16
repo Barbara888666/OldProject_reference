@@ -12,14 +12,22 @@ t=db.execute("select name from sqlite_master where type='table' order by name")
 if 'items' not in t:
     db.execute('''
     CREATE TABLE items (
-    item_id     INTEGER PRIMARY KEY AUTOINCREMENT
-                        UNIQUE
-                        NOT NULL,
-    name        TEXT    NOT NULL,
-    seller_id   INT     REFERENCES users (id) ON DELETE SET NULL
-                        NOT NULL,
-    description TEXT,
-    image_link  TEXT
+    item_id     INTEGER  PRIMARY KEY AUTOINCREMENT
+                         UNIQUE
+                         NOT NULL,
+    name        TEXT     NOT NULL,
+    seller_id   INT      REFERENCES users (id) 
+                         NOT NULL,
+    description TEXT     NOT NULL,
+    image_link  TEXT,
+    added_date  DATETIME NOT NULL,
+    is_urgent   BOOLEAN  DEFAULT (false) 
+                         NOT NULL,
+    view_time   INT      DEFAULT (0) 
+                         NOT NULL,
+    category    STRING   DEFAULT unknown
+                         NOT NULL,
+    price       NUMERIC
     );
     ''')
     db.commit()
