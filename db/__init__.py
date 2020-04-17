@@ -1,4 +1,5 @@
 import sqlite3,os,db.upload,db.search
+from flask import g
 dbpath=os.path.join(os.path.expanduser('~'),'.market')
 filepath=os.path.join(dbpath,'info.db')
 if not os.path.exists(dbpath):
@@ -12,14 +13,22 @@ t=db.execute("select name from sqlite_master where type='table' order by name")
 if 'items' not in t:
     db.execute('''
     CREATE TABLE items (
-    item_id     INTEGER PRIMARY KEY AUTOINCREMENT
-                        UNIQUE
-                        NOT NULL,
-    name        TEXT    NOT NULL,
-    seller_id   INT     REFERENCES users (id) ON DELETE SET NULL
-                        NOT NULL,
-    description TEXT,
-    image_link  TEXT
+    item_id     INTEGER  PRIMARY KEY AUTOINCREMENT
+                         UNIQUE
+                         NOT NULL,
+    name        TEXT     NOT NULL,
+    seller_id   INT      REFERENCES users (id) 
+                         NOT NULL,
+    description TEXT     NOT NULL,
+    image_link  TEXT,
+    added_date  DATETIME NOT NULL,
+    is_urgent   BOOLEAN  DEFAULT (false) 
+                         NOT NULL,
+    view_time   INT      DEFAULT (0) 
+                         NOT NULL,
+    category    STRING   DEFAULT unknown
+                         NOT NULL,
+    price       NUMERIC
     );
     ''')
     db.commit()
@@ -40,3 +49,14 @@ if 'users' not in t:
     ''')
     db.commit()
 db.close()
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect(filepath)
+    return db
+
+@app.teardown_appcontext
+def teardown_db(exception):
+    db = getattr(g, '_database', None)
+    if db is not None:
+        db.close()
