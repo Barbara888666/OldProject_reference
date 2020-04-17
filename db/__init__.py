@@ -1,4 +1,5 @@
 import sqlite3,os,db.upload,db.search
+from flask import g
 dbpath=os.path.join(os.path.expanduser('~'),'.market')
 filepath=os.path.join(dbpath,'info.db')
 if not os.path.exists(dbpath):
@@ -48,3 +49,14 @@ if 'users' not in t:
     ''')
     db.commit()
 db.close()
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect(filepath)
+    return db
+
+@app.teardown_appcontext
+def teardown_db(exception):
+    db = getattr(g, '_database', None)
+    if db is not None:
+        db.close()
