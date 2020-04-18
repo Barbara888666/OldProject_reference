@@ -1,8 +1,4 @@
 from flask import Flask,render_template
-<<<<<<< HEAD
-import sqlite3
-sqlconnector=sqlite3.connect('db/users.db')
-=======
 from util.register import register
 from util.login import login
 from util.search import search
@@ -14,20 +10,7 @@ from util.emerge import emerge
 from util.detail import detail
 from util.seller import seller
 from util.personal import personal
-
-#To run this app, set environment variable "FLASK_APP=main.py", FLASK_ENV="development" is optional, allowing debug features
-#use python -m flask run to run this app,--host=0.0.0.0 will set the website to public
-#dynamic editing is supported, which means you can chagne the code while the website is still running
->>>>>>> 75ef3feeec7d0a9838eaa7f74098e01b9a935458
 app = Flask(__name__,static_url_path='',template_folder='htmls')
-
-#static folder means the folder for static html pages
-#route() method binds functions to the corresponded URLs
-#e.g. /url means the function will preform when user visits yourwebsiteurl/url
-
-# app.register_blueprint(search)
-
-
 @app.route('/')
 def main_page():
     return render_template('main_page.html')
@@ -84,5 +67,4 @@ app.register_blueprint(personal)
 #     return render_template('search_web_page.html',file=file)
 
 if __name__=="__main__":
-    app.environment="development"
-    app.run()
+    app.run(threaded=True)
