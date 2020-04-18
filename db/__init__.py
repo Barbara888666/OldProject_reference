@@ -16,7 +16,7 @@ if 'items' not in t:
     item_id     INTEGER  PRIMARY KEY AUTOINCREMENT
                          UNIQUE
                          NOT NULL,
-    name        TEXT     NOT NULL,
+    item_name   TEXT     NOT NULL,
     seller_id   INT      REFERENCES users (id) 
                          NOT NULL,
     description TEXT     NOT NULL,
@@ -36,9 +36,9 @@ if 'users' not in t:
     db.execute('''
     CREATE TABLE users (
         id           INTEGER   PRIMARY KEY
-                               NOT NULL
-                               UNIQUE,
-        name         TEXT      NOT NULL,
+                           NOT NULL
+                           UNIQUE,
+        user_name    TEXT      NOT NULL,
         password     TEXT      NOT NULL,
         email        TEXT      NOT NULL,
         avatar       TEXT      DEFAULT ('default_avatar.png'),
