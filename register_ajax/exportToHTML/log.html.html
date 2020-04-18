@@ -1,0 +1,112 @@
+<html>
+<head>
+<title>log.html</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #080808;}
+.s1 { color: #174ad4;}
+.s2 { color: #0033b3;}
+.s3 { color: #067d17;}
+.s4 { color: #8c8c8c; font-style: italic;}
+.s5 { color: #080808;}
+.s6 { color: #174ad4;}
+.s7 { color: #067d17;}
+.s8 { color: #8c8c8c; font-style: italic;}
+.s9 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+log.html</font>
+</center></td></tr></table>
+<pre><span class="s0">&lt;!DOCTYPE </span><span class="s1">html</span><span class="s0">&gt;</span>
+<span class="s0">&lt;</span><span class="s2">html </span><span class="s1">lang</span><span class="s3">=&quot;en&quot;</span><span class="s0">&gt;</span>
+<span class="s0">&lt;</span><span class="s2">head</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;</span><span class="s2">meta </span><span class="s1">charset</span><span class="s3">=&quot;UTF-8&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;</span><span class="s2">title</span><span class="s0">&gt;知了登录&lt;/</span><span class="s2">title</span><span class="s0">&gt;</span>
+<span class="s4">{#    &lt;-- 原生JavaScript：使用XMLHttpRequest --!&gt;#}</span>
+    <span class="s0">&lt;</span><span class="s2">link </span><span class="s1">rel</span><span class="s3">=&quot;stylesheet&quot; </span><span class="s1">href</span><span class="s3">=&quot;</span><span class="s5">{{ </span><span class="s6">url_for</span><span class="s5">(</span><span class="s7">'static'</span><span class="s5">,</span><span class="s6">filename</span><span class="s5">=</span><span class="s7">'login.css'</span><span class="s5">)}}</span><span class="s3">&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;</span><span class="s2">script </span><span class="s1">src</span><span class="s3">=&quot;https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js&quot;</span><span class="s0">&gt;&lt;/</span><span class="s2">script</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;</span><span class="s2">script</span><span class="s0">&gt;</span>
+        <span class="s0">$(</span><span class="s2">function </span><span class="s0">() {</span>
+            <span class="s0">$(</span><span class="s3">&quot;#submit-btn&quot;</span><span class="s0">).click(</span><span class="s2">function </span><span class="s0">(event) {</span>
+                <span class="s8">// event.preventDefault：阻止按钮的默认行为</span>
+                <span class="s0">event.preventDefault();</span>
+                <span class="s2">var </span><span class="s0">studentnumberInput = $(</span><span class="s3">'input[name=&quot;studentnumber&quot;]'</span><span class="s0">);</span>
+                <span class="s2">var </span><span class="s0">studentnumber = studentnumberInput.val();</span>
+                <span class="s2">var </span><span class="s0">passwordInput = $(</span><span class="s3">&quot;input[name='password']&quot;</span><span class="s0">);</span>
+                <span class="s2">var </span><span class="s0">password = passwordInput.val();</span>
+                <span class="s0">$.post({</span>
+                    <span class="s3">'url'</span><span class="s0">: </span><span class="s3">'/login/'</span><span class="s0">,</span>
+                    <span class="s3">'data'</span><span class="s0">: {</span>
+                        <span class="s3">'username'</span><span class="s0">: studentnumber,</span>
+                        <span class="s3">'password'</span><span class="s0">: password</span>
+                    <span class="s0">},</span>
+                    <span class="s3">&quot;success&quot;</span><span class="s0">: </span><span class="s2">function</span><span class="s0">(data){</span>
+                        <span class="s2">if</span><span class="s0">(data[</span><span class="s3">'code'</span><span class="s0">] == </span><span class="s9">3</span><span class="s0">){</span>
+                            <span class="s0">window.location = </span><span class="s3">'/'</span>
+                        <span class="s0">}</span><span class="s2">else</span><span class="s0">{</span>
+                            <span class="s2">var </span><span class="s0">message = data[</span><span class="s3">'message'</span><span class="s0">];</span>
+                            <span class="s0">$(</span><span class="s3">&quot;#message-p&quot;</span><span class="s0">).html(message);</span>
+                            <span class="s0">$(</span><span class="s3">&quot;#message-p&quot;</span><span class="s0">).show();</span>
+                        <span class="s0">}</span>
+                        <span class="s0">console.log(data);</span>
+                    <span class="s0">},</span>
+                    <span class="s3">'fail'</span><span class="s0">: </span><span class="s2">function </span><span class="s0">(error) {</span>
+                        <span class="s0">console.log(error);</span>
+                    <span class="s0">}</span>
+                <span class="s0">});</span>
+            <span class="s0">});</span>
+        <span class="s0">});</span>
+    <span class="s0">&lt;/</span><span class="s2">script</span><span class="s0">&gt;</span>
+<span class="s0">&lt;/</span><span class="s2">head</span><span class="s0">&gt;</span>
+<span class="s0">&lt;</span><span class="s2">body</span><span class="s0">&gt;</span>
+<span class="s0">&lt;</span><span class="s2">div </span><span class="s1">class</span><span class="s3">=&quot;top&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;</span><span class="s2">a </span><span class="s1">class</span><span class="s3">=&quot;title&quot; </span><span class="s1">href</span><span class="s3">=&quot;#&quot; </span><span class="s1">target</span><span class="s3">=&quot;_blank&quot;</span><span class="s0">&gt;BJUT FLEA MARKET&lt;/</span><span class="s2">a</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;</span><span class="s2">br</span><span class="s0">/&gt;</span>
+        <span class="s0">&lt;</span><span class="s2">div </span><span class="s1">class</span><span class="s3">=&quot;title_content&quot;</span><span class="s0">&gt;User Log in&lt;/</span><span class="s2">div</span><span class="s0">&gt;</span>
+<span class="s0">&lt;/</span><span class="s2">div</span><span class="s0">&gt;</span>
+<span class="s0">&lt;</span><span class="s2">div </span><span class="s1">class</span><span class="s3">=&quot;lg_layout&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;</span><span class="s2">div </span><span class="s1">class</span><span class="s3">=&quot;lg_center&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;</span><span class="s2">div </span><span class="s1">class</span><span class="s3">=&quot;lg_form&quot;</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;</span><span class="s2">form </span><span class="s1">action</span><span class="s3">=&quot;&quot; </span><span class="s1">method</span><span class="s3">=&quot;POST&quot;</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;</span><span class="s2">table</span><span class="s0">&gt;</span>
+                <span class="s0">&lt;</span><span class="s2">tr</span><span class="s0">&gt;</span>
+                        <span class="s0">&lt;</span><span class="s2">td </span><span class="s1">class</span><span class="s3">=&quot;lg_left&quot;</span><span class="s0">&gt;&lt;</span><span class="s2">label </span><span class="s1">for</span><span class="s3">=&quot;studentnumber&quot;</span><span class="s0">&gt;Studentnumber&lt;/</span><span class="s2">label</span><span class="s0">&gt;&lt;/</span><span class="s2">td</span><span class="s0">&gt;</span>
+                        <span class="s0">&lt;</span><span class="s2">td </span><span class="s1">class</span><span class="s3">=&quot;lg_right&quot;</span><span class="s0">&gt;&lt;</span><span class="s2">input </span><span class="s1">type</span><span class="s3">=&quot;text&quot; </span><span class="s1">name</span><span class="s3">=&quot;studentnumber&quot; </span><span class="s1">id</span><span class="s3">=&quot;studentnumber&quot; </span><span class="s1">placeholder</span><span class="s3">=&quot;Please input your student number&quot;</span><span class="s0">&gt;&lt;/</span><span class="s2">td</span><span class="s0">&gt;</span>
+                        <span class="s0">&lt;</span><span class="s2">td</span><span class="s0">&gt;</span>
+                            <span class="s0">&lt;</span><span class="s2">div </span><span class="s1">class</span><span class="s3">=&quot;lg_r&quot;</span><span class="s0">&gt;</span>
+                                <span class="s0">&lt;</span><span class="s2">p</span><span class="s0">&gt;No account?&lt;</span><span class="s2">a </span><span class="s1">href</span><span class="s3">=&quot;Register.html&quot; </span><span class="s1">class</span><span class="s3">=&quot;a&quot;</span><span class="s0">&gt;Register Now!&lt;/</span><span class="s2">a</span><span class="s0">&gt;&lt;/</span><span class="s2">p</span><span class="s0">&gt;</span>
+                            <span class="s0">&lt;/</span><span class="s2">div</span><span class="s0">&gt;</span>
+                        <span class="s0">&lt;/</span><span class="s2">td</span><span class="s0">&gt;</span>
+
+                <span class="s0">&lt;/</span><span class="s2">tr</span><span class="s0">&gt;</span>
+                <span class="s0">&lt;</span><span class="s2">tr</span><span class="s0">&gt;</span>
+                        <span class="s0">&lt;</span><span class="s2">td </span><span class="s1">class</span><span class="s3">=&quot;td_r&quot;</span><span class="s0">&gt;&lt;</span><span class="s2">p </span><span class="s1">style</span><span class="s3">=&quot;</span><span class="s1">display</span><span class="s0">:</span><span class="s3">none</span><span class="s0">;</span><span class="s1">color</span><span class="s0">:</span><span class="s3">red</span><span class="s0">;</span><span class="s3">&quot; </span><span class="s1">id</span><span class="s3">=&quot;message-p&quot;</span><span class="s0">&gt;&lt;/</span><span class="s2">p</span><span class="s0">&gt;&lt;/</span><span class="s2">td</span><span class="s0">&gt;</span>
+                    <span class="s0">&lt;/</span><span class="s2">tr</span><span class="s0">&gt;</span>
+                <span class="s0">&lt;</span><span class="s2">tr</span><span class="s0">&gt;</span>
+                        <span class="s0">&lt;</span><span class="s2">td </span><span class="s1">class</span><span class="s3">=&quot;lg_left&quot;</span><span class="s0">&gt;&lt;</span><span class="s2">label </span><span class="s1">for</span><span class="s3">=&quot;password&quot;</span><span class="s0">&gt;Password&lt;/</span><span class="s2">label</span><span class="s0">&gt;&lt;/</span><span class="s2">td</span><span class="s0">&gt;</span>
+                        <span class="s0">&lt;</span><span class="s2">td </span><span class="s1">class</span><span class="s3">=&quot;lg_right&quot;</span><span class="s0">&gt;&lt;</span><span class="s2">input </span><span class="s1">type</span><span class="s3">=&quot;password&quot; </span><span class="s1">name</span><span class="s3">=&quot;password&quot; </span><span class="s1">id</span><span class="s3">=&quot;password&quot; </span><span class="s1">placeholder</span><span class="s3">=&quot;Please input your password&quot;</span><span class="s0">&gt;&lt;/</span><span class="s2">td</span><span class="s0">&gt;</span>
+                        <span class="s0">&lt;</span><span class="s2">td</span><span class="s0">&gt;</span>
+                        <span class="s0">&lt;</span><span class="s2">div </span><span class="s1">class</span><span class="s3">=&quot;lg_r&quot;</span><span class="s0">&gt;</span>
+                            <span class="s0">&lt;</span><span class="s2">p</span><span class="s0">&gt;Forget Password?&lt;</span><span class="s2">a </span><span class="s1">href</span><span class="s3">=&quot;Register.html&quot; </span><span class="s1">class</span><span class="s3">=&quot;a&quot;</span><span class="s0">&gt;Find Now!&lt;/</span><span class="s2">a</span><span class="s0">&gt;&lt;/</span><span class="s2">p</span><span class="s0">&gt;</span>
+                        <span class="s0">&lt;/</span><span class="s2">div</span><span class="s0">&gt;</span>
+                        <span class="s0">&lt;/</span><span class="s2">td</span><span class="s0">&gt;</span>
+                    <span class="s0">&lt;/</span><span class="s2">tr</span><span class="s0">&gt;</span>
+                <span class="s0">&lt;</span><span class="s2">tr</span><span class="s0">&gt;</span>
+                    <span class="s0">&lt;</span><span class="s2">td</span><span class="s0">&gt;&lt;/</span><span class="s2">td</span><span class="s0">&gt;</span>
+                    <span class="s0">&lt;</span><span class="s2">td </span><span class="s1">colspan</span><span class="s3">=&quot;3&quot; </span><span class="s1">align</span><span class="s3">=&quot;center&quot;</span><span class="s0">&gt;&lt;</span><span class="s2">input </span><span class="s1">type</span><span class="s3">=&quot;submit&quot; </span><span class="s1">id</span><span class="s3">=&quot;submit-btn&quot; </span><span class="s1">value</span><span class="s3">=&quot;Submit&quot; </span><span class="s1">class</span><span class="s3">=&quot;submit-btn&quot;</span><span class="s0">&gt;&lt;/</span><span class="s2">td</span><span class="s0">&gt;</span>
+                <span class="s0">&lt;/</span><span class="s2">tr</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;/</span><span class="s2">table</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;/</span><span class="s2">form</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;/</span><span class="s2">div</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;/</span><span class="s2">div</span><span class="s0">&gt;</span>
+<span class="s0">&lt;/</span><span class="s2">div</span><span class="s0">&gt;</span>
+<span class="s4">{#    &lt;p style=&quot;display:none;color:red;&quot; id=&quot;message-p&quot;&gt;&lt;/p&gt;#}</span>
+<span class="s0">&lt;/</span><span class="s2">form</span><span class="s0">&gt;</span>
+<span class="s0">&lt;/</span><span class="s2">body</span><span class="s0">&gt;</span>
+<span class="s0">&lt;/</span><span class="s2">html</span><span class="s0">&gt;</span></pre>
+</body>
+</html>

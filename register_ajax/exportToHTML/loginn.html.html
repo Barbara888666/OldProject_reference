@@ -1,0 +1,82 @@
+<html>
+<head>
+<title>loginn.html</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #080808;}
+.s1 { color: #174ad4;}
+.s2 { color: #0033b3;}
+.s3 { color: #067d17;}
+.s4 { color: #8c8c8c; font-style: italic;}
+.s5 { color: #8c8c8c; font-style: italic;}
+.s6 { color: #1750eb;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+loginn.html</font>
+</center></td></tr></table>
+<pre><span class="s0">&lt;!DOCTYPE </span><span class="s1">html</span><span class="s0">&gt;</span>
+<span class="s0">&lt;</span><span class="s2">html </span><span class="s1">lang</span><span class="s3">=&quot;en&quot;</span><span class="s0">&gt;</span>
+<span class="s0">&lt;</span><span class="s2">head</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;</span><span class="s2">meta </span><span class="s1">charset</span><span class="s3">=&quot;UTF-8&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;</span><span class="s2">title</span><span class="s0">&gt;loginn&lt;/</span><span class="s2">title</span><span class="s0">&gt;</span>
+<span class="s4">{#    &lt;-- 原生JavaScript：使用XMLHttpRequest --!&gt;#}</span>
+    <span class="s0">&lt;</span><span class="s2">script </span><span class="s1">src</span><span class="s3">=&quot;https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js&quot;</span><span class="s0">&gt;&lt;/</span><span class="s2">script</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;</span><span class="s2">script</span><span class="s0">&gt;</span>
+        <span class="s0">$(</span><span class="s2">function </span><span class="s0">() {</span>
+            <span class="s0">$(</span><span class="s3">&quot;#submit-btn&quot;</span><span class="s0">).click(</span><span class="s2">function </span><span class="s0">(event) {</span>
+                <span class="s5">// event.preventDefault：阻止按钮的默认行为</span>
+                <span class="s0">event.preventDefault();</span>
+                <span class="s2">var </span><span class="s0">usernameInput = $(</span><span class="s3">'input[name=&quot;username&quot;]'</span><span class="s0">);</span>
+                <span class="s2">var </span><span class="s0">username = usernameInput.val();</span>
+                <span class="s2">var </span><span class="s0">passwordInput = $(</span><span class="s3">&quot;input[name='password']&quot;</span><span class="s0">);</span>
+                <span class="s2">var </span><span class="s0">password = passwordInput.val();</span>
+                <span class="s0">$.post({</span>
+                    <span class="s3">'url'</span><span class="s0">: </span><span class="s3">'/login/'</span><span class="s0">,</span>
+                    <span class="s3">'data'</span><span class="s0">: {</span>
+                        <span class="s3">'username'</span><span class="s0">: username,</span>
+                        <span class="s3">'password'</span><span class="s0">: password</span>
+                    <span class="s0">},</span>
+                    <span class="s3">&quot;success&quot;</span><span class="s0">: </span><span class="s2">function</span><span class="s0">(data){</span>
+                        <span class="s2">if</span><span class="s0">(data[</span><span class="s3">'code'</span><span class="s0">] == </span><span class="s6">200</span><span class="s0">){</span>
+                            <span class="s0">window.location = </span><span class="s3">'/'</span>
+                        <span class="s0">}</span><span class="s2">else</span><span class="s0">{</span>
+                            <span class="s2">var </span><span class="s0">message = data[</span><span class="s3">'message'</span><span class="s0">];</span>
+                            <span class="s0">$(</span><span class="s3">&quot;#message-p&quot;</span><span class="s0">).html(message);</span>
+                            <span class="s0">$(</span><span class="s3">&quot;#message-p&quot;</span><span class="s0">).show();</span>
+                        <span class="s0">}</span>
+                        <span class="s0">console.log(data);</span>
+                    <span class="s0">},</span>
+                    <span class="s3">'fail'</span><span class="s0">: </span><span class="s2">function </span><span class="s0">(error) {</span>
+                        <span class="s0">console.log(error);</span>
+                    <span class="s0">}</span>
+                <span class="s0">});</span>
+            <span class="s0">});</span>
+        <span class="s0">});</span>
+    <span class="s0">&lt;/</span><span class="s2">script</span><span class="s0">&gt;</span>
+<span class="s0">&lt;/</span><span class="s2">head</span><span class="s0">&gt;</span>
+<span class="s0">&lt;</span><span class="s2">body</span><span class="s0">&gt;</span>
+<span class="s0">&lt;</span><span class="s2">form </span><span class="s1">action</span><span class="s3">=&quot;&quot; </span><span class="s1">method</span><span class="s3">=&quot;POST&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;</span><span class="s2">table</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;</span><span class="s2">tr</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;</span><span class="s2">td</span><span class="s0">&gt;用户名：&lt;/</span><span class="s2">td</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;</span><span class="s2">td</span><span class="s0">&gt;&lt;</span><span class="s2">input </span><span class="s1">type</span><span class="s3">=&quot;text&quot; </span><span class="s1">name</span><span class="s3">=&quot;username&quot;</span><span class="s0">&gt;&lt;/</span><span class="s2">td</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;/</span><span class="s2">tr</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;</span><span class="s2">tr</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;</span><span class="s2">td</span><span class="s0">&gt;密码：&lt;/</span><span class="s2">td</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;</span><span class="s2">td</span><span class="s0">&gt;&lt;</span><span class="s2">input </span><span class="s1">type</span><span class="s3">=&quot;password&quot; </span><span class="s1">name</span><span class="s3">=&quot;password&quot;</span><span class="s0">&gt;&lt;/</span><span class="s2">td</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;/</span><span class="s2">tr</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;</span><span class="s2">tr</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;</span><span class="s2">td</span><span class="s0">&gt;&lt;/</span><span class="s2">td</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;</span><span class="s2">td</span><span class="s0">&gt;&lt;</span><span class="s2">button </span><span class="s1">id</span><span class="s3">=&quot;submit-btn&quot; </span><span class="s1">class</span><span class="s3">=&quot;submit-btn&quot;</span><span class="s0">&gt;立即登录&lt;/</span><span class="s2">button</span><span class="s0">&gt;&lt;/</span><span class="s2">td</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;/</span><span class="s2">tr</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;/</span><span class="s2">table</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;</span><span class="s2">p </span><span class="s1">style</span><span class="s3">=&quot;</span><span class="s1">display</span><span class="s0">:</span><span class="s3">none</span><span class="s0">;</span><span class="s1">color</span><span class="s0">:</span><span class="s3">red</span><span class="s0">;</span><span class="s3">&quot; </span><span class="s1">id</span><span class="s3">=&quot;message-p&quot;</span><span class="s0">&gt;&lt;/</span><span class="s2">p</span><span class="s0">&gt;</span>
+<span class="s0">&lt;/</span><span class="s2">form</span><span class="s0">&gt;</span>
+<span class="s0">&lt;/</span><span class="s2">body</span><span class="s0">&gt;</span>
+<span class="s0">&lt;/</span><span class="s2">html</span><span class="s0">&gt;</span></pre>
+</body>
+</html>
