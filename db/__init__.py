@@ -1,7 +1,9 @@
 import sqlite3,os,db.upload,db.search
 from flask import g
 dbpath=os.path.join(os.path.expanduser('~'),'.market')
-filepath=os.path.join(dbpath,'info.db')
+dbfilepath=os.path.join(dbpath,'info.db')
+imgpath=os.path.join(dbpath,'imgs')
+
 if not os.path.exists(dbpath):
     os.mkdir(dbpath)
 if os.path.isfile(filepath):
