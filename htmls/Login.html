@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>知了登录</title>
+<!--{#    <&#45;&#45; 原生JavaScript：使用XMLHttpRequest &#45;&#45;!>#}-->
+    <link rel="stylesheet" href="{{ url_for('static',filename='/css/login.css')}}">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#submit-btn").click(function (event) {
+                // event.preventDefault：阻止按钮的默认行为
+                event.preventDefault();
+                var studentnumberInput = $('input[name="studentnumber"]');
+                var studentnumber = studentnumberInput.val();
+                var passwordInput = $("input[name='password']");
+                var password = passwordInput.val();
+                $.post({
+                    'url': '/login/',
+                    'data': {
+                        'username': studentnumber,
+                        'password': password
+                    },
+                    "success": function(data){
+                        if(data['code'] == 3){
+                            window.location = '/'
+                        }else{
+                            var message = data['message'];
+                            $("#message-p").html(message);
+                            $("#message-p").show();
+                        }
+                        console.log(data);
+                    },
+                    'fail': function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="top">
+        <a class="title" href="#" target="_blank">BJUT FLEA MARKET</a>
+        <br/>
+        <div class="title_content">User Log in</div>
+</div>
+<div class="lg_layout">
+    <div class="lg_center">
+        <div class="lg_form">
+            <form action="" method="POST">
+            <table>
+                <tr>
+                        <td class="lg_left"><label for="studentnumber">Studentnumber</label></td>
+                        <td class="lg_right"><input type="text" name="studentnumber" id="studentnumber" placeholder="Please input your student number"></td>
+                        <td>
+                            <div class="lg_r">
+                                <p>No account?<a href= href="//127.0.0.1:5000/register/" class="a">Register Now!</a></p>
+                            </div>
+                        </td>
+
+                </tr>
+                <tr>
+                        <td class="td_r"><p style="display:none;color:red;" id="message-p"></p></td>
+                    </tr>
+                <tr>
+                        <td class="lg_left"><label for="password">Password</label></td>
+                        <td class="lg_right"><input type="password" name="password" id="password" placeholder="Please input your password"></td>
+                        <td>
+                        <div class="lg_r">
+                            <p>Forget Password?<a href= href="//127.0.0.1:5000/" class="a">Find Now!</a></p>
+                        </div>
+                        </td>
+                    </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="3" align="center"><input type="submit" id="submit-btn" value="Submit" class="submit-btn"></td>
+                </tr>
+            </table>
+            </form>
+        </div>
+    </div>
+</div>
+
+</form>
+</body>
+</html>
