@@ -6,10 +6,10 @@ imgpath=os.path.join(dbpath,'imgs')
 
 if not os.path.exists(dbpath):
     os.mkdir(dbpath)
-if os.path.isfile(filepath):
-    file=open(filepath)
+if os.path.isfile(dbfilepath):
+    file=open(dbfilepath)
     file.close()
-db=sqlite3.connect(filepath)
+db=sqlite3.connect(dbfilepath)
 db.cursor()
 tb=db.execute("select name from sqlite_master where type='table' order by name").fetchall()
 item=True
@@ -61,5 +61,5 @@ db.close()
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
-        db = g._database = sqlite3.connect(filepath)
+        db = g._database = sqlite3.connect(dbfilepath)
     return db
