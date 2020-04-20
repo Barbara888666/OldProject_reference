@@ -11,8 +11,15 @@ if os.path.isfile(filepath):
     file.close()
 db=sqlite3.connect(filepath)
 db.cursor()
-t=db.execute("select name from sqlite_master where type='table' order by name")
-if 'items' not in t:
+tb=db.execute("select name from sqlite_master where type='table' order by name").fetchall()
+item=True
+user=True
+for i in tb:
+    if str(i)=="('items',)":
+        item=False
+    if str(i)=="('users',)":
+        user=False
+if item:
     db.execute('''
     CREATE TABLE items (
     item_id     INTEGER  PRIMARY KEY AUTOINCREMENT
@@ -34,7 +41,7 @@ if 'items' not in t:
     );
     ''')
     db.commit()
-if 'users' not in t:
+if user:
     db.execute('''
     CREATE TABLE users (
         id           INTEGER   PRIMARY KEY
@@ -56,9 +63,3 @@ def get_db():
     if db is None:
         db = g._database = sqlite3.connect(filepath)
     return db
-
-@app.teardown_appcontext
-def teardown_db(exception):
-    db = getattr(g, '_database', None)
-    if db is not None:
-        db.close()

@@ -1,4 +1,4 @@
-from flask import Flask,render_template
+from flask import Flask,render_template,g
 from util.register import register
 from util.login import login
 from util.search import search
@@ -30,6 +30,11 @@ app.register_blueprint(news)
 app.register_blueprint(favorites)
 app.register_blueprint(seller)
 app.register_blueprint(personal)
+@app.teardown_appcontext
+def teardown_db(exception):
+    db = getattr(g, '_database', None)
+    if db is not None:
+        db.close()
 # @app.route('/register')
 # def register():
 #     return render_template('register.html')

@@ -17,5 +17,3 @@ Our software is called `BJUT Second-Hand Market` on web devices, this software p
 - open the address, default is `http://127.0.0.1:5000/`
 
 
-
->>>>>>> 75ef3feeec7d0a9838eaa7f74098e01b9a935458
