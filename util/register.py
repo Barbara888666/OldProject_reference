@@ -1,7 +1,7 @@
 import re
 
 from flask import Blueprint, render_template, request, jsonify
-
+import db
 register=Blueprint('register',__name__)
 
 @register.route('/register/',methods=['GET','POST'])
@@ -69,7 +69,10 @@ def login():
                                 and re.search('CORRECT$', resul['tel'])
                                 and re.search('CORRECT$', resul['password'])
                                 and re.search('CORRECT$', resul['name'])
-        ): resul['result'] ="sucess"
-
+        ): 
+            resul['result'] ="sucess"
+            gdb=db.get_db()
+            gdb.cursor().execute(db.upload.registeraccount(int(dic.get('studentnumber')),dic.get('username'),dic.get('password'),dic.get('email'),dic.get('tel'),dic.get('gender'),None))
+            gdb.commit()
         return jsonify(resul)
 

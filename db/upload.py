@@ -7,4 +7,4 @@ def registeraccount(id,name,password,email,phonenum,sex,birthday):
         s='true'
     else:
         s='false'
-    return 'insert into users (id,name,password,email,phone_number,sex,birth_date) values (%d,"%s","%s","%s","%s","%s","%s")'%(id,name,r.hexdigest(),email,phonenum,s,birthday)
+    return 'insert into users (id,user_name,password,email,phone_number,sex,birth_date) values (%d,"%s","%s","%s","%s","%s","%s")'%(id,name,r.hexdigest(),email,phonenum,s,birthday)
