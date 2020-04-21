@@ -40,9 +40,11 @@ def login():
             if k=='studentnumber':
                 if re.search('^\d{8}$', dic['studentnumber']):
                     t=idcheck(int(dic.get('studentnumber')))
-                    if t is not None:
+                    if len(t)!=0:
                         resul['studentnumber'] ="This ID has been used by someone else."
-                    resul['studentnumber'] ="STUDENTNUMBER CORRECT"
+                        print('id duped')
+                    else:
+                        resul['studentnumber'] ="STUDENTNUMBER CORRECT"
                 else:
                     resul['studentnumber']="PLEASE INPUT THE TRUE STUDENTNUMBER:八位数字"
             elif k=='name':

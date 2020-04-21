@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, jsonify, request
-
+from db.search import getpassword
 login=Blueprint('login',__name__)
-
 @login.route('/login/',methods=['GET','POST'])
 def log():
     if request.method == 'GET':
@@ -9,25 +8,7 @@ def log():
     else:
         password = request.form.get('password'),
         studentnumber = request.form.get('studentnumber'),
-        # print(loginput)
-        # 根据studentnumber在库里查找：没有 studentnumber 有studentnumber：密码
-        resu = {'m': 0}
-        # if(loginput['studentnumber']==12345678):result=0
-        # elif(loginput['studentnumber']==12345678 and loginput['password']!="liang666"):result=1
-        # else:result=100
-        if(studentnumber==1):result=0
-        elif(studentnumber==12345678 and password!="liang666"):result=1
-        else:result=100
-
-        # if studentnumber == 'zhiliao' :
-        #     result=0;
-        # else:
-        #     result=1;
-        # if password == 'zhiliao' and password == '111111':
-        #     return jsonify({"code": 200, "message": ""})
-        # else:
-        #     return jsonify({"code": 401, "message": "用户名或密码错误！"})
-        print(result)
+        
         if(result==0):
             resu['message']="THIS STUDENTNUMBER IS NOT EXIST"
             # return jsonify(resu)
