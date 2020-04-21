@@ -1,4 +1,4 @@
-from flask import Flask,render_template,g
+from flask import Flask,render_template,g,session
 from os import urandom
 from util.register import register
 from util.login import login
@@ -15,6 +15,8 @@ app = Flask(__name__,static_url_path='',template_folder='htmls')
 app.secret_key=urandom(16)
 @app.route('/')
 def main_page():
+    if session is not None:
+        print(session)
     return render_template('main_page.html')
 #紧急卖卖：卖品，卖品图片，卖家；买的东西，买的描述，买家
 #网站通知：最新通知
