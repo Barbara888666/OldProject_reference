@@ -63,3 +63,11 @@ def get_db():
     if db is None:
         db = g._database = sqlite3.connect(dbfilepath)
     return db
+def dbop(query,issearch):
+    gdb=get_db()
+    gdb.cursor()
+    if issearch:
+        return gdb.execute(query).fetchall()
+    else:
+        gdb.execute(query)
+    gdb.commit()
