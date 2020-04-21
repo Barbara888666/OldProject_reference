@@ -23,4 +23,4 @@ def uploadavatar(image,id):
     uploadimage(image,id,'avatar')
 def uploaditemimg(image,itemid):
     uploadimage(image,id,'items')
-    return 'insert into users (id,user_name,password,email,phone_number,sex,birth_date) values (%d,"%s","%s","%s","%s","%s","%s")'%(id,name,r.hexdigest(),email,phonenum,s,birthday)
+    
