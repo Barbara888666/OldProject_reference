@@ -2,6 +2,8 @@ import re
 
 from flask import Blueprint, render_template, request, jsonify
 import db
+from db.search import idcheck
+from db.upload import registeraccount
 register=Blueprint('register',__name__)
 
 @register.route('/register/',methods=['GET','POST'])
@@ -37,6 +39,9 @@ def login():
                     resul['password'] ="PLEASE INPUT THE TRUE PASSWORD:以字母开头，长度在6~18之间，只能包含字母、数字和下划线"
             if k=='studentnumber':
                 if re.search('^\d{8}$', dic['studentnumber']):
+                    t=idcheck(int(dic.get('studentnumber')))
+                    if t is not None:
+                        resul['studentnumber'] ="This ID has been used by someone else."
                     resul['studentnumber'] ="STUDENTNUMBER CORRECT"
                 else:
                     resul['studentnumber']="PLEASE INPUT THE TRUE STUDENTNUMBER:八位数字"
@@ -71,8 +76,6 @@ def login():
                                 and re.search('CORRECT$', resul['name'])
         ): 
             resul['result'] ="sucess"
-            gdb=db.get_db()
-            gdb.cursor().execute(db.upload.registeraccount(int(dic.get('studentnumber')),dic.get('username'),dic.get('password'),dic.get('email'),dic.get('tel'),dic.get('gender'),None))
-            gdb.commit()
+            registeraccount(int(dic.get('studentnumber')),dic.get('username'),dic.get('password'),dic.get('email'),dic.get('tel'),dic.get('gender'),None)
         return jsonify(resul)
 
