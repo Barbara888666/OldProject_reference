@@ -9,7 +9,7 @@ def registeraccount(id,name,password,email,phonenum,sex,birthday):
         s='true'
     else:
         s='false'
-    dbop('insert into users (id,name,password,email,phone_number,sex,birth_date) values (%d,"%s","%s","%s","%s","%s","%s")'%(id,name,r.hexdigest(),email,phonenum,s,birthday),False)
+    dbop('insert into users (id,user_name,password,email,phone_number,sex,birth_date) values (%d,"%s","%s","%s","%s","%s","%s")'%(id,name,r.hexdigest(),email,phonenum,s,birthday),False)
 def uploadimage(image,id,des):
     path=os.path.join(imgpath,des,id)
     if not os.path.exists(path):
