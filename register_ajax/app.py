@@ -1,10 +1,19 @@
+from flask import Flask,render_template,request,redirect,url_for,jsonify
 import re
+app = Flask(__name__)
 
-from flask import Blueprint, render_template, request, jsonify
-import db
-register=Blueprint('register',__name__)
+# AJAX(ajax)
+# Async JavaScript And XML
+# Async（异步）：网络请求是异步的。
+# JavaScript：JavaScript语言
+# And：并且
+# XML：JSON
 
-@register.route('/register/',methods=['GET','POST'])
+@app.route('/')
+def index():
+    return '这是首页！'
+
+@app.route('/register/',methods=['GET','POST'])
 def login():
     if request.method == 'GET':
         return render_template('Register.html')
@@ -69,10 +78,72 @@ def login():
                                 and re.search('CORRECT$', resul['tel'])
                                 and re.search('CORRECT$', resul['password'])
                                 and re.search('CORRECT$', resul['name'])
-        ): 
-            resul['result'] ="sucess"
-            gdb=db.get_db()
-            gdb.cursor().execute(db.upload.registeraccount(int(dic.get('studentnumber')),dic.get('username'),dic.get('password'),dic.get('email'),dic.get('tel'),dic.get('gender'),None))
-            gdb.commit()
+        ): resul['result'] ="sucess"
+
         return jsonify(resul)
 
+
+        # if re.search('^\d{8}$', dic['password']):
+        #     return jsonify({"code":200,"message":"学号格式正确","m":"正确"})
+        # else:
+        #     return jsonify({"code":201,"message":"学号格式错误","m":"错误"})
+
+#现在又好几个需要验证 每一条都要判断是否vaild
+# 显示的方式是每一个的后面都输出正确或者错
+# 只有提交post再显示所有成功与否
+# post后就要一次判断所有的对错 一共36种可能性 return后html只接收一次信息
+# 或者是按条目定义函数 每个都自己更新 没有return传不到html页面里
+# 所以试着判断两个 一个函数两个传参
+
+@app.route('/login/',methods=['GET','POST'])
+def log():
+    if request.method == 'GET':
+        return render_template('log.html')
+    else:
+        password = request.form.get('password'),
+        studentnumber = request.form.get('studentnumber'),
+        # print(loginput)
+        # 根据studentnumber在库里查找：没有 studentnumber 有studentnumber：密码
+        resu = {'m': 0}
+        # if(loginput['studentnumber']==12345678):result=0
+        # elif(loginput['studentnumber']==12345678 and loginput['password']!="liang666"):result=1
+        # else:result=100
+        if(studentnumber==1):result=0
+        elif(studentnumber==12345678 and password!="liang666"):result=1
+        else:result=100
+
+        # if studentnumber == 'zhiliao' :
+        #     result=0;
+        # else:
+        #     result=1;
+        # if password == 'zhiliao' and password == '111111':
+        #     return jsonify({"code": 200, "message": ""})
+        # else:
+        #     return jsonify({"code": 401, "message": "用户名或密码错误！"})
+        print(result)
+        if(result==0):
+            resu['message']="THIS STUDENTNUMBER IS NOT EXIST"
+            # return jsonify(resu)
+            return jsonify({"code":1,"message":"学号格式错误"})
+        elif(result==1):
+            resu['message'] = "WRONG PASSWORD OR WRONG STUDNETNUMBER"
+            return jsonify({"code":2,"message":"密码错误"})
+        else:
+            resu['message'] = "LOGIN SUCCESSFULLY"
+            print(resu['message'])
+            return jsonify({"code": 3, "message": "好了"})
+        # print(resu)
+        # if studentnumber == 'm':
+        #     return jsonify({"code": 1, "message": "学号格式错误"})
+        # elif studentnumber == 'zhiliao' and password == '111111':
+        #     return jsonify({"code":2,"message":"用户名或密码错误！"})
+        # else:
+        #     return jsonify({"code":3,"message":"成了！"})
+        # json_str = json.dumps(resu)
+        # return json_str, 200, {"Content-Type": "application/json"}
+        return jsonify(resu)
+
+
+
+if __name__ == '__main__':
+    app.run(debug=True)

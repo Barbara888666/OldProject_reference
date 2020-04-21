@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+{#    <-- 原生JavaScript：使用XMLHttpRequest --!>#}
+    <link rel="stylesheet" href="{{ url_for('static',filename='register_final.css')}}">
+
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    <script>
+
+        $(function () {
+
+            $("#submit-btn").click(function (event) {
+                // event.preventDefault：阻止按钮的默认行为
+                event.preventDefault();
+                var usernameInput = $('input[name="username"]');
+                var username = usernameInput.val();
+                var passwordInput = $("input[name='password']");
+                var password = passwordInput.val();
+                var studentnumberInput = $('input[name="studentnumber"]');
+                var studentnumber = studentnumberInput.val();
+                var telInput = $("input[name='tel']");
+                var tel = telInput.val();
+                var nameInput = $('input[name="name"]');
+                var name = nameInput.val();
+                var genderInput = $("input[name='gender']");
+                var gender = genderInput.val();
+                var emailInput = $("input[name='email']");
+                var email = emailInput.val();
+                $.post({
+                    'url': '/register/',
+                    'data': {
+                        'username': username,
+                        'studentnumber': studentnumber,
+                        'password': password,
+                        'tel':tel,
+                        'name':name,
+                        'gender':gender,
+                        'email':email,
+                    },
+
+                    success:function(data){
+                        var message1 = data['username'];
+
+                        $("#message-1").html(message1);
+                        $("#message-1").show();
+
+                        var message2 = data['studentnumber'];
+
+                        $("#message-2").html(message2);
+                        $("#message-2").show();
+
+                        var message3 = data['password'];
+
+                        $("#message-3").html(message3);
+                        $("#message-3").show();
+
+                        var message4 = data['email'];
+
+                        $("#message-4").html(message4);
+                        $("#message-4").show();
+
+                        var message5 = data['name'];
+
+                        $("#message-5").html(message5);
+                        $("#message-5").show();
+
+                        var message6 = data['tel'];
+
+                        $("#message-6").html(message6);
+                        $("#message-6").show();
+
+                        var message7 = data['gender'];
+
+                        $("#message-7").html(message7);
+                        $("#message-7").show();
+
+                         {#if ('CORRECT$') {//根据返回值进行跳转#}
+                         {#    window.location.href = '/log/';#}
+                        var message8 = data['result'];
+                            if (message8=="sucess"){window.location.href='/login/'}
+
+
+                        console.log(data);
+                    },
+                    'fail': function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="top">
+    <div class="topcontent">
+        <a class="title" href="#">BJUT FLEA MARKET</a>
+            <br/>
+        <div class="title_content">User Rigister</div>
+
+    </div>
+    <div class="rg_login">
+        <p>Existing account?<a href="login.html">Log in Now!</a></p>
+    </div>
+</div>
+<div class="rg_layout">
+    <div class="rg_center">
+            <form class="rg_form" method="post">
+                <table>
+
+                    <tr>
+                        <td class="td_left"><label for="username">Username</label></td>
+                        <td class="td_right"><input type="text" name="username" id="username" placeholder="Please input your Username"></td>
+                        <td class="td_r"><p style="display:none;color:red;" id="message-1"></p></td>
+                    </tr>
+
+                    <tr>
+                       <td class="td_left"><label for="studentnumber">Studentnumber</label></td>
+                        <td class="td_right"><input type="text" name="studentnumber" id="studentnumber" placeholder="Please input your student number"></td>
+                        <td class="td_r"><p style="display:none;color:red;" id="message-2"></p></td>
+                    </tr>
+
+                    <tr>
+                        <td class="td_left"><label for="password">Password</label></td>
+                        <td class="td_right"><input type="password" name="password" id="password" placeholder="Please input your password"></td>
+                        <td class="td_r"><p style="display:none;color:red;" id="message-3"></p></td>
+                    </tr>
+
+                    <tr>
+                        <td class="td_left"><label for="email">Email</label></td>
+                        <td class="td_right"><input type="email" name="email" id="email" placeholder="Please enter email address"></td>
+                        <td class="td_r"><p style="display:none;color:red;" id="message-4"></p></td>
+                    </tr>
+
+                    <tr>
+                        <td class="td_left"><label for="name">Name</label></td>
+                        <td class="td_right"><input type="text" name="name" id="name" placeholder="Please input your name"></td>
+                        <td class="td_r"><p style="display:none;color:red;" id="message-5"></p></td>
+                    </tr>
+
+                    <tr>
+                        <td class="td_left"><label for="tel">Phone number</label></td>
+                        <td class="td_right"><input type="text" name="tel" id="tel" placeholder="Please input your phone number"></td>
+                        <td class="td_r"><p style="display:none;color:red;" id="message-6"></p></td>
+                    </tr>
+
+                    <tr>
+                        <td class="td_left"><label>Gender</label></td>
+                        <td class="td_right">
+                            <input type="radio" name="gender" value="male"> Male
+                            <input type="radio" name="gender" value="female"> Female
+                        </td>
+                        <td class="td_r"><p style="display:none;color:red;" id="message-7"></p></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" align="center"><input type="submit" id="submit-btn" value="Submit" class="submit-btn"></td>
+                    </tr>
+                </table>
+            </form>
+
+
+    </div>
+</div>
+
+
+<hr>
+
+</body>
+</html>

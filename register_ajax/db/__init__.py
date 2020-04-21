@@ -1,24 +1,26 @@
 import sqlite3,os
+from db import search
+from flask import Flask
+import db as db
 from flask import g
+appp = Flask(__name__)
 dbpath=os.path.join(os.path.expanduser('~'),'.market')
-dbfilepath=os.path.join(dbpath,'info.db')
-imgpath=os.path.join(dbpath,'imgs')
-
+filepath=os.path.join(dbpath,'info.db')
 if not os.path.exists(dbpath):
     os.mkdir(dbpath)
-if os.path.isfile(dbfilepath):
-    file=open(dbfilepath)
+if os.path.isfile(filepath):
+    file=open(filepath)
     file.close()
-db=sqlite3.connect(dbfilepath)
+db=sqlite3.connect(filepath)
 db.cursor()
-tb=db.execute("select name from sqlite_master where type='table' order by name").fetchall()
-if ('items',) not in tb:
+t=db.execute("select name from sqlite_master where type='table' order by name")
+if 'items' not in t:
     db.execute('''
     CREATE TABLE items (
     item_id     INTEGER  PRIMARY KEY AUTOINCREMENT
                          UNIQUE
                          NOT NULL,
-    item_name   TEXT     NOT NULL,
+    name        TEXT     NOT NULL,
     seller_id   INT      REFERENCES users (id) 
                          NOT NULL,
     description TEXT     NOT NULL,
@@ -34,13 +36,13 @@ if ('items',) not in tb:
     );
     ''')
     db.commit()
-if ('users',) not in tb:
+if 'users' not in t:
     db.execute('''
     CREATE TABLE users (
         id           INTEGER   PRIMARY KEY
-                           NOT NULL
-                           UNIQUE,
-        user_name    TEXT      NOT NULL,
+                               NOT NULL
+                               UNIQUE,
+        name         TEXT      NOT NULL,
         password     TEXT      NOT NULL,
         email        TEXT      NOT NULL,
         avatar       TEXT      DEFAULT ('default_avatar.png'),
@@ -54,13 +56,11 @@ db.close()
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
-        db = g._database = sqlite3.connect(dbfilepath)
+        db = g._database = sqlite3.connect(filepath)
     return db
-def dbop(query,issearch):
-    gdb=get_db()
-    gdb.cursor()
-    if issearch:
-        return gdb.execute(query).fetchall()
-    else:
-        gdb.execute(query)
-    gdb.commit()
+
+@appp.teardown_appcontext
+def teardown_db(exception):
+    db = getattr(g, '_database', None)
+    if db is not None:
+        db.close()
