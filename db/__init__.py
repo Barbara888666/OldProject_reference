@@ -1,23 +1,18 @@
-import sqlite3,os,db.upload,db.search
+import sqlite3,os
 from flask import g
 dbpath=os.path.join(os.path.expanduser('~'),'.market')
-filepath=os.path.join(dbpath,'info.db')
+dbfilepath=os.path.join(dbpath,'info.db')
+imgpath=os.path.join(dbpath,'imgs')
+
 if not os.path.exists(dbpath):
     os.mkdir(dbpath)
-if os.path.isfile(filepath):
-    file=open(filepath)
+if os.path.isfile(dbfilepath):
+    file=open(dbfilepath)
     file.close()
-db=sqlite3.connect(filepath)
+db=sqlite3.connect(dbfilepath)
 db.cursor()
 tb=db.execute("select name from sqlite_master where type='table' order by name").fetchall()
-item=True
-user=True
-for i in tb:
-    if str(i)=="('items',)":
-        item=False
-    if str(i)=="('users',)":
-        user=False
-if item:
+if ('items',) not in tb:
     db.execute('''
     CREATE TABLE items (
     item_id     INTEGER  PRIMARY KEY AUTOINCREMENT
@@ -39,7 +34,7 @@ if item:
     );
     ''')
     db.commit()
-if user:
+if ('users',) not in tb:
     db.execute('''
     CREATE TABLE users (
         id           INTEGER   PRIMARY KEY
@@ -59,5 +54,13 @@ db.close()
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
-        db = g._database = sqlite3.connect(filepath)
+        db = g._database = sqlite3.connect(dbfilepath)
     return db
+def dbop(query,issearch):
+    gdb=get_db()
+    gdb.cursor()
+    if issearch:
+        return gdb.execute(query).fetchall()
+    else:
+        gdb.execute(query)
+    gdb.commit()
