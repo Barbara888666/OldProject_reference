@@ -1,4 +1,4 @@
-import sqlite3,os,db.upload,db.search
+import sqlite3,os
 from flask import g
 dbpath=os.path.join(os.path.expanduser('~'),'.market')
 dbfilepath=os.path.join(dbpath,'info.db')
@@ -12,14 +12,7 @@ if os.path.isfile(dbfilepath):
 db=sqlite3.connect(dbfilepath)
 db.cursor()
 tb=db.execute("select name from sqlite_master where type='table' order by name").fetchall()
-item=True
-user=True
-for i in tb:
-    if str(i)=="('items',)":
-        item=False
-    if str(i)=="('users',)":
-        user=False
-if item:
+if ('items',) not in tb:
     db.execute('''
     CREATE TABLE items (
     item_id     INTEGER  PRIMARY KEY AUTOINCREMENT
@@ -41,7 +34,7 @@ if item:
     );
     ''')
     db.commit()
-if user:
+if ('users',) not in tb:
     db.execute('''
     CREATE TABLE users (
         id           INTEGER   PRIMARY KEY

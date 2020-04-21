@@ -1,4 +1,6 @@
+
 from db import dbop
+
 def getpassword(id):
     return dbop('select password from users where users.id=%d'%(id),True)
 def idcheck(id):
