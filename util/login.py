@@ -4,12 +4,21 @@ login=Blueprint('login',__name__)
 
 @login.route('/login/',methods=['GET','POST'])
 def log():
+
     if request.method == 'GET':
         return render_template('Login.html')
     else:
-        password = request.form.get('password'),
-        studentnumber = request.form.get('studentnumber'),
-        # print(loginput)
+        logdic = dict(
+            username=request.form.get('username'),
+            password=request.form.get('password')
+        )
+        render_template('Register.html', **logdic)
+        studentnumber=logdic['username']
+        password=logdic['password']
+        print(logdic['username'])
+        print(logdic['password'])
+
+
         # 根据studentnumber在库里查找：没有 studentnumber 有studentnumber：密码
         resu = {'m': 0}
         # if(loginput['studentnumber']==12345678):result=0
