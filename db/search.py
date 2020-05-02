@@ -1,8 +1,10 @@
 import hashlib
 from db import dbop
 
-def pwcheck(id,pw):   
-    if hashlib.md5().update(pw.encode('utf-8')).hexdigest() == dbop('select password from users where users.id=%d'%(id),True):
+def pwcheck(id,pw):
+    t=hashlib.md5()
+    t.update(pw.encode(encoding='UTF-8'))
+    if t.hexdigest() == dbop('select password from users where users.id=%d'%(id),True)[0][0]:
         return True
     return False
 def idcheck(id):
