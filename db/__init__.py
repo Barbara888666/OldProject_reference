@@ -40,7 +40,6 @@ if ('users',) not in tb:
         user_name    TEXT      NOT NULL,
         password     TEXT      NOT NULL,
         email        TEXT      NOT NULL,
-        avatar       TEXT      DEFAULT ('default_avatar.png'),
         phone_number CHAR (11),
         sex          BOOLEAN,
         birth_date   DATE
@@ -61,7 +60,10 @@ def dbop(query,issearch):
     else:
         gdb.execute(query)
     gdb.commit()
-def hash(text,salt):
-    t=hashlib.md5(bytes(salt))
+def hash(text,*salt):
+    if len(salt)==0:
+        t=hashlib.md5()
+    else:
+        t=hashlib.md5(bytes(salt[0]))
     t.update(text.encode(encoding='UTF-8'))
     return t.hexdigest()
