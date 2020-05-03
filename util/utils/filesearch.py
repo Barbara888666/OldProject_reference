@@ -1,11 +1,9 @@
 import os
-from db import imgpath
-def searchimgs(path):
-    return os.listdir(path)
+from util.utils import rjson,getdir,searchimgs
+
 def searchavatar(id):
-    if isinstance(id,int):
-        id=str(id)
-    path=os.path.join(imgpath,'avatar',id)
-    if not os.path.exists(path):
-        return None
-    return searchimgs(path)
+    return searchimgs(str(id),'avatar')
+def searchalbum(id):
+    return searchimgs(str(id),'album')
+def searchitemimg(itemid):
+    return searchimgs(str(itemid),'items')
