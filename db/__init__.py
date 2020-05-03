@@ -64,3 +64,5 @@ def dbop(query,issearch):
     else:
         gdb.execute(query)
     gdb.commit()
+
+
