@@ -1,4 +1,5 @@
 from flask import Flask,render_template,g
+from os import urandom
 from util.register import register
 from util.login import login
 from util.search import search
@@ -11,6 +12,7 @@ from util.detail import detail
 from util.seller import seller
 from util.personal import personal
 app = Flask(__name__,static_url_path='',template_folder='htmls')
+app.secret_key=urandom(16)
 @app.route('/')
 def main_page():
     return render_template('main_page.html')
@@ -72,4 +74,4 @@ def teardown_db(exception):
 #     return render_template('search_web_page.html',file=file)
 
 if __name__=="__main__":
-    app.run(threaded=True)
+    app.run(threaded=True,debug=True)
