@@ -11,11 +11,9 @@ from util.emerge import emerge
 from util.detail import detail
 from util.seller import seller
 from util.personal import personal
+from util.mainpage import mainpage
 app = Flask(__name__,static_url_path='',template_folder='htmls')
 app.secret_key=urandom(16)
-@app.route('/')
-def main_page():
-    return render_template('main_page.html')
 #紧急卖卖：卖品，卖品图片，卖家；买的东西，买的描述，买家
 #网站通知：最新通知
 #分类：分类列表
@@ -32,6 +30,7 @@ app.register_blueprint(news)
 app.register_blueprint(favorites)
 app.register_blueprint(seller)
 app.register_blueprint(personal)
+app.register_blueprint(mainpage)
 @app.teardown_appcontext
 def teardown_db(exception):
     db = getattr(g, '_database', None)
