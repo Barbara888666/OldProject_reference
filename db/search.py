@@ -10,7 +10,7 @@ def pwcheck(id,pw):
 def idcheck(id):
     return dbop('select id from users where users.id=%d'%(id),True)
 def searchitems(itemname,page,*category):
-    query='''select item_id,item_name,user_name from items natural join users where items.category='''+"'"+category[0]+"'"+''' and items.item_name like '''+"'%"+itemname+"%'"+'limit 10 offset '+str(page)
+    query='''select item_id,item_name,user_name from items natural join users where items.seller_id=users.id and items.category='''+"'"+category[0]+"'"+''' and items.item_name like '''+"'%"+itemname+"%'"+'limit 10 offset '+str(page)
     return dbop(query,True)
 def searchitem(item_id):
     return dbop('select * from items where items.item_id='+item_id,True)
