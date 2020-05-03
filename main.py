@@ -14,6 +14,7 @@ from util.detail import detail
 from util.seller import seller
 from util.personal import personal
 from util.sell import sell
+from util.buy import buy
 
 app = Flask(__name__,static_url_path='',template_folder='htmls')
 app.secret_key=urandom(16)
