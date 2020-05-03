@@ -40,11 +40,11 @@ def login():
                     resul['studentnumber'] ="STUDENTNUMBER CORRECT"
                 else:
                     resul['studentnumber']="PLEASE INPUT THE TRUE STUDENTNUMBER:八位数字"
-            elif k=='name':
-                if re.search('^.{2,10}$$', dic['name']):
-                    resul['name'] ="NAME CORRECT"
-                else:
-                    resul['name'] ="PLEASE INPUT THE TRUE NAME:长度为1-10的所有字符"
+            # elif k=='name':
+            #     if re.search('^.{2,10}$$', dic['name']):
+            #         resul['name'] ="NAME CORRECT"
+            #     else:
+            #         resul['name'] ="PLEASE INPUT THE TRUE NAME:长度为1-10的所有字符"
             elif k=='tel':
                 if re.search('^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$', dic['tel']):
                     resul['tel'] ="TELEPHONE CORRECT"
