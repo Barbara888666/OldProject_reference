@@ -1,4 +1,4 @@
-import sqlite3,os
+import sqlite3,os,hashlib
 from flask import g
 dbpath=os.path.join(os.path.expanduser('~'),'.market')
 dbfilepath=os.path.join(dbpath,'info.db')
@@ -22,14 +22,11 @@ if ('items',) not in tb:
     seller_id   INT      REFERENCES users (id) 
                          NOT NULL,
     description TEXT     NOT NULL,
-    image_link  TEXT,
     added_date  DATETIME NOT NULL,
-    is_urgent   BOOLEAN  DEFAULT (false) 
-                         NOT NULL,
+    is_urgent   BOOLEAN  DEFAULT (false),
     view_time   INT      DEFAULT (0) 
                          NOT NULL,
-    category    STRING   DEFAULT unknown
-                         NOT NULL,
+    category    STRING   DEFAULT ('other'),
     price       NUMERIC
     );
     ''')
@@ -43,7 +40,6 @@ if ('users',) not in tb:
         user_name    TEXT      NOT NULL,
         password     TEXT      NOT NULL,
         email        TEXT      NOT NULL,
-        avatar       TEXT      DEFAULT ('default_avatar.png'),
         phone_number CHAR (11),
         sex          BOOLEAN,
         birth_date   DATE
@@ -64,5 +60,10 @@ def dbop(query,issearch):
     else:
         gdb.execute(query)
     gdb.commit()
-
-
+def hash(text,*salt):
+    if len(salt)==0:
+        t=hashlib.md5()
+    else:
+        t=hashlib.md5(bytes(salt[0]))
+    t.update(text.encode(encoding='UTF-8'))
+    return t.hexdigest()

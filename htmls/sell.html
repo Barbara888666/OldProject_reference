@@ -25,8 +25,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.9/js/fileinput.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.9/themes/fa/theme.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.9/js/locales/(lang).js"></script>
-    <link rel="stylesheet" href="{{url_for('static',filename='/css/sell.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='/css/sell.css')}}">
+    <!--link rel="stylesheet" href="css/sell.css"-->
 
+    <link rel="stylesheet" href="../static/css/sell.css">
 
 
 </head>
@@ -44,6 +46,12 @@
                 </p>
                 </div>
     {% endfor %}
+    {%if userid != None%}
+        <li><a id="personal" href="//127.0.0.1:5000/personal" >{{userid}}</a></li>
+    {%endif%}
+    <div class="return">
+        <p><a href= href="//127.0.0.1:5000/" class="return">Back</a></p>
+    </div>
 
 </div>
 
@@ -52,17 +60,23 @@
 <table  border="0" style="border:10px solid lavender;" class="tablemyself" >
     <tr>
         <td class="table_left" >
+                <div><label class="se_left" for="Name">Name</label>
+                    <input type="text" name="Name" class="se_right" id="Name" placeholder="Please input its Name">
+                </div>
                 <div>
                     <label class="se_left">Category</label>
                     <select name="category" class="se_right" id="category">
-                        <option value="Cloth" selected>Cloth</option>
-                        <option value="Book">Book</option>
-                        <option value="Food">Food</option>
+                        <option value="Cloth">Cloth</option>
+                        <option value="Book" selected> Book</option>
+                        <option value="Food"> Food</option>
                         <option value="Cosmetics">Cosmetics</option>
                         <option value="Commodity">Commodity</option>
                     </select>
                 </div>
-                <br>
+                <div><label class="se_left" for="price">Price</label>
+                    <input type="text" name="Price" class="se_right" id="Price" placeholder="Price">
+                    <div class="RMB">RMB</div>
+                </div>
                 <div>
                     <label class="se_left">Situation</label>
                     <select name="Situation" class="se_right" id="situation" >
@@ -72,26 +86,28 @@
                         <option value="Old">Old</option>
                     </select>
                 </div>
-                <br>
+
                 <div>
                     <label class="se_left">Time</label>
                     <br>
                     <label class="se_left"><input name="time" type="radio" value="Short term" checked/><label class="sub">Short term</label></label>
-                    <select name="short time" class="se_right" id="short">
+                    <select name="short time" class="se_right" id="short" >
+                        <option value="One day" class="emerge"><font color="#dc143c">Very Emergancy !!</font></option>
                         <option value="One day" selected>One day</option>
                         <option value="Three days">Three days</option>
                         <option value="One week">One week</option>
                     </select>
-                    <br>
+
                     <label class="se_left"><input   name="time" type="radio" value="Long term"/><label class="sub">Long term</label></label>
                     <select name="long time" class="se_right" id="long">
                         <option value="One Month" selected>One month</option>
                         <option value="Longer till sell out">Longer till sell out</option>
                     </select>
                 </div>
-                <br>
+
                 <div><label class="se_left" for="Note">Description</label>
-                    <input type="text" name="Note" class="se_right" id="Note" placeholder="Please input its features"></div>
+                    <input type="text" name="Note" class="se_right" id="Note" placeholder="Please input its features">
+                </div>
 
         </td>
 

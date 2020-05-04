@@ -3,4 +3,5 @@
 __pycache__
 .idea
 .vscode
-test.py
+*test.py
+htmls/test.html
