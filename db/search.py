@@ -16,4 +16,4 @@ def searchitemnum(itemname,*category):
     query='select count(*) from items where category='+"'"+category[0]+"'"+' and items.item_name like '+"'%"+itemname+"%'"
     return dbop(query,True)[0][0]
 def searchuser(userid):
-    return dbop('select * from users where users.id=%d'%(userid),True)
+    return dbop('select user_name,email,phone_number,sex,birth_date from users where users.id=%d'%(userid),True)
