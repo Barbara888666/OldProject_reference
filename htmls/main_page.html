@@ -13,10 +13,14 @@
     <div class="topcontent">
         <a class="title">BJUT FLEA MARKET  </a>
         <div class="headingnav">
+            {%if userid == None%}
             <ul>
                 <li><a id="login" href="//127.0.0.1:5000/login" >login</a></li>
                 <li><a id="reg" href="//127.0.0.1:5000/register">register</a></li>
             </ul>
+            {%else%}
+                <li><a id="personal" href="//127.0.0.1:5000/login" >personal</a></li>
+            {%endif%}
         </div>
         <div class="spot">
             <form>
@@ -62,7 +66,7 @@
         <div class="notice_content"> <a  id="not1" href="//127.0.0.1:5000/notice">notice contents</a></div>
     </div>
     <div class="sell_buy_inbox">
-        <div class="upload_sell"><a><p>upload sell information</p></a></div>
+        <div class="upload_sell"><a href="//127.0.0.1:5000/sell"><p>upload sell information</p></a></div>
         <div class="upload_buy"><a><p>upload buy information</p></a></div>
         <div class="information_inbox"><a href="//127.0.0.1:5000/news"><p>information inbox</p></a></div>
     </div>
