@@ -1,9 +1,9 @@
 import os
-from flask import Flask, render_template, request, flash, Blueprint
+from flask import Flask, render_template, request, flash, Blueprint,session
 
 sell=Blueprint('sell',__name__)
 @sell.route('/sell/', methods=['GET', 'POST'])
-def sell():
+def sell_item():
         if request.method == 'GET':
             return render_template('sell.html')
         else:

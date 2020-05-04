@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, flash, Blueprint
 
 buy=Blueprint('buy',__name__)
 @buy.route('/sell/', methods=['GET', 'POST'])
-def sell():
+def buy_post():
         if request.method == 'GET':
             return render_template('buy.html')
         else:
