@@ -60,6 +60,7 @@ def dbop(query,issearch):
     else:
         gdb.execute(query)
     gdb.commit()
+<<<<<<< HEAD
 def hash(text,*salt):
     if len(salt)==0:
         t=hashlib.md5()
@@ -67,3 +68,7 @@ def hash(text,*salt):
         t=hashlib.md5(bytes(salt[0]))
     t.update(text.encode(encoding='UTF-8'))
     return t.hexdigest()
+=======
+
+
+>>>>>>> 6bb184512095c8b8ee60b29e43498b39f22a0386
