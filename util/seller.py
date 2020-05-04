@@ -1,9 +1,9 @@
 from flask import Blueprint,render_template,request,session,redirect
 from db.search import searchuser
 seller=Blueprint('seller',__name__)
-@seller.route('/seller')
-def sellers():
-    t = searchuser(17372221)
+@seller.route('/seller/<int:userid>/')
+def sellers(userid):
+    t = searchuser(userid)
     username = t[0][1]
     email = t[0][2]
     phone = t[0][3]
