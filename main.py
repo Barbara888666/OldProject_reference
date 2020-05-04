@@ -15,6 +15,7 @@ from util.seller import seller
 from util.personal import personal
 from util.mainpage import mainpage
 from util.sell import sell
+from util.changeinfo import changeinfo
 from util.buy import buy
 
 app = Flask(__name__,static_url_path='',template_folder='htmls')
@@ -37,7 +38,8 @@ app.register_blueprint(seller)
 app.register_blueprint(personal)
 app.register_blueprint(mainpage)
 app.register_blueprint(sell)
-
+app.register_blueprint(buy)
+app.register_blueprint(changeinfo)
 @app.teardown_appcontext
 def teardown_db(exception):
     db = getattr(g, '_database', None)
