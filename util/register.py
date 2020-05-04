@@ -73,7 +73,7 @@ def login():
                                 and re.search('CORRECT$', resul['gender'])
                                 and re.search('CORRECT$', resul['tel'])
                                 and re.search('CORRECT$', resul['password'])
-                                and re.search('CORRECT$', resul['name'])
+                                # and re.search('CORRECT$', resul['name'])
         ): 
             resul['result'] ="sucess"
             registeraccount(int(dic.get('studentnumber')),dic.get('username'),dic.get('password'),dic.get('email'),dic.get('tel'),dic.get('gender'),None)
