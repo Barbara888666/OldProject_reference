@@ -44,6 +44,7 @@
                 </p>
                 </div>
     {% endfor %}
+    <div class="title_content">Sell</div>
 
 </div>
 
@@ -56,7 +57,7 @@
                     <label class="se_left">Category</label>
                     <select name="category" class="se_right" id="category">
                         <option value="Cloth">Cloth</option>
-                        <option value="Book"> Book</option>
+                        <option value="Book" selected> Book</option>
                         <option value="Food"> Food</option>
                         <option value="Cosmetics">Cosmetics</option>
                         <option value="Commodity">Commodity</option>
@@ -67,7 +68,7 @@
                     <label class="se_left">Situation</label>
                     <select name="Situation" class="se_right" id="situation" >
                         <option value="Completely new">Completely new</option>
-                        <option value="Nine new">Nine new</option>
+                        <option value="Nine new" selected>Nine new</option>
                         <option value="Seven new">Seven new</option>
                         <option value="Old">Old</option>
                     </select>
@@ -76,21 +77,21 @@
                 <div>
                     <label class="se_left">Time</label>
                     <br>
-                    <label class="se_left"><input name="time" type="radio" value="Short term"/><label class="sub">Short term</label></label>
-                    <select name="short time" class="se_right" id="short">
-                        <option value="One day">One day</option>
+                    <label class="se_left"><input name="time" type="radio" value="Short term" checked/><label class="sub">Short term</label></label>
+                    <select name="short time" class="se_right" id="short" >
+                        <option value="One day" selected>One day</option>
                         <option value="Three days">Three days</option>
                         <option value="One week">One week</option>
                     </select>
                     <br>
                     <label class="se_left"><input   name="time" type="radio" value="Long term"/><label class="sub">Long term</label></label>
                     <select name="long time" class="se_right" id="long">
-                        <option value="One Month">One month</option>
+                        <option value="One Month" selected>One month</option>
                         <option value="Longer till sell out">Longer till sell out</option>
                     </select>
                 </div>
                 <br>
-                <div><label class="se_left" for="Note">Note</label>
+                <div><label class="se_left" for="Note">Description</label>
                     <input type="text" name="Note" class="se_right" id="Note" placeholder="Please input its features"></div>
 
         </td>
