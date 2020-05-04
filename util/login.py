@@ -13,7 +13,6 @@ def log():
 
         if(result==0):
             resu['message']="THIS STUDENTNUMBER IS NOT EXIST"
-            # return jsonify(resu)
             return jsonify({"code":1,"message":"学号格式错误"})
         elif(result==1):
             resu['message'] = "WRONG PASSWORD OR WRONG STUDNETNUMBER"
