@@ -18,7 +18,6 @@ def log():
         resu = {'m': 0}
         if idcheck(int(studentnumber)) is None:
             resu['message']="THIS STUDENTNUMBER IS NOT EXIST"
-            # return jsonify(resu)
             return jsonify({"code":1,"message":"学号格式错误"})
         elif not pwcheck(int(studentnumber),password):
             resu['message'] = "WRONG PASSWORD OR WRONG STUDNETNUMBER"
