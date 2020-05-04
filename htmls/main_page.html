@@ -5,6 +5,7 @@
     <title>mainPage</title>
  <link rel="stylesheet"  type="text/css" href="{{ url_for('static', filename='/css/mainPageCss.css') }}">
 <!--{{ url_for('static', filename='/css/mainPageCss.css') }}-->
+<!--    <link rel="stylesheet"  type="text/css" href="../static/css/mainPageCss.css">-->
 </head>
 
 
@@ -19,7 +20,7 @@
                 <li><a id="reg" href="//127.0.0.1:5000/register">register</a></li>
             </ul>
             {%else%}
-                <li><a id="personal" href="//127.0.0.1:5000/personal" >{{userid}}</a></li>
+                <li><a id="personal" class="personal" href="//127.0.0.1:5000/personal" >{{userid}}</a></li>
             {%endif%}
         </div>
         <div class="spot">
@@ -28,8 +29,9 @@
                 <div class="button">
                     <a id="btn" href="//127.0.0.1:5000/search">search</a>
                 </div>
-         </div>
+
             </form>
+        </div>
 
         </div>
 
