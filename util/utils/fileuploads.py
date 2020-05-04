@@ -6,8 +6,8 @@ from util.utils import uploadimage,delimage
 def uploadavatar(image,id):
     rmavatar(id)
     uploadimage([image],id,'avatar',0)
-def uploaditemimg(image,itemid):
-    uploadimage(image,id,'items',*range(0,len(image)))
+def uploaditemimg(image,itemid:[int,str]):
+    uploadimage(image,itemid,'items',*range(0,len(image)))
 def uploadalbum(image,id):   
     uploadimage(image,id,'album',*range(0,len(image)))
                     
