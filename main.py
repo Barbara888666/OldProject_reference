@@ -14,8 +14,8 @@ from util.detail import detail
 from util.seller import seller
 from util.personal import personal
 from util.mainpage import mainpage
-from util.sell import sell
-from util.buy import buy
+from util.sell import sale
+from util.buy import bought
 
 app = Flask(__name__,static_url_path='',template_folder='htmls')
 app.secret_key=urandom(16)
@@ -36,7 +36,8 @@ app.register_blueprint(favorites)
 app.register_blueprint(seller)
 app.register_blueprint(personal)
 app.register_blueprint(mainpage)
-app.register_blueprint(sell)
+app.register_blueprint(sale)
+app.register_blueprint(bought)
 
 @app.teardown_appcontext
 def teardown_db(exception):

@@ -1,8 +1,8 @@
 import os
 from flask import Flask, render_template, request, flash, Blueprint,session,redirect
 
-sell=Blueprint('sell',__name__)
-@sell.route('/sell/', methods=['GET', 'POST'])
+sale=Blueprint('sale',__name__)
+@sale.route('/sell/', methods=['GET', 'POST'])
 def sell_item():
         if request.method == 'GET':
             if 'id' not in session:
