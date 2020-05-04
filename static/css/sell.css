@@ -4,6 +4,9 @@
     box-sizing: border-box;
 
 }
+.emerge{
+    color: red;
+}
 
 body{
     background-color: darkblue;
@@ -19,6 +22,12 @@ body{
     /*  margin: 0px auto;*/
     margin-left:100px;
     float: left;
+}
+.return{
+    margin-right: 50px;
+    font-size: 70px;
+    float: right;
+    margin-top:-50px;
 }
 .se_layout{
     width: 100%;
@@ -97,7 +106,6 @@ a:link,a:visited{
 }
 
 
-
 .table_left{
     width:300px;
     height: 300px;
@@ -124,9 +132,25 @@ a:link,a:visited{
     height: 100px;
     font-size: 20px;
 }
-.picccccc{
+.picccccc {
     margin-left: -200px;
     margin-right: -80px;
 }
+#Price{
+    float:right;
+    width:180px;
+    background-color:lightyellow;
+    height: 35px;
+    font-size: 20px;
+    margin-right: 70px;
+}
+.RMB{
+    float: right;
+    font-size: 25px;
+    margin-top: -50px;
+    margin-right: 10px;
+
+}
+
 
 
