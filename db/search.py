@@ -4,9 +4,7 @@ from db import dbop
 def pwcheck(id,pw):
     t=hashlib.md5()
     t.update(pw.encode(encoding='UTF-8'))
-    if t.hexdigest() == dbop('select password from users where users.id=%d'%(id),True)[0][0]:
-        return True
-    return False
+    return t.hexdigest() == dbop('select password from users where users.id=%d'%(id),True)[0][0]
 def idcheck(id):
     return dbop('select id from users where users.id=%d'%(id),True)
 def searchitems(itemname,page,orderby=None,*category):
@@ -18,4 +16,4 @@ def searchitemnum(itemname,*category):
     query='select count(*) from items where category='+"'"+category[0]+"'"+' and items.item_name like '+"'%"+itemname+"%'"
     return dbop(query,True)[0][0]
 def searchuser(userid):
-    return dbop('select id,user_name,email,phone_number,sex from users where users.id=%d'%(userid),True)
+    return dbop('select * from users where users.id=%d'%(userid),True)
