@@ -13,13 +13,10 @@ from util.emerge import emerge
 from util.detail import detail
 from util.seller import seller
 from util.personal import personal
-<<<<<<< HEAD
 from util.mainpage import mainpage
-=======
 from util.sell import sell
 from util.buy import buy
 
->>>>>>> 6bb184512095c8b8ee60b29e43498b39f22a0386
 app = Flask(__name__,static_url_path='',template_folder='htmls')
 app.secret_key=urandom(16)
 #紧急卖卖：卖品，卖品图片，卖家；买的东西，买的描述，买家
@@ -38,12 +35,9 @@ app.register_blueprint(news)
 app.register_blueprint(favorites)
 app.register_blueprint(seller)
 app.register_blueprint(personal)
-<<<<<<< HEAD
 app.register_blueprint(mainpage)
-=======
 app.register_blueprint(sell)
 
->>>>>>> 6bb184512095c8b8ee60b29e43498b39f22a0386
 @app.teardown_appcontext
 def teardown_db(exception):
     db = getattr(g, '_database', None)
