@@ -2,7 +2,7 @@
 from flask import Flask, render_template, request, flash, Blueprint,session,redirect
 from util.utils.fileuploads import uploadavatar, uploadalbum, uploaditemimg
 
-sale=Blueprint('sale',__name__)
+sale=Blueprint('sale',__name__,static_folder='static')
 @sale.route('/sell/', methods=['GET', 'POST'])
 def sell_item():
         userid = None
