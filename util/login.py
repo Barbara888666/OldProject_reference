@@ -8,9 +8,10 @@ def log():
     if request.method == 'GET':
         return render_template('Login.html')
     else:
+
         password = request.form.get('password'),
         studentnumber = request.form.get('studentnumber'),
-
+        result=0
         if(result==0):
             resu['message']="THIS STUDENTNUMBER IS NOT EXIST"
             # return jsonify(resu)
