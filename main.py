@@ -13,8 +13,8 @@ from util.emerge import emerge
 from util.detail import detail
 from util.seller import seller
 from util.personal import personal
-from util.sell import sell
-from util.buy import buy
+from util.buy import bought
+from util.sell import sale
 
 app = Flask(__name__,static_url_path='',template_folder='htmls')
 app.secret_key=urandom(16)
@@ -37,7 +37,8 @@ app.register_blueprint(news)
 app.register_blueprint(favorites)
 app.register_blueprint(seller)
 app.register_blueprint(personal)
-app.register_blueprint(sell)
+app.register_blueprint(bought)
+app.register_blueprint(sale)
 
 @app.teardown_appcontext
 def teardown_db(exception):

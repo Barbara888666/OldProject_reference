@@ -1,9 +1,10 @@
 import os
 from flask import Flask, render_template, request, flash, Blueprint
 
-buy=Blueprint('buy',__name__)
-@buy.route('/sell/', methods=['GET', 'POST'])
-def sell():
+bought=Blueprint('bought',__name__)
+
+@bought.route('/buy/', methods=['GET', 'POST'])
+def buy():
         if request.method == 'GET':
             return render_template('buy.html')
         else:
