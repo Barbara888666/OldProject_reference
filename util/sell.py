@@ -1,10 +1,10 @@
 import os
 from flask import render_template, request, flash, Blueprint
 
-sale=Blueprint('sale',__name__)
 
+sale=Blueprint('sale',__name__)
 @sale.route('/sell/', methods=['GET', 'POST'])
-def sell():
+def sell_item():
         if request.method == 'GET':
             return render_template('sell.html')
         else:
@@ -16,6 +16,7 @@ def sell():
                 long_time=request.form.get("long time"),
                 Note=request.form.get('Note'),
             )
+
             print(dic)
             f = request.files['pic']
             render_template('sell.html', **dic)
