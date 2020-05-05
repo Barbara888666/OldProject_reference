@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>sellerInformation</title>
+    <title>personalInformation</title>
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='/css/sellerInformationCss.css')}}">
 </head>
 <body>
@@ -11,7 +11,7 @@
         <a  id="h1" class="title" href="//127.0.0.1:5000/">
             BJUT FLEA MARKET
         <br/>
-            <div class="title_content">Seller Information</div></a>
+            <div class="title_content">Personal Information</div></a>
         <div class="headingnav">
             <ul>
                 <li><a id="h2">personal center</a></li>
@@ -38,7 +38,7 @@
         <div class="contact">contact information</div>
         <div class="seller_main">
             <ul>
-                <li>phone number: {{ phone }}</li>
+                <li>phone: {{ phone }}</li>
                 <li>email: {{ email }}</li>
                 <li>qq</li>
             </ul>
@@ -77,6 +77,8 @@
 <div class="change_page">
     <div class="last_page"><a> last page<a/></div>
     <div class="next_page"><a>next page<a/></div>
+    <a>edit personal information</a>
+    <a>manange products</a>
 </div>
 <div class="tail">
     <div class="tailcontent">
