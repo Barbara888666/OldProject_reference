@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends 'admin/base.html' %}
+{% import "admin/ui/admin_page.html" as pg %}
+
+{% block css %}
+
+{% endblock %}
+{% block content %}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        查询条件
+    </div>
+    <div class='panel-body'>
+        <div class="row">
+            <form role="form">
+                <div class="col-sm-6 col-md-6 col-lg-4">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">查找</div>
+                            <input class="form-control" type="email">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <hr class="mt5 mb15">
+                    <button type="submit" class="king-btn king-info">查询</button>
+                    <a class="king-btn king-success" href="{{ url_for('admin.account_add') }}">添加账号</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<!---->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        带边框的表格
+    </div>
+    {% for msg in get_flashed_messages(category_filter=["ok"]) %}
+    <div class="king-notice2 king-notice-success notice-borders">
+        <i class="fa fa-check-circle"></i>
+        <div class="notice-text">
+            <p>{{ msg }}</p>
+        </div>
+    </div>
+    {% endfor %}
+    <div class='panel-body'>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                <tr>
+                    <th>名称</th>
+                    <th>网站/IP</th>
+                    <th>用户名</th>
+                    <th>密码</th>
+                    <th>备注</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for v in page_data.items %}
+                <tr>
+                    <td>{{ v.name }}</td>
+                    <td>{{ v.website }}</td>
+                    <td>{{ v.username }}</td>
+                    <td>{{ v.pwd }}</td>
+                    <td>{{ v.comment }}</td>
+                    <td>
+                        <button type="submit" class="king-btn king-warning">编辑</button>
+                        <a href="{{ url_for('admin.account_del', id=v.id) }}" type="submit"
+                           class="king-btn king-danger">删除</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                <tfoot>
+                <tr>
+                    <td colspan="6">
+                        <div class="pagination-info pull-left">共有{{ page_data.total }}条，每页显示：{{ page_data.per_page }}条
+                        </div>
+                        <div class="pull-right king-page-box">
+                            {{ pg.page(page_data, 'admin.account_list') }}
+                        </div>
+                    </td>
+                </tr>
+                </tfoot>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</div>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}
+</body>
+</html>

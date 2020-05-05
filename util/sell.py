@@ -33,11 +33,12 @@ def sell_item():
             userid = None
             if 'id' in session:
                 userid = session['id']
+            d=uploaditem(dic['Name'],int(userid),dic['Note'],dic['Category'],float(dic['Price']))
             if(f.filename!=''):
-                uploaditemimg(f)
-            uploaditem(dic['Name'],userid,dic['Note'],dic['Category'],dic['Price'],dic['time'])
+                uploaditemimg([f],str(d))
+            
             flash('PLEASE INPUT ALL!')
-            return render_template('sell.html')
+            return redirect('/')
 
 
 

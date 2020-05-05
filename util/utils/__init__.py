@@ -5,7 +5,7 @@ from db import imgpath,hash
 def uploadimage(image:list,id,des,*seq):
     tid=id
     
-    if isinstance(id,int):
+    if not isinstance(id,str):
         tid=str(id)
     
     rpath=path.join(imgpath,des,tid)
