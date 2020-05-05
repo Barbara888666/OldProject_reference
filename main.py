@@ -80,6 +80,8 @@ def teardown_db(exception):
 #     #由后端传送文件的示范
 #     file="/images/test.jpg"
 #     return render_template('search_web_page.html',file=file)
-
+@app.route('/base/')
+def list():
+    return render_template('base.html')
 if __name__=="__main__":
     app.run(threaded=True,debug=True)
