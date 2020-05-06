@@ -27,7 +27,7 @@
 
     <div class="production_list">
         <div id="listname">production list</div>
-    {{ item((url_for('static',filename='images/test.jpg')),'detail','productname','category') }}
+{#    {{ item((url_for('static',filename='images/test.jpg')),'detail','productname','category') }}#}
     {% set i=0 %}
       {% for i in range(0,7) %}
         {{ item((url_for('static',filename='images/test.jpg')),'detail','productname','category') }}
