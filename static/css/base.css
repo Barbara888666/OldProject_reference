@@ -57,6 +57,7 @@ a{
 a:hover,a:active{
     color: red;
 }
+
 #login{
     color: #FFD026;
 }
@@ -65,6 +66,12 @@ a:hover,a:active{
 }
 #personal{
     color: #FFD026;
+}
+#news{
+      color: #FFD026;
+}
+#upload{
+      color: #FFD026;
 }
 #btn{
     color: white;
