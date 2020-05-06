@@ -23,8 +23,6 @@
                 var studentnumber = studentnumberInput.val();
                 var telInput = $("input[name='tel']");
                 var tel = telInput.val();
-                var nameInput = $('input[name="name"]');
-                var name = nameInput.val();
                 var genderInput = $("input[name='gender']");
                 var gender = genderInput.val();
                 var emailInput = $("input[name='email']");
@@ -36,7 +34,6 @@
                         'studentnumber': studentnumber,
                         'password': password,
                         'tel':tel,
-                        'name':name,
                         'gender':gender,
                         'email':email,
                     },
@@ -62,10 +59,6 @@
                         $("#message-4").html(message4);
                         $("#message-4").show();
 
-                        var message5 = data['name'];
-
-                        $("#message-5").html(message5);
-                        $("#message-5").show();
 
                         var message6 = data['tel'];
 
@@ -80,7 +73,9 @@
                          // {#if ('CORRECT$'){//根据返回值进行跳转#}
                          // {#    window.location.href = '/log/';#}
                         var message8 = data['result'];
-                            if (message8=="sucess"){window.location.href='/login/'}
+                            if (message8=="success"){
+                                window.location.href='/login/';
+                            }
 
 
                         console.log(data);
@@ -133,12 +128,6 @@
                         <td class="td_right"><input type="email" name="email" id="email" placeholder="Please enter email address"></td>
                         <td class="td_r"><p style="display:none;color:red;" id="message-4"></p></td>
                     </tr>
-
-<!--                    <tr>-->
-<!--                        <td class="td_left"><label for="name">Name</label></td>-->
-<!--                        <td class="td_right"><input type="text" name="name" id="name" placeholder="Please input your name"></td>-->
-<!--                        <td class="td_r"><p style="display:none;color:red;" id="message-5"></p></td>-->
-<!--                    </tr>-->
 
                     <tr>
                         <td class="td_left"><label for="tel">Phone number</label></td>

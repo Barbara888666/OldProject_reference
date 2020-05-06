@@ -61,8 +61,20 @@ a:hover,a:active{
     color: #FFD026;
 }
 #personal{
-    color: #FFD026;
+    background-color: darkblue;
+    border: wheat 5px;
+    height: 80px;
+    width: 130px;
+    color: coral;
+    float: right;
+    margin-right: 50px;
+    margin-top:-40px;
+    font-size: 30px;
+    padding-top: 50px;
 }
+
+
+
 #btn{
     color: white;
     text-align: center;
@@ -73,7 +85,7 @@ a:hover,a:active{
     width: 170px;
     height: 30px;
     position: relative;
-    margin-right: 100px;
+    margin-right: 200px;
     display: inline-block;
 }
 .button{

@@ -15,7 +15,6 @@ def login():
             username=request.form.get('username'),
             password=request.form.get('password'),
             studentnumber=request.form.get('studentnumber'),
-            name=request.form.get('name'),
             tel=request.form.get('tel'),
             gender=request.form.get('gender'),
             email=request.form.get('email')
@@ -37,19 +36,16 @@ def login():
                     resul['password'] ="PASSWORD CORRECT"
                 else:
                     resul['password'] ="PLEASE INPUT THE TRUE PASSWORD:以字母开头，长度在6~18之间，只能包含字母、数字和下划线"
-            if k=='studentnumber':
+            elif k=='studentnumber':
                 if re.search('^\d{8}$', dic['studentnumber']):
-                    if idcheck(int(dic['studentnumber']))!=[]:
-                        resul['studentnumber'] ='THIS USER IS REGISTERED'
+                    t=idcheck(int(dic.get('studentnumber')))
+                    if len(t)!=0:
+                        resul['studentnumber'] ="This ID has been used by someone else."
+                        print('id duped')
                     else:
                         resul['studentnumber'] ="STUDENTNUMBER CORRECT"
                 else:
                     resul['studentnumber']="PLEASE INPUT THE TRUE STUDENTNUMBER:八位数字"
-            # elif k=='name':
-            #     if re.search('^.{2,10}$$', dic['name']):
-            #         resul['name'] ="NAME CORRECT"
-            #     else:
-            #         resul['name'] ="PLEASE INPUT THE TRUE NAME:长度为1-10的所有字符"
             elif k=='tel':
                 if re.search('^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$', dic['tel']):
                     resul['tel'] ="TELEPHONE CORRECT"
@@ -73,9 +69,8 @@ def login():
                                 and re.search('CORRECT$', resul['gender'])
                                 and re.search('CORRECT$', resul['tel'])
                                 and re.search('CORRECT$', resul['password'])
-                                # and re.search('CORRECT$', resul['name'])
         ): 
-            resul['result'] ="sucess"
+            resul['result'] ="success"
             registeraccount(int(dic.get('studentnumber')),dic.get('username'),dic.get('password'),dic.get('email'),dic.get('tel'),dic.get('gender'),None)
         return jsonify(resul)
 
