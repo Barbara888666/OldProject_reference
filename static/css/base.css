@@ -44,12 +44,15 @@ padding: 0px;}
     float: right;
     display: inline;
 }
-a:link,a:visited{
+a{
+    text-decoration: none;
+}
+.top.tail a:link,a:visited{
     font-weight: bold;
-    color: black;
+    color: white;
     text-align: center;
     padding:6px;
-    text-decoration: none;
+
 }
 a:hover,a:active{
     color: red;
@@ -120,5 +123,10 @@ form input{
     display: inline;
     padding-left: 60px;
     margin-right: 10px;
+
+}
+.body{
+    height: 1000px;
+    width: 100%;
 
 }
