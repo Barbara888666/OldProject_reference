@@ -6,7 +6,10 @@ padding: 0px;}
     height: 100px;
     background-color:black ;
 }
-
+.title_content{
+    font-size: 15px;
+    color: #8e61f8;
+}
 .title{
     color:aliceblue;
     font-size: 30px;
