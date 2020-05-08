@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% from 'macro.html' import contents %}
+{% block title %}search page
+{% endblock %}
+{% block pagename %}search
+{% endblock %}
+{% block headlink %}
+     <link rel="stylesheet" type="text/css" href="    {{ url_for('static', filename='/css/searchtest.css') }}">
+{% endblock %}
+{% block body %}
+
+        <div class="search"></div>
+        <div class="bodycontent">
+            <div class="classification_board">
+                <div class="classification">
+                    <h3>CLASSIFICATION</h3>
+                    <div class="classification_content">
+                        <a id="1"><p>food</p></a>
+                        <a><p>clothes</p></a>
+                        <a><p>shoes</p></a>
+                        <a><p>bag</p></a>
+                        <a><p>book</p></a>
+                        <a><p>electronic product</p></a>
+                    </div>
+                </div>
+            </div>
+            <div class="specificcontent">
+                {% set i=0 %}
+                {% for i in range(0,5) %}
+                    {{ contents((url_for('static',filename='images/test.jpg')),'itemname','name','high','description') }}
+                {% endfor %}
+
+            </div>
+        </div>
+
+    <div class="order_menu">
+        <script src="/js/jquery-3.4.1.min.js"></script>
+        <ul>
+            <li class="menu_main"><a href="#">change order</a>>
+                <ul>
+                    <li><a href="#">order by name</a></li>
+                    <li><a href="#">order by seller credibility</a></li>
+                    <li><a href="#">order by user favorites</a></li>
+                </ul>
+            </li>
+        </ul>
+        <script src="/js/searchWebPage.js"></script>
+    </div>
+    <div class="change_page">
+        <div class="last_page"><a> last page<a/></div>
+        <div class="next_page"><a>next page<a/></div>
+    </div>
+{% endblock %}
