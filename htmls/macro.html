@@ -1,0 +1,27 @@
+{% macro item(img,detail,productname,category) %}
+    <div class="list_content">
+        <img src="{{ img }}" height="100" width="100"/>
+        <div class="product_name"><a href="{{ detail }}">{{ productname }}</a></div>
+        <div class="product_classifiction">{{ category }}</div>
+    </div>
+{% endmacro %}
+
+
+{% macro contents(img,itemname,name,high,description) %}
+<div class="content">
+    <img src="{{ img }}" height="50" width="50"/>
+    <div class="contents">
+        <a href="//127.0.0.1:5000/detail/">
+            <div class="name"><h3>{{ itemname }}</h3></div>
+        </a>
+        <div class="seller">seller:</div>
+        <div class="sellername"><a href="//127.0.0.1:5000/testmain/">{{ name }}</a></div>
+        <br/>
+        <div class="credibility">Seller credibility:</div>
+        <div class="credibility_content"><a>{{ high }}</a></div>
+        <br/>
+        <div class="description">product description:</div>
+        <div class="descriptions">{{ description }}</div>
+    </div>
+</div>
+{% endmacro %}
