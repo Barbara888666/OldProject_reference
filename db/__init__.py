@@ -1,6 +1,6 @@
 import sqlite3,os,hashlib
 from flask import g
-from os import urandom,path
+from os import urandom,path,remove
 dbpath=os.path.join(os.path.expanduser('~'),'.market')
 dbfilepath=os.path.join(dbpath,'info.db')
 imgpath=os.path.join(dbpath,'imgs')
@@ -198,17 +198,27 @@ def hash(text,*salt):
         t=hashlib.md5(bytes(salt[0]))
     t.update(text.encode(encoding='UTF-8'))
     return t.hexdigest()
-def uploadimgs(image):
+def uploadimgs(image,des,id):
     if not isinstance(image,list):
         image=[image]
     r=[]
+    t=path.join(imgpath,des,id)
     for t in image:
-        s=t.contetn_type.split('.')[-1]
+        s=t.content_type.split('.')[-1]
         n=hash(str(urandom(16),encoding="UTF-8"))+'.'+s
-        p=path.join(imgpath,n)
+        p=path.join(p,n)
         if not path.exists(p):
             with open(p,'w') as a:
                 pass
         image.save(p)
         r.append(p)
     return r #返回有被添加文件的名字的表
+def delimgs(*imgpath):
+    err=[]
+    for t in imgpath:
+        if path.exists(t):
+            remove(t)
+            continue
+        err.append(t)
+    if err!=[]:
+        return err
