@@ -1,0 +1,114 @@
+a:link a:visited{
+    color: #8e61f8;
+}
+.classification_board{
+    height: 1000px;
+    width: 25%;
+    background-color: white;
+    padding-right: 2px;
+    float: left;
+    margin-left: 100px;
+}
+.classification{
+    padding:30px;
+    width: auto;
+    height: auto;
+
+}
+.classification h3 {
+    font-size: 30px;
+
+}
+.hr{
+    float: left;
+    margin-left: 400px;
+    margin-top: 10px;
+    width:2px;
+    height:800px;
+}
+.classification_content{
+    margin-top:20px;
+    margin-bottom: 20px;
+    line-height: 50px;
+    color: slateblue;
+}
+
+
+.specificcontent{
+    width: 45%;
+    height: 1000px;
+    float: left;
+
+}
+.content{
+
+    height: 186px;
+    width: 650px;
+    margin: 10px ;
+    border-width: 1px;
+    border-style: dashed;
+    border-top-style: none;
+    border-left-style: none;
+    border-right-style: none;
+}
+.content img{
+    height: 90px;
+    width: 90px;
+    float: left;
+    margin: 10px;
+}
+.contents{
+    float: left;
+    margin: 10px;
+
+}
+.seller{
+    float: left;
+      margin-right: 10px;
+}
+.sellername{
+    float: left;
+    color: slateblue;
+}
+.credibility{
+    float: left;
+}
+.credibility_content{
+    float: left;
+    margin-left: 10px;
+    color: slateblue;
+}
+.descriptions{
+    color:slateblue;;
+}
+.order_menu{
+    float: left;
+}
+.order_menu ul,li{
+    list-style: none;
+}
+.menu_main a{
+    padding-left: 10px;
+    padding-top: 5px;
+    display: block;
+    color: white;
+}
+.menu_main li a{
+    color: slateblue;
+}
+.menu_main{
+    background-color:slateblue;
+
+    float: left;
+}
+.menu_main li{
+    background-color:gainsboro;
+}
+.menu_main ul{
+    display: none;
+}
+.change_page{
+    float: left;
+    margin-top: 800px;
+    line-height: 60px;
+}

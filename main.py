@@ -16,6 +16,7 @@ from util.personal import personal
 from util.mainpage import mainpage
 from util.sell import sale
 from util.buy import bought
+# from util.testmain import tests
 
 app = Flask(__name__,static_url_path='',template_folder='htmls')
 app.secret_key=urandom(16)
@@ -38,7 +39,7 @@ app.register_blueprint(personal)
 app.register_blueprint(mainpage)
 app.register_blueprint(sale)
 app.register_blueprint(bought)
-
+# app.register_blueprint(tests)
 @app.teardown_appcontext
 def teardown_db(exception):
     db = getattr(g, '_database', None)
@@ -79,6 +80,13 @@ def teardown_db(exception):
 #     #由后端传送文件的示范
 #     file="/images/test.jpg"
 #     return render_template('search_web_page.html',file=file)
+@app.route('/base/')
+def list():
+    return render_template('base.html')
 
+# @app.route('/testmain/')
+# def test():
+#     return  render_template('maintest.html')
 if __name__=="__main__":
     app.run(threaded=True,debug=True)
+

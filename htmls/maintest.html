@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% from 'macro.html' import item %}
+{% block title %}personal information
+{% endblock %}
+{% block pagename %}personal information
+{% endblock %}
+{% block headlink %}
+     <link rel="stylesheet" type="text/css" href="    {{ url_for('static', filename='/css/maintest.css') }}">
+
+{% endblock %}
+{% block body %}
+    <div class="seller_information">
+        <img src="{{ img }}" height="100" width="100"/>
+        <div class="sellername">{{ username }}</div>
+        <div class="seller_credibility">credibility</div>
+        <div class="introduction">introduction</div>
+        <div class="contact">contact information</div>
+        <div class="seller_main">
+            <ul>
+                <li>phone: {{ phone }}</li>
+                <li>email: {{ email }}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="album">
+     <img src="{{ album }}" height="200" width="200">
+    {% for album in range(0,5) %}
+    <img src="{{ url_for('static',filename='images/test.jpg')  }}"height="200" width="200">
+    {% endfor %}
+    </div>
+
+    <div class="production_list">
+        <div id="listname">production list</div>
+{#    {{ item((url_for('static',filename='images/test.jpg')),'detail','productname','category') }}#}
+    {% set i=0 %}
+      {% for i in range(0,7) %}
+        {{ item((url_for('static',filename='images/test.jpg')),'detail','productname','category') }}
+      {% endfor %}
+    </div>
+{% endblock %}
