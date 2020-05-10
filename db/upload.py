@@ -202,3 +202,21 @@ def sendchat(srcid:[int,str],desid:[int,str],content:str,images='null'):
                   );
     '''%(srcid,desid,content,getctime(),r),False)
 
+def sendreport(targetid:str,typen,typeid:str,reason):
+    q='''insert into %s (%s,report_reason) values (%s,%s)'''%(typen,typeid,targetid,reason)
+    dbop(q,False)
+
+#上传用户举报内容
+#@param targetid: 被举报用户的id
+#@param reason: 理由
+def senduserreport(targetid:[int,str],reason:str):
+    sendreport(targetid,'user_reports','target_id',reason)
+
+#举报物品，参照举报用户
+def senditemreport(targetid:[int,str],reason:str):
+    sendreport(targetid,'item_reports','item_id',reason)
+
+#举报回复，参照举报用户
+def sendreplyreport(targetid:[int,str],reason:str):
+    sendreport(targetid,'reply_reports','target_reply',reason)
+
