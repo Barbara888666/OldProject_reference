@@ -1,10 +1,10 @@
 import hashlib
-from db import dbop
+from db import dbop,hash
 
 def pwcheck(id,pw):
-    t=hashlib.md5()
-    t.update(pw.encode(encoding='UTF-8'))
-    return t.hexdigest() == dbop('select password from users where users.id=%d'%(id),True)[0][0]
+    r=dbop('select password,salt from users where users.id=%d'%(id),True)[0]
+    t=hash(pw,r[1])
+    return t == r[0]
 def idcheck(id):
     return dbop('select id from users where users.id=%d'%(id),True)
 # 输入：可选项：物品名, 类别，页面，排序选项（格式：“{列名称：asc/desc}”,列名称请见名为items的table）

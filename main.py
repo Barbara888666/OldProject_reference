@@ -1,6 +1,6 @@
 from flask import Flask,render_template,g
 from os import urandom
-
+from db import init
 
 from util.register import register
 from util.login import login
@@ -81,4 +81,5 @@ def teardown_db(exception):
 #     return render_template('search_web_page.html',file=file)
 
 if __name__=="__main__":
+    init()
     app.run(threaded=True,debug=True)
