@@ -47,12 +47,10 @@ def wholikeshim(user_id):
 def searchreplies(item_id):
     return dbop('select user_name,user_id,reply_content,added_date from replies natural join users where users.id=replies.user_id and replies.item_id='+item_id,True)
 #输入回复id，返回该用户名字与id，所回复项目的名字与id,以及添加该回复的日期
-def searchreply_imgs(reply_id):
-    return dbop('select * from reply_imgs where reply_imgs.reply_id='+reply_id,True)
+def searchreply_imgs(item_id):
+    return dbop('select user_name,user_id,item_name,seq from reply_imgs natural join items natural join users where item_id=reply_imgs.item_id and users.id=items.item_id and items.item_id='+item_id,True)
 #输入回复id,返回该回复中的图片以及图片所对于的顺序
-def searchchat(chat_id):
-    return dbop('select * from chat where chat.chat_id='+chat_id,True)
-#输入聊天id，返回该聊天的寄件人和收件人id，以及内容和发送时间
+
 
 def searchreport(userid,itype,typeid):
     return dbop('select * from '+itype+' where '+typeid+'='+userid)
@@ -76,3 +74,6 @@ def searchbanneduser():
 def checkifbanned(userid:[int,str]):
     userid=str(userid)
     return dbop('select * from banned_user where user_id='+userid+' and unban_date>'+getctime().split(' ')[0],True)!=[]
+def searchchat(user_id_1,user_id_2):
+    return dbop('select content and send_time from chat where chat.sender.id='+user_id_1+' and chat.receiver.id='+user_id_2,True)
+#输入聊天id，返回该聊天的寄件人和收件人id，以及内容和发送时间
