@@ -1,5 +1,5 @@
 import hashlib
-from db import dbop,hash
+from db import dbop,hash,getctime
 
 def pwcheck(id,pw):
     r=dbop('select password,salt from users where users.id=%d'%(id),True)[0]
@@ -53,3 +53,26 @@ def searchreply_imgs(reply_id):
 def searchchat(chat_id):
     return dbop('select * from chat where chat.chat_id='+chat_id,True)
 #输入聊天id，返回该聊天的寄件人和收件人id，以及内容和发送时间
+
+def searchreport(userid,itype,typeid):
+    return dbop('select * from '+itype+' where '+typeid+'='+userid)
+
+#返回所有关于用户举报的内容
+def searchuserreport(userid):
+    return searchreport(userid,'user_reports','target_id')
+
+#返回所有关于物品的举报内容
+def searchitemreport(itemid):
+    return searchreport(itemid,'item_reports','item_id')
+
+#返回所有关于回复的举报内容
+def searchreplyreport(rid):
+    return searchreport(rid,'reply_reports','target_reply')
+
+def searchbanneduser():
+    return dbop('select * from banned_user',True)
+
+#输入用户id检验是否被ban
+def checkifbanned(userid:[int,str]):
+    userid=str(userid)
+    return dbop('select * from banned_user where user_id='+userid+' and unban_date>'+getctime().split(' ')[0],True)!=[]
