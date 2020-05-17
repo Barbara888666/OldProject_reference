@@ -220,3 +220,12 @@ def senditemreport(targetid:[int,str],reason:str):
 def sendreplyreport(targetid:[int,str],reason:str):
     sendreport(targetid,'reply_reports','target_reply',reason)
 
+def likecategory(srcid:[int,str],category='other'):
+    strid = str(srcid)
+    q='''insert into likes_category (self_id,category) values (%s,%s );'''%(scrid,category)
+    dbop(q,False)
+
+def unlikecategory(srcid:[int,str],category='other'):
+    strid = str(srcid)
+    dbop('delete from likes_category where self_id=' + srcid + ' and category=' + category)
+
