@@ -7,12 +7,13 @@
 	<body>
 
 <div class="product_information">
-    <img src="../static/images/test.jpg" height="100" width="100"/>
-    <p>product name</p>
-    <a>classification</a>
-    <p>description</p>
-    <a>seller name</a>
-    <input type="button" value="like">
+    {%if itemimgs!=None%}
+    <img src="{{itemimgs}}" height="100" width="100"/>
+    {%endif%}
+    <p>{{name}}</p>
+    <a>{{category}}</a>
+    <p>{{description}}</p>
+    <a>{{seller_name}}</a>
 </div>
     </body>
 </html>

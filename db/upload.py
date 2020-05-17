@@ -59,10 +59,11 @@ def uploadalbum(userid:[int,str],images,*seq):
 
 def uploaditemimg(itemid:str,imgs):
     r=[None]
-    if imgs!=[None]:
+    if imgs!=None:
         r=uploadimgs(imgs,'items',itemid)
+        imgs=[imgs]
     for t,n in zip(r,range(0,len(imgs))):
-        dbop('''
+        q='''
         INSERT INTO item_imgs (
                           item_id,
                           img_name,
@@ -73,7 +74,8 @@ def uploaditemimg(itemid:str,imgs):
                           '%s',
                           %d
                       );
-        '''%(itemid,r,n),False)
+        '''%(itemid,t,n)
+        dbop(q,False)
 
 #删除对应的相册图片，基于文件的顺序
 #@param userid:用户id
@@ -111,8 +113,7 @@ def uploaditem(name:str,sellerid:[int,str],description:str,category='other',pric
     q='''INSERT INTO items (item_name,seller_id,description,added_date,is_sell,view_time,category,price,situation)VALUES 
     ('%s',%d,'%s','%s','%s',0,'%s',%f,%d);'''%(name,sellerid,description,t,issell,category,p,s)
     r=dbop(q,False,'items')
-    if image!=None:
-        uploaditemimg(str(r),image)
+    uploaditemimg(str(r),image)
 
 #删除物品
 #@param itemid:物品id

@@ -235,15 +235,16 @@ def uploadimgs(image,des,tid):
     if not isinstance(image,list):
         image=[image]
     r=[]
-    t=path.join(imgpath,des,tid)
+    fdir=path.join(imgpath,des,tid)
     for t in image:
-        s=t.content_type.split('.')[-1]
-        n=hash(str(urandom(16),encoding="UTF-8"))+'.'+s
-        p=path.join(p,n)
-        if not path.exists(p):
-            with open(p,'w') as a:
-                pass
-        image.save(p)
+        s=t.filename.split('.')[-1]
+        n=hash(getsalt())+'.'+s
+        p=path.join(fdir,n)
+        if not path.exists(fdir):
+            os.makedirs(fdir)
+            a=open(p,'w')
+            a.close()
+        t.save(p)
         r.append(n)
     return r #返回有被添加文件的名字的表
 def delimgs(*imgpath):
