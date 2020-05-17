@@ -197,6 +197,17 @@ CREATE TABLE reply_imgs (
 );
 ''')
         db.commit()
+    if ('notifications',) not in tb:
+        db.execute('''
+        CREATE TABLE notifications (
+    noti_id     INT  PRIMARY KEY AUTOINCREMENT
+                          NOT NULL,
+     noti_type  STRING   DEFAULT ('other'),
+     user_id    INT  REFERENCES users (id)  NOT NULL
+     seen       BOOLEAN  DEFAULT(false)          
+);
+''')
+        db.commit()
     if ('banned_user',) not in tb:
         db.execute('''
         CREATE TABLE banned_user (
