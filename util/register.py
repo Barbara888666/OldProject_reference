@@ -1,7 +1,6 @@
 import re
 
 from flask import Blueprint, render_template, request, jsonify
-import db
 from db.search import idcheck
 from db.upload import registeraccount
 register=Blueprint('register',__name__)
