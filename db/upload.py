@@ -103,12 +103,11 @@ def uploaditem(name:str,sellerid:[int,str],description:str,category='other',pric
         s=2
     elif situation=='Left over':
         s=3
-    q='''INSERT INTO items (item_name,seller_id,description,added_date,is_urgent,view_time,category,price,situation)VALUES 
+    q='''INSERT INTO items (item_name,seller_id,description,added_date,is_sell,view_time,category,price,situation)VALUES 
     ('%s',%d,'%s','%s','%s',0,'%s',%f,%d);'''%(name,sellerid,description,t,issell,category,p,s)
-    dbop(q,False)
+    r=dbop(q,False,'items')
     if image!=None:
-        r=dbop('select count(*) form items;',True)[0][0]
-        uploaditemimg(str(sellerid),image)
+        uploaditemimg(r,image)
 
 #删除物品
 #@param itemid:物品id
@@ -139,9 +138,9 @@ def uploadreply(item_id:[int,str],userid:[int,str],content:[str],image=None):
                         '%s',
                         '%s'
                     );'''%(item_id,userid,content,getctime())
-    dbop(q,False)
+    r=dbop(q,False,'replies')
     if image!=None:
-        r=dbop('select count(*) form replies;',True)[0][0]
+        
         a=uploadimgs(image,'replies',r)
         for t,n in zip(a,range(0,len(a))):
             dbop('''
@@ -215,14 +214,12 @@ def senduserreport(targetid:[int,str],reason:str):
 #举报物品，参照举报用户
 def senditemreport(targetid:[int,str],reason:str):
     sendreport(targetid,'item_reports','item_id',reason)
-
-#举报回复，参照举报用户
-def sendreplyreport(targetid:[int,str],reason:str):
+def sendreplyreport(targetid:[int,str],reason:str): 
     sendreport(targetid,'reply_reports','target_reply',reason)
 
 def likecategory(srcid:[int,str],category='other'):
     strid = str(srcid)
-    q='''insert into likes_category (self_id,category) values (%s,%s );'''%(scrid,category)
+    q='''insert into likes_category (self_id,category) values (%s,%s );'''%(srcid,category)
     dbop(q,False)
 
 def unlikecategory(srcid:[int,str],category='other'):

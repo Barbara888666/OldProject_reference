@@ -119,17 +119,7 @@ CREATE TABLE chats (
                   NOT NULL
 );
     ''')
-    if ('likes_category',) not in tb:
-        db.execute('''
-    CREATE TABLE likes (
-    self_id   INT PRIMARY KEY
-                     REFERENCES users (id) ON DELETE CASCADE
-                    NOT NULL,
-    category STRING REFERENCES items (category) ON DELETE CASCADE
-                          NOT NULL
-);
-    ''')
-        db.commit()
+
     if ('replies',) not in tb:
         db.execute('''
 CREATE TABLE replies (
@@ -200,9 +190,9 @@ CREATE TABLE reply_imgs (
     if ('notifications',) not in tb:
         db.execute('''
         CREATE TABLE notifications (
-    noti_id     INT  PRIMARY KEY AUTOINCREMENT
+    noti_id     INTEGER  PRIMARY KEY AUTOINCREMENT
                           NOT NULL,
-     user_id    INT  REFERENCES users (id)  NOT NULL
+     user_id    INT  REFERENCES users (id)  NOT NULL,
      seen       BOOLEAN  DEFAULT(false)          
 );
 ''')
@@ -226,7 +216,7 @@ def get_db():
     if db is None:
         db = g._database = sqlite3.connect(dbfilepath)
     return db
-def dbop(query,issearch):
+def dbop(query,issearch,table:str=''):
     gdb=get_db()
     gdb.cursor()
     if issearch:
@@ -234,6 +224,8 @@ def dbop(query,issearch):
     else:
         gdb.execute(query)
     gdb.commit()
+    if table!='':
+        return dbop('select last_insert_rowid() from '+table,True)[0][0]
 def hash(text,*salt):
     if len(salt)==0:
         t=hashlib.md5()
