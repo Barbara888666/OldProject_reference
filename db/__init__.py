@@ -202,7 +202,6 @@ CREATE TABLE reply_imgs (
         CREATE TABLE notifications (
     noti_id     INT  PRIMARY KEY AUTOINCREMENT
                           NOT NULL,
-     noti_type  STRING   DEFAULT ('other'),
      user_id    INT  REFERENCES users (id)  NOT NULL
      seen       BOOLEAN  DEFAULT(false)          
 );
