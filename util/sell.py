@@ -1,8 +1,6 @@
 
 from flask import Flask, render_template, request, flash, Blueprint,session,redirect
-from util.utils.fileuploads import uploadavatar, uploadalbum, uploaditemimg
 from db.upload import uploaditem
-
 sale=Blueprint('sale',__name__,static_folder='static')
 @sale.route('/sell/', methods=['GET', 'POST'])
 def sell_item():
@@ -33,10 +31,9 @@ def sell_item():
             userid = None
             if 'id' in session:
                 userid = session['id']
-            d=uploaditem(dic['Name'],int(userid),dic['Note'],dic['Category'],float(dic['Price']))
-            if(f.filename!=''):
-                uploaditemimg([f],str(d))
-            
+            if(f.filename==''):
+                f=None
+            uploaditem(dic['Name'],userid,dic['Note'],dic['Category'],float(dic['Price']),True,dic['Situation'],f)
             flash('PLEASE INPUT ALL!')
             return redirect('/')
 

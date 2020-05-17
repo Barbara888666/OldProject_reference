@@ -1,6 +1,6 @@
 from flask import Flask,render_template,g
 from os import urandom
-
+from db import init
 
 from util.register import register
 from util.login import login
@@ -88,5 +88,6 @@ def list():
 # def test():
 #     return  render_template('maintest.html')
 if __name__=="__main__":
+    init()
     app.run(threaded=True,debug=True)
 

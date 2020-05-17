@@ -27,7 +27,7 @@
             <div class="specificcontent">
                 {% set i=0 %}
                 {% for i in range(0,5) %}
-                    {{ contents((url_for('static',filename='images/test.jpg')),'itemname','name','high','description') }}
+                    {{ contents((url_for('static',filename='images/test.jpg')),itemname,name,high,'description') }}
                 {% endfor %}
 
             </div>
