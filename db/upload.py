@@ -43,6 +43,9 @@ def uploadavatar(id:[int,str],avatar):
     r=uploadimgs(avatar,'avatar',str(id))[0]
     dbop('update users set avatar_name='+r+' where id='+str(id),False)
 
+def addviewtime(itemid:[int,str]):
+    dbop('update items set view_time=view_time+1 where item_id='+itemid,False)
+
 
 def uploadalbum(userid:[int,str],images,*seq):
     """
