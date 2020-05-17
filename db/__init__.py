@@ -119,6 +119,16 @@ CREATE TABLE chats (
                   NOT NULL
 );
     ''')
+    if ('likes_category',) not in tb:
+        db.execute('''
+    CREATE TABLE likes (
+    self_id   INT PRIMARY KEY
+                     REFERENCES users (id) ON DELETE CASCADE
+                    NOT NULL,
+    category STRING REFERENCES items (category) ON DELETE CASCADE
+                          NOT NULL
+);
+    ''')
         db.commit()
     if ('replies',) not in tb:
         db.execute('''

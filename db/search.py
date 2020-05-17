@@ -77,3 +77,11 @@ def checkifbanned(userid:[int,str]):
 def searchchat(user_id_1,user_id_2):
     return dbop('select content and send_time from chat where chat.sender.id='+user_id_1+' and chat.receiver.id='+user_id_2,True)
 #输入聊天id，返回该聊天的寄件人和收件人id，以及内容和发送时间
+
+def whatcategoryhelikes(userid):
+    return dbop('select category from likes_category where likes_category.self_id='+userid,True)
+#输入用户id，返回该用户所关注的物品种类
+
+def wholikesthiscategory(category):
+    return dbop('select self_id from likes_category where likes_category.category='+category,True)
+#输入物品种类，返回关注该物品的用户
