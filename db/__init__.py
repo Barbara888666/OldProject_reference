@@ -176,14 +176,12 @@ CREATE TABLE reply_imgs (
         db.commit()
     if ('admins',) not in tb:
         db.execute('''
-        CREATE TABLE banned_user (
-    user_id    INT     REFERENCES users (id) 
-                       NOT NULL,
-    ban_id     INTEGER PRIMARY KEY AUTOINCREMENT
-                       NOT NULL,
-    unban_date DATE    NOT NULL,
-    reason     TEXT    NOT NULL
-                       DEFAULT ('No reason') 
+        CREATE TABLE admins (
+    admin_id INTEGER PRIMARY KEY AUTOINCREMENT
+                     NOT NULL
+                     UNIQUE,
+    password TEXT    NOT NULL,
+    salt     TEXT    NOT NULL
 );
 ''')
         db.commit()
