@@ -16,7 +16,7 @@ def log():
         studentnumber=logdic['username']
         password=logdic['password']
         resu = {'m': 0}
-        if idcheck(int(studentnumber)) is None:
+        if idcheck(int(studentnumber))==[]:
             resu['message']="THIS STUDENTNUMBER IS NOT EXIST"
             return jsonify({"code":1,"message":"学号格式错误"})
         elif not pwcheck(int(studentnumber),password):

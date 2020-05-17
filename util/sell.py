@@ -17,21 +17,14 @@ def sell_item():
                 Category=request.form.get('Category'),
                 Situation=request.form.get('Situation'),
                 Price=request.form.get('Price'),
-                time=request.form.get('time'),
-                Short_term=request.form.get('short time'),
-                long_time=request.form.get("long time"),
                 Note=request.form.get('Note'),
             )
-            f = request.files['pic']
+            f = request.files.get('pic','')
             render_template('sell.html', **dic)
-            if(dic['time']=='short time' and dic['Short_term']=='Emergancy'):
-                dic['time']='flase'
-            print(dic)
-            print(f.filename is '')
             userid = None
             if 'id' in session:
                 userid = session['id']
-            if(f.filename==''):
+            if(f==''):
                 f=None
             uploaditem(dic['Name'],userid,dic['Note'],dic['Category'],float(dic['Price']),True,dic['Situation'],f)
             flash('PLEASE INPUT ALL!')

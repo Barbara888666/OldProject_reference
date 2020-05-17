@@ -59,7 +59,7 @@ def uploadalbum(userid:[int,str],images,*seq):
 
 def uploaditemimg(itemid:str,imgs):
     r=[None]
-    if imgs!=None:
+    if imgs!=[None]:
         r=uploadimgs(imgs,'items',itemid)
     for t,n in zip(r,range(0,len(imgs))):
         dbop('''
@@ -87,7 +87,7 @@ def delalbum(userid:[int,str],*seq):
             l.append(t[0])
     delimgs(*l)
 
-def uploaditem(name:str,sellerid:[int,str],description:str,category='other',price:[float]=None,issell:bool=True,situation:str='Brand new',image=[None]):
+def uploaditem(name:str,sellerid:[int,str],description:str,category='other',price:[float]=None,issell:bool=True,situation:str='Brand new',image=None):
 
     """
     上传物品
@@ -111,7 +111,8 @@ def uploaditem(name:str,sellerid:[int,str],description:str,category='other',pric
     q='''INSERT INTO items (item_name,seller_id,description,added_date,is_sell,view_time,category,price,situation)VALUES 
     ('%s',%d,'%s','%s','%s',0,'%s',%f,%d);'''%(name,sellerid,description,t,issell,category,p,s)
     r=dbop(q,False,'items')
-    uploaditemimg(r,image)
+    if image!=None:
+        uploaditemimg(str(r),image)
 
 #删除物品
 #@param itemid:物品id
