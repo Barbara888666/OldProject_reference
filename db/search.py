@@ -39,16 +39,16 @@ def searchalbums(owner_id):
     return dbop('select img_name,seq from albums where albums.owner_id='+owner_id,True)
 #输入用户id，返回该用户相簿中的图片以及图片所对应的顺序
 def whohelikes(user_id):
-    return dbop('select user_name，id from likes natural join users where likes.target_id=users.id and likes.self_id='+user_id,True)
+    return dbop('select user_name，id from likes cross join users where likes.target_id=users.id and likes.self_id='+user_id,True)
 #输入用户id，返回所有被该用户关注的用户的名字及id
 def wholikeshim(user_id):
-    return dbop('select user_name,id from likes natural join users where likes.self_id=users.id and likes.target_id='+user_id,True)
+    return dbop('select user_name,id from likes cross join users where likes.self_id=users.id and likes.target_id='+user_id,True)
 #输入用户id，返回所有关注该用户的用户的名字及id
 def searchreplies(item_id):
-    return dbop('select user_name,user_id,reply_content,added_date from replies natural join users where users.id=replies.user_id and replies.item_id='+item_id,True)
+    return dbop('select user_name,user_id,reply_content,added_date from replies cross join users where users.id=replies.user_id and replies.item_id='+item_id,True)
 #输入回复id，返回该用户名字与id，所回复项目的名字与id,以及添加该回复的日期
 def searchreply_imgs(item_id):
-    return dbop('select user_name,user_id,item_name,seq from reply_imgs natural join items natural join users where item_id=reply_imgs.item_id and users.id=items.item_id and items.item_id='+item_id,True)
+    return dbop('select user_name,user_id,item_name,seq from reply_imgs cross join items cross join users where item_id=reply_imgs.item_id and users.id=items.item_id and items.item_id='+item_id,True)
 #输入回复id,返回该回复中的图片以及图片所对于的顺序
 
 
