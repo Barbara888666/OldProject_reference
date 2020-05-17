@@ -233,11 +233,11 @@ def hash(text,*salt):
         t=hashlib.md5(bytes(salt[0].encode('UTF-8')))
     t.update(text.encode(encoding='UTF-8'))
     return t.hexdigest()
-def uploadimgs(image,des,id):
+def uploadimgs(image,des,tid):
     if not isinstance(image,list):
         image=[image]
     r=[]
-    t=path.join(imgpath,des,id)
+    t=path.join(imgpath,des,tid)
     for t in image:
         s=t.content_type.split('.')[-1]
         n=hash(str(urandom(16),encoding="UTF-8"))+'.'+s

@@ -10,7 +10,7 @@ def idcheck(id):
 # 输入：可选项：物品名, 类别，页面，排序选项（格式：“{列名称：asc/desc}”,列名称请见名为items的table）
 # 返回带有物品id，物品名称，用户id，物品首个图片的表中表
 def searchitems(itemname:str=None,page:int=None,orderby:dict=None,category='other'):
-    query='''select item_id,item_name,user_name,img_name from items natural join users natural join item_imgs where items.seller_id=users.id  and item_imgs.item_id=items.item_id and item_imgs.seq=0'''
+    query='''select items.item_id,item_name,user_name,img_name from items cross join users cross join item_imgs where items.seller_id=users.id  and item_imgs.item_id=items.item_id and item_imgs.seq=0 '''
     if itemname!=None:
         query=query+'and items.item_name like '''+"'%"+itemname+"%' "
     query=query+'''and items.category='''+"'"+category+"' "
