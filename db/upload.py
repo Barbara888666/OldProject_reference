@@ -225,10 +225,36 @@ def sendreplyreport(targetid:[int,str],reason:str):
 
 def likecategory(srcid:[int,str],category='other'):
     strid = str(srcid)
-    q='''insert into likes_category (self_id,category) values (%s,%s );'''%(srcid,category)
+    q='''insert into likes_category (self_id,category) values (%s,%s )'''%(srcid,category)
     dbop(q,False)
 
 def unlikecategory(srcid:[int,str],category='other'):
     strid = str(srcid)
     dbop('delete from likes_category where self_id=' + srcid + ' and category=' + category)
+
+def addlikenotice(userid:[int,str],seen:bool=False):
+    strid = str(userid)
+    dbop('insert into like_notifications (user_id,seen) values (' + userid + ','+ seen +')')
+def adddeletenotice(userid:[int,str],seen:bool=False):
+    strid = str(userid)
+    dbop('insert into delete_notifications (user_id,seen) values (' + userid + ','+ seen +')')
+def addreplynotice(userid:[int,str],seen:bool=False):
+    strid = str(userid)
+    dbop('insert into reply_notifications (user_id,seen) values (' + userid + ','+ seen +')')
+
+def deletedeletenotice(userid:[int,str],notiid:[int,str]):
+    strid = str(userid)
+    notistrid =str(notiid)
+    dbop('delete from delete_notifications where user_id=' + userid + ' and noti_id=' + notiid)
+
+def deletelikenotice(userid:[int,str],notiid:[int,str]):
+    strid = str(userid)
+    notistrid =str(notiid)
+    dbop('delete from like_notifications where user_id=' + userid + ' and noti_id=' + notiid)
+
+def deletereplyotice(userid:[int,str],notiid:[int,str]):
+    strid = str(userid)
+    notistrid =str(notiid)
+    dbop('delete from reply_notifications where user_id=' + userid + ' and noti_id=' + notiid)
+
 

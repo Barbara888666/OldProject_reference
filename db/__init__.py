@@ -185,7 +185,28 @@ CREATE TABLE reply_imgs (
 );
 ''')
         db.commit()
-    if ('notifications',) not in tb:
+    if ('like_notifications',) not in tb:
+        db.execute('''
+        CREATE TABLE like_notifications (
+    noti_id     INTEGER  PRIMARY KEY AUTOINCREMENT
+                          NOT NULL,
+     user_id    INT  REFERENCES users (id)  NOT NULL,
+     seen       BOOLEAN  DEFAULT(false)          
+);
+''')
+        db.commit()
+    if ('delete_notifications',) not in tb:
+        db.execute('''
+        CREATE TABLE delete_notifications (
+    noti_id     INTEGER  PRIMARY KEY AUTOINCREMENT
+                              NOT NULL,
+     user_id    INT  REFERENCES users (id)  NOT NULL,
+     seen       BOOLEAN  DEFAULT(false)          
+    );
+    ''')
+            db.commit()
+
+    if ('reply_notifications',) not in tb:
         db.execute('''
         CREATE TABLE notifications (
     noti_id     INTEGER  PRIMARY KEY AUTOINCREMENT
@@ -195,6 +216,7 @@ CREATE TABLE reply_imgs (
 );
 ''')
         db.commit()
+
     if ('banned_user',) not in tb:
         db.execute('''
         CREATE TABLE banned_user (
