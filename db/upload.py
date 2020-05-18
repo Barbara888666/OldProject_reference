@@ -174,13 +174,13 @@ def delreply(replyid:[int,str]):
 def like(srcid:[int,str],targetid:[int,str]):
     strid=str(srcid)
     targetid=str(targetid)
-    dbop('''INSERT INTO likes (self_id,target_id) VALUES (%s,%s );'''%(srcid,targetid),False)
+    dbop('''INSERT INTO likes (self_id,target_id) VALUES (%s,%s );'''%(strid,targetid),False)
 
 #取关某用户，参照关注某用户的使用方法
 def unlike(srcid:[int,str],targetid:[int,str]):
     strid=str(srcid)
     targetid=str(targetid)
-    dbop('delete from likes where self_id='+srcid+' and target_id='+targetid)
+    dbop('delete from likes where self_id='+strid+' and target_id='+targetid)
 
 def sendchat(srcid:[int,str],desid:[int,str],content:str,images='null'):
     """
@@ -225,10 +225,36 @@ def sendreplyreport(targetid:[int,str],reason:str):
 
 def likecategory(srcid:[int,str],category='other'):
     strid = str(srcid)
-    q='''insert into likes_category (self_id,category) values (%s,%s );'''%(srcid,category)
+    q='''insert into likes_category (self_id,category) values (%s,%s )'''%(strid,category)
     dbop(q,False)
 
 def unlikecategory(srcid:[int,str],category='other'):
     strid = str(srcid)
-    dbop('delete from likes_category where self_id=' + srcid + ' and category=' + category)
+    dbop('delete from likes_category where self_id=' + strid + ' and category=' + category)
+
+def addlikenotice(userid:[int,str],seen:bool=False):
+    strid = str(userid)
+    dbop('insert into like_notifications (user_id,seen) values (' + strid + ','+ seen +')')
+def adddeletenotice(userid:[int,str],seen:bool=False):
+    strid = str(userid)
+    dbop('insert into delete_notifications (user_id,seen) values (' + strid + ','+ seen +')')
+def addreplynotice(userid:[int,str],seen:bool=False):
+    strid = str(userid)
+    dbop('insert into reply_notifications (user_id,seen) values (' + strid + ','+ seen +')')
+
+def deletedeletenotice(userid:[int,str],notiid:[int,str]):
+    strid = str(userid)
+    notistrid =str(notiid)
+    dbop('delete from delete_notifications where user_id=' + strid + ' and noti_id=' + notistrid)
+
+def deletelikenotice(userid:[int,str],notiid:[int,str]):
+    strid = str(userid)
+    notistrid =str(notiid)
+    dbop('delete from like_notifications where user_id=' + strid + ' and noti_id=' + notistrid)
+
+def deletereplyotice(userid:[int,str],notiid:[int,str]):
+    strid = str(userid)
+    notistrid =str(notiid)
+    dbop('delete from reply_notifications where user_id=' + strid + ' and noti_id=' + notistrid)
+
 
