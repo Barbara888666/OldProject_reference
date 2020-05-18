@@ -190,12 +190,13 @@ CREATE TABLE reply_imgs (
         CREATE TABLE like_notifications (
     noti_id  INTEGER PRIMARY KEY AUTOINCREMENT
                      NOT NULL,
-    user_id  INT     REFERENCES users (id) 
+    user_id  INT     REFERENCES users (id) ON DELETE CASCADE
                      NOT NULL,
     seen     BOOLEAN DEFAULT (false) 
                      NOT NULL,
     liker_id INT     REFERENCES users (id) ON DELETE CASCADE
                      NOT NULL
+    
 );
 ''')
         db.commit()
@@ -205,7 +206,12 @@ CREATE TABLE reply_imgs (
     noti_id     INTEGER  PRIMARY KEY AUTOINCREMENT
                               NOT NULL,
      user_id    INT  REFERENCES users (id)  NOT NULL,
-     seen       BOOLEAN  DEFAULT(false)          
+     seen       BOOLEAN  DEFAULT(false)
+                NOT NULL,
+    item_id     INT  REFERENCES items (item_id) ON DELETE CASCADE
+                           NOT NULL,
+    reply_id     INTEGER PRIMARY KEY AUTOINCREMENT
+                            
     );
     ''')
         db.commit()
@@ -220,7 +226,7 @@ CREATE TABLE reply_imgs (
                           NOT NULL,
     reply_id      INT     REFERENCES replies (reply_id) ON DELETE CASCADE
                           NOT NULL,
-    reply_user_id INT     REFERENCES users (id) ON DELETE CASCADE
+    replier_id INT     REFERENCES users (id) ON DELETE CASCADE
 );
 ''')
         db.commit()

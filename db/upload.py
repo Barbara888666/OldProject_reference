@@ -232,15 +232,20 @@ def unlikecategory(srcid:[int,str],category='other'):
     strid = str(srcid)
     dbop('delete from likes_category where self_id=' + strid + ' and category=' + category)
 
-def addlikenotice(userid:[int,str],seen:bool=False):
+def addlikenotice(userid:[int,str],seen:bool=False,likerid:[int,str]):
     strid = str(userid)
-    dbop('insert into like_notifications (user_id,seen) values (' + strid + ','+ seen +')')
-def adddeletenotice(userid:[int,str],seen:bool=False):
+    strlikerid = str(likerid)
+    dbop('insert into like_notifications (user_id,seen,liker_id) values (' + strid + ','+ seen +','+strlikerid+')')
+def adddeletenotice(userid:[int,str],seen:bool=False,itemid:[int,str],replyid:[int,str]):
     strid = str(userid)
-    dbop('insert into delete_notifications (user_id,seen) values (' + strid + ','+ seen +')')
-def addreplynotice(userid:[int,str],seen:bool=False):
+    stritemid = str(itemid)
+    strreplyid = str(replyid)
+    dbop('insert into delete_notifications (user_id,seen,item_id,reply_id) values (' + strid + ','+ seen +',' + stritemid +','+strreplyid  + ')')
+def addreplynotice(userid:[int,str],seen:bool=False,replyid:[int,str],replierid:[int,str]):
     strid = str(userid)
-    dbop('insert into reply_notifications (user_id,seen) values (' + strid + ','+ seen +')')
+    strreplyid = str(replyid)
+    strreplierid = str(replierid)
+    dbop('insert into reply_notifications (user_id,seen,reply_id,replier_id) values (' + strid + ','+ seen + ',' + strreplyid  +',' + strreplierid  +')')
 
 def deletedeletenotice(userid:[int,str],notiid:[int,str]):
     strid = str(userid)
