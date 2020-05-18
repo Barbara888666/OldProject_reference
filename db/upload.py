@@ -60,8 +60,8 @@ def uploadalbum(userid:[int,str],images,*seq):
 def uploaditemimg(itemid:str,imgs):
     r=[None]
     if imgs!=None:
-        r=uploadimgs(imgs,'items',itemid)
         imgs=[imgs]
+        r=uploadimgs(imgs,'items',itemid)
     for t,n in zip(r,range(0,len(imgs))):
         q='''
         INSERT INTO item_imgs (

@@ -7,13 +7,15 @@
 	<body>
 
 <div class="product_information">
-    {%if itemimgs!=None%}
-    <img src="{{itemimgs}}" height="100" width="100"/>
+    {%if itemimgs!=('None',)%}
+        {%for t in itemimgs%}
+            <img src="{{t[0]}}" height="100" width="100"/>
+        {%endfor%}
     {%endif%}
-    <p>{{name}}</p>
-    <a>{{category}}</a>
-    <p>{{description}}</p>
-    <a>{{seller_name}}</a>
+    <p>{{items[0]}}</p>
+    <a>{{items[6]}}</a>
+    <p>{{items[4]}}</p>
+    <a href="//127.0.0.1:5000/seller/{{items[2]}}">{{items[1]}}</a>
 </div>
     </body>
 </html>

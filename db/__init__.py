@@ -1,12 +1,12 @@
 import sqlite3,os,hashlib
 from flask import g
-from os import urandom,path,remove
+from os import urandom,path,remove,getcwd
 from shutil import rmtree
 from random import sample
 import time
 dbpath=os.path.join(os.path.expanduser('~'),'.market')
 dbfilepath=os.path.join(dbpath,'info.db')
-imgpath=os.path.join(dbpath,'imgs')
+imgpath=os.path.join(getcwd(),'static','images')
 #数据库位置：当前用户文件夹下.markets/info.db
 def init():
     if not os.path.exists(dbpath):
@@ -232,10 +232,9 @@ def hash(text,*salt):
     t.update(text.encode(encoding='UTF-8'))
     return t.hexdigest()
 def uploadimgs(image,des,tid):
-    if not isinstance(image,list):
-        image=[image]
     r=[]
     fdir=path.join(imgpath,des,tid)
+    print(fdir)
     for t in image:
         s=t.filename.split('.')[-1]
         n=hash(getsalt())+'.'+s
@@ -244,8 +243,9 @@ def uploadimgs(image,des,tid):
             os.makedirs(fdir)
             a=open(p,'w')
             a.close()
+            print(fdir)
         t.save(p)
-        r.append(n)
+        r.append('/images/'+des+'/'+tid+'/'+n)
     return r #返回有被添加文件的名字的表
 def delimgs(*imgpath):
     err=[]

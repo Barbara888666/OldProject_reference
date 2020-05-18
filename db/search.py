@@ -22,11 +22,11 @@ def searchitems(itemname:str=None,page:int=None,orderby:dict=None,category='othe
     return dbop(query,True)
 #输入物品id，返回物品的所有信息
 def searchitem(item_id):
-    return dbop('select item_name,user_name,avatar_name,items.description as description,added_date,category,price,situation from items cross join users where items.item_id='+item_id+' and items.seller_id=users.id',True)[0]
+    return dbop('select item_name,user_name,id,avatar_name,items.description as description,added_date,category,price,situation from items cross join users where items.item_id='+item_id+' and items.seller_id=users.id',True)[0]
 
 #输入物品id，返回物品的图片以及图片对应的顺序
 def searchitemimgs(item_id:[str,int]):
-    return dbop('select img_name,seq from item_imgs where item_id='+str(item_id)+';',True)
+    return dbop('select img_name from item_imgs where item_id='+str(item_id)+' order by seq;',True)
 #输入物品id和类别，返回当前结果的个数
 def searchitemnum(itemname,*category):
     query='select count(*) from items where category='+"'"+category[0]+"'"+' and items.item_name like '+"'%"+itemname+"%'"
