@@ -188,10 +188,14 @@ CREATE TABLE reply_imgs (
     if ('like_notifications',) not in tb:
         db.execute('''
         CREATE TABLE like_notifications (
-    noti_id     INTEGER  PRIMARY KEY AUTOINCREMENT
-                          NOT NULL,
-     user_id    INT  REFERENCES users (id)  NOT NULL,
-     seen       BOOLEAN  DEFAULT(false)          
+    noti_id  INTEGER PRIMARY KEY AUTOINCREMENT
+                     NOT NULL,
+    user_id  INT     REFERENCES users (id) 
+                     NOT NULL,
+    seen     BOOLEAN DEFAULT (false) 
+                     NOT NULL,
+    liker_id INT     REFERENCES users (id) ON DELETE CASCADE
+                     NOT NULL
 );
 ''')
         db.commit()
@@ -204,15 +208,19 @@ CREATE TABLE reply_imgs (
      seen       BOOLEAN  DEFAULT(false)          
     );
     ''')
-            db.commit()
+        db.commit()
 
     if ('reply_notifications',) not in tb:
         db.execute('''
-        CREATE TABLE notifications (
-    noti_id     INTEGER  PRIMARY KEY AUTOINCREMENT
+        CREATE TABLE reply_notifications (
+    noti_id       INTEGER REFERENCES notifications (noti_id) ON DELETE CASCADE
+                          PRIMARY KEY
                           NOT NULL,
-     user_id    INT  REFERENCES users (id)  NOT NULL,
-     seen       BOOLEAN  DEFAULT(false)          
+    item_id       INT     REFERENCES items (item_id) ON DELETE CASCADE
+                          NOT NULL,
+    reply_id      INT     REFERENCES replies (reply_id) ON DELETE CASCADE
+                          NOT NULL,
+    reply_user_id INT     REFERENCES users (id) ON DELETE CASCADE
 );
 ''')
         db.commit()
