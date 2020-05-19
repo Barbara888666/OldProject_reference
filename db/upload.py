@@ -232,7 +232,7 @@ def unlikecategory(srcid:[int,str],category='other'):
     strid = str(srcid)
     dbop('delete from likes_category where self_id=' + strid + ' and category=' + category)
 
-def addlikenotice(userid:[int,str],seen:bool=False,likerid:[int,str]):
+def addlikenotice(userid:[int,str],seen:bool,likerid:[int,str]):
     strid = str(userid)
     strlikerid = str(likerid)
     dbop('insert into like_notifications (user_id,seen,liker_id) values (' + strid + ','+ seen +','+strlikerid+')')
