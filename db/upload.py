@@ -236,12 +236,12 @@ def addlikenotice(userid:[int,str],seen:bool,likerid:[int,str]):
     strid = str(userid)
     strlikerid = str(likerid)
     dbop('insert into like_notifications (user_id,seen,liker_id) values (' + strid + ','+ seen +','+strlikerid+')')
-def adddeletenotice(userid:[int,str],seen:bool=False,itemid:[int,str],replyid:[int,str]):
+def adddeletenotice(userid:[int,str],seen:bool,itemid:[int,str],replyid:[int,str]):
     strid = str(userid)
     stritemid = str(itemid)
     strreplyid = str(replyid)
     dbop('insert into delete_notifications (user_id,seen,item_id,reply_id) values (' + strid + ','+ seen +',' + stritemid +','+strreplyid  + ')')
-def addreplynotice(userid:[int,str],seen:bool=False,replyid:[int,str],replierid:[int,str]):
+def addreplynotice(userid:[int,str],seen:bool,replyid:[int,str],replierid:[int,str]):
     strid = str(userid)
     strreplyid = str(replyid)
     strreplierid = str(replierid)
