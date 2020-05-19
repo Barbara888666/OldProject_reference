@@ -1,5 +1,4 @@
 from flask import Blueprint,render_template,request
-from flask_pagination import Pagination
 from db.search import searchitems
 search=Blueprint('search',__name__)
 # @search.route('/search',classmethod=('GET','POST'))
