@@ -1,7 +1,0 @@
-.git
-*.code-workspace
-__pycache__
-.idea
-.vscode
-*test.py
-htmls/test.html
