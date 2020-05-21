@@ -1,0 +1,57 @@
+$(function () {
+    $(".highlight-btn").click(function () {
+        var self = $(this);
+        var tr = self.parent().parent();
+        var product_id = tr.attr("data-id");
+        var highlight = parseInt(tr.attr("data-highlight"));
+        var url = "";
+        if(highlight){
+            url = "/cms/uhpost/";
+        }else{
+            url = "/cms/hpost/";
+        }
+        zlajax.post({
+            'url': url,
+            'data': {
+                'product_id': product_id
+            },
+            'success': function (data) {
+                if(data['code'] == 200){
+                    alert.alertSuccessToast('操作成功！');
+                    setTimeout(function () {
+                        window.location.reload();
+                    },500);
+                }else{
+                    alert.alertInfo(data['message']);
+                }
+            }
+        });
+    });
+});
+
+
+$(function () {
+    $(".delete-product-btn").click(function (event) {
+        var self = $(this);
+        var tr = self.parent().parent();
+        var product_id = tr.attr("data-id");
+        alert.alertConfirm({
+            "msg":"您确定要删除这个板块吗？",
+            'confirmCallback': function () {
+                zlajax.post({
+                    'url': '/cms/dpost/',
+                    'data':{
+                        'product_id': product_id
+                    },
+                    'success': function (data) {
+                        if(data['code'] == 200){
+                            window.location.reload();
+                        }else{
+                            alert.alertInfo(data['message']);
+                        }
+                    }
+                })
+            }
+        });
+    });
+});

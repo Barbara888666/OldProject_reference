@@ -1,0 +1,71 @@
+{% from "common/_macros.html" import static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ static("fromold/base.css") }}">
+    <link rel="stylesheet" href="{{ static("fromold/base.css") }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/fromold/base.css') }}">
+{#url_for('static',filename='common/images/logo.png') #}
+{% block headlink %}{% endblock %}
+</head>
+<body>
+<div class="top" id="top">
+    <div class="topcontent">
+        {#        <a class="title">BJUT FLEA MARKET</a>#}
+        <a id="h1" class="title" href="//127.0.0.1:5000/">
+            BJUT FLEA MARKET
+            <br/>
+            <div class="title_content">{% block pagename %}{% endblock %}</div>
+        </a>
+        <div class="headingnav">
+            {% if userid == None %}
+                <ul>
+                    <li><a id="login" href="{{ url_for('front.signin') }}">login</a></li>
+                    <li><a id="reg" href="{{ url_for('front.signup') }}">register</a></li>
+                </ul>
+            {% else %}
+                <li><a id="personal" href="//127.0.0.1:5000/personal">personal information</a></li>
+                <br/>
+                <li><a id="news" href="//127.0.0.1:5000/my_news">my news</a></li>
+                <br/>
+                <li><a id="upload" href="//127.0.0.1:5000/sell">upload</a></li>
+            {% endif %}
+        </div>
+        <div class="spot">
+            <form>
+                <div class="text"><input type="text"></div>
+                <div class="button">
+                    <a id="btn" href="//127.0.0.1:5000/search">search</a>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<div class="body">
+    {% block body %}
+
+    {% endblock %}
+</div>
+
+<div class="tail" id="tail">
+    <div class="tailcontent">
+        <ul>
+            <a href="#top">
+                <li  >back to top</li>
+            </a>
+            <a>
+                <li>more information</li>
+            </a>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

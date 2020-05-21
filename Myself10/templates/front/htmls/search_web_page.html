@@ -1,0 +1,146 @@
+{% from "common/_macros.html" import static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>searchPage</title>
+      <link rel="stylesheet" href="{{ static("fromold/front_index.css") }}">
+    <link rel="stylesheet" href="{{ static("front/css/fromold/front_index.css") }}">
+{#    <link rel="stylesheet" href="{{ url_for('static', filename='/css/fromold/searchWebPageCss.css') }}">#}
+</head>
+
+<div class="top">
+    <div class="topcontent">
+        <a class="title" href="//127.0.0.1:5000/">BJUT FLEA MARKET  </a>
+        <div class="headingnav">
+            <ul>
+                <li><a>personal center</a></li>
+            </ul>
+        </div>
+
+        <div class="img"><img src="test.jpg" height="50" width="50"/>
+        </div>
+        <div class="spot">
+            <form>
+                <input type="text">
+            </form>
+        </div>
+        <div class="button">
+            <div class="button_content">search</div></div>
+    </div>
+</div>
+<div class="body">
+    <div class="search"></div>
+    <div class="bodycontent">
+        <div class="classification_board">
+            <div class="classification">
+            <h3>CLASSIFICATION</h3>
+            <div class="classification_content">
+                <a id="1"><p>food</p></a>
+                <a><p>clothes</p></a>
+                <a><p>shoes</p></a>
+                <a><p>bag</p></a>
+                <a><p>book</p></a>
+                <a><p>electronic product</p></a>
+            </div>
+            </div>
+        </div>
+        <div class="specificcontent">
+            <div class="content">
+                <img src="test.jpg" height="50" width="50"/>
+                <div class="contents">
+                <a><div class="name"><h3>bookname</h3></div></a>
+                <div class="seller">seller</div>
+                <div class="sellername"><a>name</a></div><br/>
+                <div class="credibility">Seller credibility</div>
+                <div class="credibility_content"><a>high</a></div>
+                <br/>
+                <div class="description">product description</div>
+                    <div class="descriptions">description</div>
+                </div>
+            </div>
+             <div class="content">
+                <img src="test.jpg" height="50" width="50"/>
+                <div class="contents">
+                <a><div class="name"><h3>bookname</h3></div></a>
+                <div class="seller">seller</div>
+                <div class="sellername"><a>name</a></div><br/>
+                <div class="credibility">Seller credibility</div>
+                <div class="credibility_content"><a>high</a></div>
+                <br/>
+                <div class="description">product description</div>
+                    <div class="descriptions">description</div>
+                </div>
+            </div>
+             <div class="content">
+                <img src="test.jpg" height="50" width="50"/>
+                <div class="contents">
+                <a><div class="name"><h3>bookname</h3></div></a>
+                <div class="seller">seller</div>
+                <div class="sellername"><a>name</a></div><br/>
+
+                <div class="credibility">Seller credibility</div>
+                <div class="credibility_content"><a>high</a></div>
+                <br/>
+                <div class="description">product description</div>
+                    <div class="descriptions">description</div>
+                </div>
+            </div>
+             <div class="content">
+                <img src="test.jpg" height="50" width="50"/>
+                <div class="contents">
+                <a><div class="name"><h3>bookname</h3></div></a>
+                <div class="seller">seller</div>
+                <div class="sellername"><a>name</a></div><br/>
+                <div class="credibility">Seller credibility</div>
+                <div class="credibility_content"><a>high</a></div>
+                <br/>
+                <div class="description">product description</div>
+                    <div class="descriptions">description</div>
+                </div>
+            </div>
+             <div class="content">
+                <img src="test.jpg" height="50" width="50"/>
+                <div class="contents">
+                <a><div class="name"><h3>bookname</h3></div></a>
+                <div class="seller">seller</div>
+                <div class="sellername"><a>name</a></div><br/>
+                <div class="credibility">Seller credibility</div>
+                <div class="credibility_content"><a>high</a></div>
+                <br/>
+                <div class="description">product description</div>
+                    <div class="descriptions">description</div>
+                </div>
+            </div>
+        </div>
+    </div>
+     </div>
+<div class="order_menu">
+<script src="{{ static("front/js/jquery-3.4.1.min.js") }}"></script>
+    <ul>
+        <li class="menu_main"><a href="#">change order</a>>
+        <ul>
+            <li><a href="#">order by name</a></li>
+            <li><a href="#">order by seller credibility</a></li>
+            <li><a href="#">order by user favorites</a></li>
+        </ul>
+        </li>
+    </ul>
+{#    <script src="front/js/searchWebPage.js"></script>#}
+    <script src="{{ static("front/js/searchWebPage.js") }}"></script>
+</div>
+<div class="change_page">
+    <div class="last_page"><a> last page<a/></div>
+    <div class="next_page"><a>next page<a/></div>
+</div>
+<div class="tail">
+    <div class="tailcontent">
+        <ul>
+            <a><li>back to top</li></a>
+            <a><li>more information</li></a>
+        </ul>
+    </div>
+    </div>
+</body>
+</html>

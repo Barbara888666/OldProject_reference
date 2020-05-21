@@ -1,0 +1,107 @@
+{% from "common/_macros.html" import static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>emergeProduct</title>
+     <link rel="stylesheet" href="{{ static("front/css/front_index.css") }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/fromold/emerge.css') }}">
+    <link rel="stylesheet" href="{{ static("/fromold/emerge.css") }}">
+
+<!--    {{ url_for('static', filename='/css/fromold/emerge.css') }}-->
+</head>
+<body>
+
+<div class="top" id="top">
+    <div class="topcontent">
+        <a class="title" id="h1" href="//127.0.0.1:5000/">BJUT FLEA MARKET  </a>
+        <div class="headingnav">
+            <ul>
+                <li><a id="head">personal center</a></li>
+            </ul>
+        </div>
+
+{#        <div class="img"><img src="{{url_for('static',filename='front/htmls/test.png') }}" alt="" height="50" width="50"/>#}
+
+        </div>
+        <div class="spot">
+            <form>
+                <input type="text">
+            </form>
+        </div>
+        <div class="button">
+            <div class="button_content">search</div></div>
+    </div>
+</div>
+<div class="body">
+    <div class="buy">
+        <p id="buy">buy</p>
+        <div class="buy_content">
+            <p class="name">buy product name</p>
+            <p class="buy_description"> description</p>
+            <a class="buyer" href="//127.0.0.1:5000/seller">buyer</a>
+        </div>
+         <div class="buy_content">
+            <p class="name">buy product name</p>
+            <p class="buy_description"> description</p>
+            <a class="buyer" href="//127.0.0.1:5000/seller">buyer</a>
+        </div>
+         <div class="buy_content">
+            <p class="name">buy product name</p>
+            <p class="buy_description"> description</p>
+            <a class="buyer" href="//127.0.0.1:5000/seller">buyer</a>
+        </div>
+         <div class="buy_content">
+            <p class="name">buy product name</p>
+            <p class="buy_description"> description</p>
+            <a class="buyer" href="//127.0.0.1:5000/seller">buyer</a>
+        </div>
+    </div>
+    <div class="sell">
+        <p id="sell">sell</p>
+        <div class="sell_content">
+            <img src="{{url_for('static',filename='common/images/logo.png') }}" alt="" height="100" width="150">
+            <img src="test.jpg" height="100" width="150"/>
+            <a class="sell_product" href="//127.0.0.1:5000/detail">sell product name</a>
+            <a class="classification">classification</a>
+            <br/>
+            <a class="seller" href="//127.0.0.1:5000/seller">seller</a>
+        </div>
+        <div class="sell_content">
+            <img src="test.jpg" height="100" width="150"/>
+            <a class="sell_product" href="//127.0.0.1:5000/detail">sell product name</a>
+            <a class="classification">classification</a>
+            <br/>
+            <a class="seller" href="//127.0.0.1:5000/seller">seller</a>
+        </div>
+        <div class="sell_content">
+            <img src="test.jpg" height="100" width="150"/>
+            <a class="sell_product" href="//127.0.0.1:5000/detail">sell product name</a>
+            <a class="classification">classification</a>
+            <br/>
+            <a class="seller" href="//127.0.0.1:5000/seller">seller</a>
+        </div>
+        <div class="sell_content">
+            <img src="test.jpg" height="100" width="150"/>
+            <a class="sell_product" href="//127.0.0.1:5000/detail">sell product name</a>
+            <a class="classification">classification</a>
+            <br/>
+            <a class="seller" href="//127.0.0.1:5000/seller">seller</a>
+        </div>
+
+    </div>
+    <div class="change_page">
+     <div class="last_page"><a>last page<a/></div>
+     <div class="next_page"><a>next page<a/></div>
+    </div>
+</div>
+<div class="tail">
+    <div class="tailcontent">
+        <ul>
+            <a id="tail1" href="#top"><li>back to top</li></a>
+            <a id="tail2"><li>more information</li></a>
+        </ul>
+    </div>
+    </div>
+</body>
+</html>

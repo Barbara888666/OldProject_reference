@@ -51,7 +51,7 @@
     </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Newone" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -218,7 +218,7 @@
       <workItem from="1590070495851" duration="757000" />
       <workItem from="1590078666227" duration="3978000" />
       <workItem from="1590084473613" duration="372000" />
-      <workItem from="1590085046021" duration="707000" />
+      <workItem from="1590085046021" duration="916000" />
     </task>
     <task id="LOCAL-00001" summary="Change:login.py register.py&#10;login.css register_final.css&#10;Login.html Register.html&#10;Work successfully!">
       <created>1587299018094</created>
@@ -479,7 +479,14 @@
       <option name="project" value="LOCAL" />
       <updated>1590085431327</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="delete old">
+      <created>1590085909075</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1590085909075</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -642,10 +649,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="334" y="99" key="Vcs.Multiple.Commit.Info.Dialog.Key/0.0.1280.680@0.0.1280.680" timestamp="1588524936042" />
-    <state x="233" y="73" key="Vcs.Push.Dialog.v2" timestamp="1590085649684">
+    <state x="233" y="73" key="Vcs.Push.Dialog.v2" timestamp="1590085924114">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1590085649684" />
+    <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1590085924114" />
     <state x="349" y="74" key="VcsDiffUtil.ChangesDialog" timestamp="1587484489694">
       <screen x="0" y="0" width="1280" height="680" />
     </state>

@@ -1,0 +1,77 @@
+{% extends 'front/front_base.html' %}
+{% from "common/_macros.html" import static %}
+
+{% block title %}
+    {{ product.name }}
+{% endblock %}
+
+{% block head %}
+    <script src="{{ static('front/js/front_product_detail.js') }}"></script>
+    <link rel="stylesheet" href="{{ static('front/css/front_product_detail.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="lg-container">
+        <div class="product-container">
+            <h2>{{ product.name }}</h2>
+            <div class="product-picture">
+                <img src="{{ url_for('static',filename='common/images/logo.png') }}" alt="">
+            </div>
+            <ul class="product-info-group" id="product-information" data-da="1">
+            <li><span>发布时间：{{ product.join_time }}</span></li>
+            <li><span>卖家：{{ product.user.username }}</span></li>
+            <li><span>类别：{{ product.board.name }}</span></li>
+            <li><span>描述:{{ product.description }}</span></li>
+            <li><span>时长:{{ product.price }}</span></li>
+            <li><span>点击数: 0</span></li>
+            <li><span>评论数: 0</span></li>
+            </ul>
+        </div>
+
+        <div class="comment-group">
+            <h3>评论列表</h3>
+            <ul class="comment-list-group">
+                {% for comment in product.comments %}
+                    <li>
+                        <div class="avatar-group">
+                            <img src="{{ comment.commenter.avatar or static('common/images/logo.png') }}" alt="">
+                        </div>
+                        <div class="comment-content">
+                            <p class="user-info">
+                                <span>{{ comment.commenter.username }}</span>
+                                <span>{{ comment.create_time }}</span>
+                            </p>
+                            <p class="comment-txt">
+                                {{ comment.content|safe }}
+                            </p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="add-comment-group">
+            <span>评论</span>
+            <input type="text" class="form-control" id="comment-content"
+                   name="comment-content" placeholder="欢迎评论">
+            <div class="comment-btn-group">
+                <button class="btn btn-primary" id="comment-btn" name="comment-btn" data="1">发布</button></td>
+            </div>
+        </div>
+    </div>
+
+    <div class="sm-container">
+        <div style="padding-bottom:10px;">
+            <div class="saler"><a href="#">卖家</a></div>
+
+
+            <div class="user-avatar-group">
+                <img src="{{ url_for('static',filename='common/images/logo.png') }}" alt="">
+            </div>
+            <div>
+                <button class="btn btn-warning btn-block hispage"><a href="{{ url_for("front.ta_page",user_id=product.user.id)}}">Ta的主页</a></button>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}
