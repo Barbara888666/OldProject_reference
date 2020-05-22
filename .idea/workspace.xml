@@ -19,7 +19,12 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48c7084a-4f10-4e2f-a25a-bdeb2e8002d9" name="Default Changelist" comment="delete old" />
+    <list default="true" id="48c7084a-4f10-4e2f-a25a-bdeb2e8002d9" name="Default Changelist" comment="delete old">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/本地仓库.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/本地仓库.iml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -219,6 +224,8 @@
       <workItem from="1590078666227" duration="3978000" />
       <workItem from="1590084473613" duration="372000" />
       <workItem from="1590085046021" duration="916000" />
+      <workItem from="1590113899319" duration="206000" />
+      <workItem from="1590114126002" duration="59000" />
     </task>
     <task id="LOCAL-00001" summary="Change:login.py register.py&#10;login.css register_final.css&#10;Login.html Register.html&#10;Work successfully!">
       <created>1587299018094</created>
