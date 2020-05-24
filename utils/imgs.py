@@ -27,7 +27,7 @@ def uploadimgs(imgs:list,des:str,tid:[int,str]):
     for i,n in zip(imgs,range(0,len(imgs))):
         fn=hash(''.join(des,tid),bytes(n))
         uploadimg(i,des,tid,fn)
-        r.append(fn)
+        r.append('/'.join('imgs',des,tid,fn))
     return r
 def delimg(des:str,tid:str):
     dpath=path.join(imgpath,des,tid)
