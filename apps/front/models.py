@@ -80,3 +80,8 @@ class CommentModel(db.Model):
 
     product = db.relationship("Product", backref="comments")
     commenter = db.relationship("FrontUser", backref='comments')
+class product_imgs(db.Model):
+    __tablename__='product_imgs'
+    pid=db.Column(db.INTEGER,db.ForeignKey('Product.id'))
+    imglink=db.Column(db.String(80))
+    seq=db.Column(db.INTEGER)
