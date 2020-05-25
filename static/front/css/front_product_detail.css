@@ -1,28 +1,27 @@
-.post-container{
+.product-container{
     border: 1px solid #e6e6e6;
     padding: 10px;
 }
 
-.post-info-group{
-    font-size: 12px;
-    color: #8c8c8c;
-    border-bottom: 1px solid #e6e6e6;
-    margin-top: 20px;
-    padding-bottom: 10px;
+.product-picture{
+    width: 400px;
+    height: 300px;
+    background-color: chartreuse;
 }
 
-.post-info-group span{
-    margin-right: 20px;
+.product-picture img{
+    width: 380px;
+    height: 280px;
+    margin: 0 auto;
 }
-
-.post-content{
-    margin-top: 20px;
+#like-btn{
+    float: right;
+    margin-top: -30px;
 }
-
-.post-content img{
-    max-width: 100%;
+#have-like-btn{
+    float: right;
+    margin-top: -30px;
 }
-
 .comment-group{
     margin-top: 20px;
     border: 1px solid #e8e8e8;

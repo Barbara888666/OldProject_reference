@@ -4,11 +4,11 @@ import os
 from flask import Blueprint, views, request, render_template, url_for, session, g, abort, jsonify, redirect
 from sqlalchemy import func
 
-from apps.front.forms import SignupForm, SigninForm, AddProductForm, AddCommentForm, ForgetPasswordForm
+from apps.front.forms import SignupForm, SigninForm, AddProductForm, AddCommentForm, ForgetPasswordForm, AddLikeForm
 from exts import sms,db
 from utils import restful,safeutils
 from utils.captcha import Captcha
-from .models import FrontUser, Product, CommentModel
+from .models import FrontUser, Product, CommentModel, LikeModel
 import config
 from ..models import BannerModel, BoardModel, HighlightProductModel
 from .decorators import login_required
@@ -258,10 +258,19 @@ def ta_page(user_id):
 def product_detail(product_id):
     product=Product.query.get(product_id)
     print(product.user)
-    print("YONGHU")
+    # user_id=product.user.id
+    like=LikeModel.query.filter(LikeModel.product_id==product_id).filter(LikeModel.liker==g.front_user).first()
+    # query.filter(User.name == 'ed').filter(User.fullname == 'Ed Jones')
+    # like=LikeModel.query.get(product_id)
+    # like=like.filter_by(user_id=user_id)
+    print(like)
     if not product:
         abort(404)
-    return render_template('front/front_product_detail.html',product=product)
+    if not like:
+        like=0
+    else:
+        like=1
+    return render_template('front/front_product_detail.html',product=product,like=like)
 
 
 @bp.route('/acomment/',methods=['POST'])
@@ -284,6 +293,27 @@ def add_comment():
     else:
         return restful.params_error(form.get_error())
 
+@bp.route('/alike/',methods=['POST'])
+@login_required
+def add_like():
+    form = AddLikeForm(request.form)
+    if form.validate():
+        product_id = form.product_id.data
+        print(product_id)
+        print("             id+")
+        product = Product.query.get(product_id)
+        print(product)
+        if product:
+            like = LikeModel()
+            like.product = product
+            like.liker = g.front_user
+            db.session.add(like)
+            db.session.commit()
+            return restful.success()
+        else:
+            return restful.params_error('没有这篇帖子！')
+    else:
+        return restful.params_error(form.get_error())
 
 
 class SignupView(views.MethodView):

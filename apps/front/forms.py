@@ -53,6 +53,8 @@ class AddCommentForm(BaseForm):
     content = StringField(validators=[InputRequired(message='请输入评论内容！')])
     product_id = IntegerField(validators=[InputRequired(message='请输入帖子id！')])
 
+class AddLikeForm(BaseForm):
+    product_id = IntegerField(validators=[InputRequired(message='请输入帖子id！')])
 
 class ForgetPasswordForm(BaseForm):
     telephone = StringField(validators=[Regexp(r"1[345789]\d{9}",message='请输入正确格式的手机号码！')])

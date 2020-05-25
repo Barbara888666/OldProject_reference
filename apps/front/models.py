@@ -80,3 +80,16 @@ class CommentModel(db.Model):
 
     product = db.relationship("Product", backref="comments")
     commenter = db.relationship("FrontUser", backref='comments')
+
+class LikeModel(db.Model):
+    __tablename__ = 'like'
+    id = db.Column(db.INTEGER, primary_key=True, autoincrement=True)
+    create_time = db.Column(db.DateTime,default=datetime.now)
+
+    product_id = db.Column(db.INTEGER, db.ForeignKey('product.id'))
+    liker_id = db.Column(db.String(100), db.ForeignKey("front_user.id"))
+
+    product = db.relationship("Product", backref="likes")
+    liker = db.relationship("FrontUser", backref='likes')
+
+
