@@ -1,4 +1,5 @@
 #encoding: utf-8
+import os
 
 from flask import Blueprint, views, request, render_template, url_for, session, g, abort, jsonify, redirect
 from sqlalchemy import func
@@ -312,7 +313,16 @@ def aproduct():
         boards = BoardModel.query.all()
         return render_template('front/front_aproduct3.html',boards=boards)
     else:
-
+        f = request.files.get('pic','')
+        if (f != None):
+            basepath = os.path.dirname(__file__)
+            print(basepath)
+            # upload_path = os.path.join(basepath, 'upload_file_dir', secure_filename(f.filename))
+            # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
+            # print(upload_path)
+            # upload_path = os.path.abspath(upload_path)  # 将路径转换为绝对路径
+            # print(upload_path)
+            # f.save(upload_path)
         form = AddProductForm(request.form)
         if form.validate():
               name = form.name.data
@@ -322,11 +332,8 @@ def aproduct():
               situstion = form.situation.data
               term = form.term.data
               description = form.description.data
-              file = form.file.data
-              print(file)
-              if file!=None:
-                  file = file.read()
-                  filename = uptoken(file)
+
+
               if not board:
                  return restful.params_error(message='没有这个板块！')
               product = Product(name=name,price=price,board_id=board_id,situation=situstion,term=term,description=description)
@@ -338,6 +345,7 @@ def aproduct():
               return restful.success()
         else:
             return restful.params_error(message=form.get_error())
+
 
 
 
