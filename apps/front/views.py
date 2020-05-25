@@ -310,7 +310,7 @@ bp.add_url_rule('/signin/',view_func=SigninView.as_view('signin'))
 def aproduct():
     if request.method == 'GET':
         boards = BoardModel.query.all()
-        return render_template('front/front_aproduct2.html',boards=boards)
+        return render_template('front/front_aproduct3.html',boards=boards)
     else:
 
         form = AddProductForm(request.form)

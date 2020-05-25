@@ -69,5 +69,27 @@ a:link,a:visited{
     width: 200px;
 }
 
+.table-right{
+    width:380px;
+    height: 400px;
+    background-color: wheat;
+    float: left;
+    /*让div水平居中*/
+}
 
+.table-left{
+    width:380px;
+    height: 400px;
+    /*让div水平居中*/
+    text-align: left;
+    float: left;
+    /*margin: left;*/
+    background-color: cyan;
+    padding-top: 50px;
+
+
+}
+.table-btn{
+    margin: 0 auto;
+}
 
