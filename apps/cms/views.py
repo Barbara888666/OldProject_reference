@@ -168,11 +168,7 @@ def fusers():
 def cusers():
     return render_template('cms/cms_cusers.html')
 
-@bp.route('/croles/')
-@login_required
-@permission_required(CMSPermission.ALL_PERMISSION)
-def croles():
-    return render_template('cms/cms_croles.html')
+
 
 @bp.route('/banners/')
 @login_required

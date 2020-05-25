@@ -78,9 +78,7 @@
                       <li class="nav-group cmsuser-manage"><a href="{{ url_for('cms.cusers') }}">CMS用户管理</a></li>
                   {% endif %}
 
-                  {% if cms_user.has_permission(CMSPermission.ALL_PERMISSION) %}
-                      <li class="cmsrole-manage"><a href="{{ url_for('cms.croles') }}">CMS组管理</a></li>
-                  {% endif %}
+
 
             </ul>
           </div>

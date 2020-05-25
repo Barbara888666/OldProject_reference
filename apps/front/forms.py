@@ -54,7 +54,18 @@ class AddCommentForm(BaseForm):
     product_id = IntegerField(validators=[InputRequired(message='请输入帖子id！')])
 
 
+class ForgetPasswordForm(BaseForm):
+    telephone = StringField(validators=[Regexp(r"1[345789]\d{9}",message='请输入正确格式的手机号码！')])
+    sms_captcha = StringField(validators=[Regexp(r"\w{6}",message='请输入正确格式的短信验证码！')])
 
+
+    def validate_sms_captcha(self,field):
+        sms_captcha = field.data
+        telephone = self.telephone.data
+
+        sms_captcha_mem = cache.get(telephone)
+        if not sms_captcha_mem or sms_captcha_mem != sms_captcha:
+            raise ValidationError(message='短信验证码错误！')
 
 
 

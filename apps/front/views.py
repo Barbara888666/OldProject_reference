@@ -4,7 +4,7 @@ import os
 from flask import Blueprint, views, request, render_template, url_for, session, g, abort, jsonify, redirect
 from sqlalchemy import func
 
-from apps.front.forms import SignupForm, SigninForm, AddProductForm, AddCommentForm
+from apps.front.forms import SignupForm, SigninForm, AddProductForm, AddCommentForm, ForgetPasswordForm
 from exts import sms,db
 from utils import restful,safeutils
 from utils.captcha import Captcha
@@ -15,6 +15,7 @@ from .decorators import login_required
 from flask_paginate import Pagination, get_page_parameter
 from tasks import send_sms_captcha
 from ..common.views import uptoken
+# from werkzeug.utils import secure_filename
 
 bp = Blueprint("front",__name__)
 
@@ -44,10 +45,12 @@ def highpres():
 #搜索网站通知列表
 
 @bp.route('/')
-@login_required
 def main_page():
-    userid=g.front_user.id
-    return render_template('front/htmls/main_page.html',userid=userid)
+    if session[config.FRONT_USER_ID]:
+        userid=g.front_user.id
+        return render_template('front/htmls/main_page.html',userid=userid)
+    else:
+        return render_template('front/htmls/main_page.html')
 
 @bp.route('/news')
 def new():
@@ -205,6 +208,31 @@ def logout():
     del session[config.FRONT_USER_ID]
     return redirect(url_for('front.signin'))
 
+# @bp.route('/forget_password/')
+# def forget_password():
+#
+#     return render_template('front/front_forget_password.html')
+
+class Forget_password(views.MethodView):
+    def get(self):
+        return render_template('front/front_forget_password.html')
+
+    def post(self):
+        form = ForgetPasswordForm(request.form)
+        if form.validate():
+            telephone= form.telephone.data
+            print(telephone)
+            user = FrontUser.query.filter(FrontUser.telephone==telephone).first()
+            print(user)
+            db.session.delete(user)
+            db.session.commit()
+            print("delete success")
+            return restful.success("confirm success")
+        else:
+            print(form.get_error())
+            return restful.params_error(message=form.get_error())
+bp.add_url_rule('/forget_password/',view_func=Forget_password.as_view('forget_password'))
+
 @bp.route('/t/<user_id>')
 def ta_page(user_id):
     ta = FrontUser.query.get(user_id)
@@ -345,7 +373,6 @@ def aproduct():
               return restful.success()
         else:
             return restful.params_error(message=form.get_error())
-
 
 
 
