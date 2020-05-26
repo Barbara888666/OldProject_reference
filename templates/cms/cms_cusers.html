@@ -3,7 +3,7 @@
 {% block title %}CMS用户管理{% endblock %}
 
 {% block head %}
-
+     <script src="{{ static('cms/js/cmsuser.js') }}"></script>
 {% endblock %}
 
 {% block page_title %}
@@ -12,4 +12,72 @@
 
 {% block main_content %}
     我是CMS用户管理页面
+    <div class="top-box">
+        <button class="btn btn-warning" data-toggle="modal" style="float:right;" data-target="#cmsuser-dialog">添加新cms用户</button>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>username</th>
+                <th>email</th>
+                <th>join_time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cmsuser in cmsusers %}
+                <tr>
+                    <td>{{ cmsuser.id }}</td>
+                    <td>{{ cmsuser.username }}</td>
+                    <td>{{ cmsuser.email }}</td>
+                    <td>{{ cmsuser.join_time }}</td>
+                </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+
+<!-- Modal -->
+<div class="modal fade" id="cmsuser-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">CMS用户</h4>
+      </div>
+      <div class="modal-body">
+          <form action="" class="form-horizontal">
+              <div class="form-group">
+                  <label class="col-sm-2 control-label">邮箱：</label>
+                  <div class="col-sm-10">
+                      <input type="text" class="form-control" name="email" placeholder="cms用户邮箱">
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label class="col-sm-2 control-label">用户名：</label>
+                  <div class="col-sm-10">
+                      <input type="text" class="form-control" name="username" placeholder="cms用户名">
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label class="col-sm-2 control-label">权限：</label>
+                  <div class="col-sm-10">
+                      <select name="permission" class="form-control">
+                          <option value="Visitor">Visitor</option>
+                          <option value="Front">Front</option>
+                          <option value="Manager">Manager</option>
+                          <option value="Boss">Boss</option>
+                      </select>
+                  </div>
+              </div>
+          </form>
+          <div>初始密码:12345678</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" id="save-cmsuser-btn">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

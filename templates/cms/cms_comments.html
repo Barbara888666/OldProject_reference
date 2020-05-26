@@ -3,7 +3,7 @@
 {% block title %}评论管理{% endblock %}
 
 {% block head %}
-
+    <script src="{{ static('cms/js/comment.js') }}"></script>
 {% endblock %}
 
 {% block page_title %}
@@ -11,5 +11,32 @@
 {% endblock %}
 
 {% block main_content %}
-    我是评论管理页面
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Commenter</th>
+                <th>Product</th>
+                <th>Content</th>
+                <th>Create_time</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for comment in comments %}
+                <tr data-id="{{ comment.id }}">
+                    <td>{{ comment.id }}</td>
+                    <td>{{ comment.commenter.username }}</td>
+                    <td>{{ comment.product}}</td>
+                    <td>{{ comment.content}}</td>
+                    <td>{{ comment.create_time }}</td>
+                    <td>
+                        <button class="btn btn-danger btn-xs delete-comment-btn" name="delete-comment-btn"id="delete-comment-btn">删除</button>
+                    </td>
+                </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
 {% endblock %}

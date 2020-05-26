@@ -68,5 +68,7 @@ class AddBoardForm(BaseForm):
 class UpdateBoardForm(AddBoardForm):
     board_id = IntegerField(validators=[InputRequired(message='请输入板块id！')])
 
-
-
+class AddCmsUserForm(BaseForm):
+    email = StringField(validators=[InputRequired(message='请输入cms用户邮箱！')])
+    username = StringField(validators=[InputRequired(message='请输入cms用户名！')])
+    permission = StringField()

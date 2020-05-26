@@ -10,7 +10,7 @@ from utils import restful,safeutils
 from utils.captcha import Captcha
 from .models import FrontUser, Product, CommentModel, LikeModel
 import config
-from ..models import BannerModel, BoardModel, HighlightProductModel
+from ..models import BannerModel, BoardModel, HighlightProductModel, MessageModel
 from .decorators import login_required
 from flask_paginate import Pagination, get_page_parameter
 from tasks import send_sms_captcha
@@ -158,6 +158,7 @@ def index():
     query_obj = None
     print(sort)
     if sort == 1:
+        #添加的时间排序
         query_obj = Product.query.order_by(Product.join_time.desc())
     elif sort == 2:
         # 按照加精的时间倒叙排序
@@ -165,30 +166,23 @@ def index():
             HighlightProductModel.create_time.desc(), Product.join_time.desc())
     elif sort == 3:
         # 按照点赞的数量排序
-        query_obj = Product.query.order_by(Product.join_time.desc())
+        query_obj = Product.query.order_by(Product.like.desc())
     elif sort == 4:
-        # 按照评论的数量排序
-        query_obj = db.session.query(Product).outerjoin(CommentModel).group_by(Product.id).order_by(
-            func.count(CommentModel.id).desc(), Product.join_time.desc())
+        # 按照价格便宜排序
+        query_obj = Product.query.order_by(Product.price.asc())
 
     page = request.args.get(get_page_parameter(), type=int, default=1)
     start=(page-1)*config.PER_PAGE
     end=start+config.PER_PAGE
     products = None
     total = None
-    # if board_id:
-    #     products = Product.query.filter_by(board_id=board_id).slice(start, end)
-    #     total = Product.query.filter_by(board_id=board_id).count()
-    # else:
-    #     products = Product.query.slice(start, end)
-    # pagination = Pagination(bs_version=3,page=page,total=total)
-    if board_id:
+    if (board_id!=0):
         # products_obj = Product.query.filter_by(board_id=board_id)
         products_obj = query_obj.filter(Product.board_id  == board_id)
         products=products_obj.slice(start, end)
         total = products_obj.count()
     else:
-        products = Product.query.slice(start, end)
+        products = query_obj.slice(start, end)
         total=Product.query.count()
     pagination = Pagination(bs_version=3,page=page,total=total)
     context = {
@@ -285,7 +279,14 @@ def add_comment():
             comment = CommentModel(content=content)
             comment.product = product
             comment.commenter= g.front_user
+            producttmp = Product.query.filter(Product.id == product_id).first()
+            if not producttmp.comment:
+                producttmp.comment = 0
+            producttmp.comment = producttmp.comment + 1
+            content="You are followed by ssss"
+            message=MessageModel(content=content,user_id=product.user_id,type='comment')
             db.session.add(comment)
+            db.session.add(message)
             db.session.commit()
             return restful.success()
         else:
@@ -307,6 +308,13 @@ def add_like():
             like = LikeModel()
             like.product = product
             like.liker = g.front_user
+            producttmp = Product.query.filter(Product.id == product_id).first()
+            if not producttmp.like:
+                producttmp.like=0
+            producttmp.like = producttmp.like+1
+            content = "You are liked by ssss"
+            message = MessageModel(content=content, user_id=product.user_id, type='like')
+            db.session.add(message)
             db.session.add(like)
             db.session.commit()
             return restful.success()
@@ -394,7 +402,7 @@ def aproduct():
 
               if not board:
                  return restful.params_error(message='没有这个板块！')
-              product = Product(name=name,price=price,board_id=board_id,situation=situstion,term=term,description=description)
+              product = Product(name=name,price=price,board_id=board_id,situation=situstion,term=term,description=description,like=0,comment=0)
               product.board = board
               product.user_id = g.front_user.id
               product.user = g.front_user

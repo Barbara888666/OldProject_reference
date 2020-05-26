@@ -63,6 +63,8 @@ class Product(db.Model):
     situation = db.Column(db.Enum(SituationEnum),default=SituationEnum.Slightly_used)
     term = db.Column(db.Enum(TermEnum),default=TermEnum.Long_term)
     join_time = db.Column(db.DateTime,default=datetime.now)
+    like= db.Column(db.INTEGER,default=0)
+    comment = db.Column(db.INTEGER, default=0)
 
     board_id = db.Column(db.INTEGER, db.ForeignKey('board.id'))
     user_id = db.Column(db.String(100), db.ForeignKey("front_user.id"))

@@ -14,9 +14,9 @@ from flask import (
     jsonify
 )
 from .forms import LoginForm, ResetpwdForm, ResetEmailForm, AddBannerForm, UpdateBannerForm, AddBoardForm, \
-    UpdateBoardForm
-from .models import CMSUser,CMSPermission
-from ..front.models import Product
+    UpdateBoardForm, AddCmsUserForm
+from .models import CMSUser, CMSPermission, cms_role_user,CMSRole
+from ..front.models import Product, CommentModel,FrontUser
 from .decorators import login_required,permission_required
 import config
 from exts import db,mail
@@ -94,7 +94,27 @@ def dpost():
 @login_required
 @permission_required(CMSPermission.COMMENTER)
 def comments():
-    return render_template('cms/cms_comments.html')
+    comment_models = CommentModel.query.all()
+    context = {
+        'comments': comment_models
+    }
+    return render_template('cms/cms_comments.html',**context)
+
+@bp.route('/dcomment/',methods=['POST'])
+@login_required
+@permission_required(CMSPermission.COMMENTER)
+def dcomment():
+    comment_id = request.form.get("comment_id")
+    print(comment_id)
+    if not comment_id:
+        return restful.params_error('请传入评论id！')
+    comment = CommentModel.query.get(comment_id)
+    if not comment:
+        return restful.params_error(message='没有这个评论！')
+
+    db.session.delete(comment)
+    db.session.commit()
+    return restful.success()
 
 @bp.route('/boards/')
 @login_required
@@ -160,12 +180,62 @@ def dboard():
 @login_required
 @permission_required(CMSPermission.FRONTUSER)
 def fusers():
-    return render_template('cms/cms_fusers.html')
+    front_usermodels = FrontUser.query.all()
+    context = {
+        'front_users': front_usermodels
+    }
+    return render_template('cms/cms_fusers.html',**context)
 
 @bp.route('/cusers/')
 @login_required
 @permission_required(CMSPermission.CMSUSER)
 def cusers():
+    cmsusers = CMSUser.query.all()
+    context = {
+        'cmsusers': cmsusers
+    }
+    return render_template('cms/cms_cusers.html',**context)
+
+@bp.route('/acmsuser/',methods=['POST'])
+@login_required
+@permission_required(CMSPermission.CMSUSER)
+def addcusers():
+    form = AddCmsUserForm(request.form)
+    if form.validate():
+        email = form.email.data
+        emialkey=CMSUser.query.filter(CMSUser.email==email).first()
+        #user = FrontUser.query.filter(FrontUser.telephone==telephone)
+        print(emialkey)
+        if emialkey:
+            return restful.params_error('该用户已存在！')
+        else:
+            username = form.username.data
+            permission=form.permission.data
+            print(email)
+            print(permission)
+            password='12345678'
+            user = CMSUser(email=email, username=username,password=password)
+            db.session.add(user)
+            db.session.commit()
+            if not permission:
+                permission='Visitor'
+            user = CMSUser.query.filter_by(email=email).first()
+            if user:
+                role = CMSRole.query.filter_by(name=permission).first()
+                if role:
+                    role.users.append(user)
+                    db.session.commit()
+                    print('User to be a Role Success！')
+                else:
+                    print('No this Role：%s' % role)
+            else:
+                print('%s no register!' % email)
+            # permisstmp=cms_role_user(cms_role_id=per,cms_user_id=idtmp)
+            # db.session.add(permisstmp)
+            # db.session.commit()
+            return restful.success()
+    else:
+        return restful.params_error(message=form.get_error())
     return render_template('cms/cms_cusers.html')
 
 

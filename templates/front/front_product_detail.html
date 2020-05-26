@@ -23,8 +23,8 @@
             <li><span>类别：{{ product.board.name }}</span></li>
             <li><span>描述:{{ product.description }}</span></li>
             <li><span>价格:{{ product.price }}</span></li>
-            <li><span>点击数: 0</span></li>
-            <li><span>评论数: 0</span></li>
+            <li><span>点击数: {{ product.like }}</span></li>
+            <li><span>评论数: {{ product.comment }}</span></li>
             </ul>
             {% if like == 0 %}
             <button class="btn btn-warning" id="like-btn" name="like-btn" data="0">Like</button></td>
