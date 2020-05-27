@@ -53,8 +53,8 @@ def sms_captcha():
         print('发送的短信验证码是：',captcha)
         # if sms.send(telephone,code=captcha):
         # if send_sms_captcha.delay(telephone, captcha):
-        if 1==1:
-        # if sms.send(telephone,code=captcha):
+        # if 1==1:
+        if sms.send(telephone,code=captcha):
             cache.set(telephone,captcha)
             return restful.success()
         else:
