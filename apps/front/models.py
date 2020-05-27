@@ -82,6 +82,6 @@ class CommentModel(db.Model):
     commenter = db.relationship("FrontUser", backref='comments')
 class product_imgs(db.Model):
     __tablename__='product_imgs'
-    pid=db.Column(db.INTEGER,db.ForeignKey('Product.id'))
+    pid=db.Column(db.INTEGER,db.ForeignKey('Product.id'),primary_key=True)
     imglink=db.Column(db.String(80))
-    seq=db.Column(db.INTEGER)
+    seq=db.Column(db.INTEGER,primary_key=True)
