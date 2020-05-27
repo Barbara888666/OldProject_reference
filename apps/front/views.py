@@ -291,7 +291,8 @@ def add_comment():
             if not producttmp.comment:
                 producttmp.comment = 0
             producttmp.comment = producttmp.comment + 1
-            content="You are comment by ssss"
+            content = "Your product %s is commented by %s" % (product.name, comment.commenter.username)
+            # content="Your product %s is commented by %s",product.name,comment.commenter.username
             message=MessageModel(content=content,user_id=product.user_id,type='comment')
             db.session.add(comment)
             db.session.add(message)
@@ -320,7 +321,8 @@ def add_like():
             if not producttmp.like:
                 producttmp.like=0
             producttmp.like = producttmp.like+1
-            content = "You are liked by ssss"
+            content = "Your product %s is liked by %s" %(product.name,like.liker.username)
+            print(content)
             message = MessageModel(content=content, user_id=product.user_id, type='like')
             db.session.add(message)
             db.session.add(like)
@@ -346,7 +348,7 @@ def add_follow():
             follow.follower = g.front_user
             startmp = FrontUser.query.filter(FrontUser.id == user_id).first()
             follow.star=startmp
-            content = "You are followed by ssss"
+            content = "You are followed by %s" %follow.follower.username
             message = MessageModel(content=content, user_id=startmp.id, type='follow')
             db.session.add(message)
             db.session.add(follow)
