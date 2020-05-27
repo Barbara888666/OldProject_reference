@@ -49,11 +49,6 @@ def sms_captcha():
     if form.validate():
         telephone = form.telephone.data
         captcha = ''.join(str(i) for i in random.sample(range(0, 9), 6))  # sample(seq, n) 从序列seq中选择n个随机且独立的元素；
-        # captcha = Captcha.gene_text(number=6)
-        print('发送的短信验证码是：',captcha)
-        # if sms.send(telephone,code=captcha):
-        # if send_sms_captcha.delay(telephone, captcha):
-        # if 1==1:
         if sms.send(telephone,code=captcha):
             cache.set(telephone,captcha)
             return restful.success()

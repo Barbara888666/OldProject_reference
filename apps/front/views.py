@@ -44,7 +44,7 @@ def highpres():
     return render_template('front/htmls/high_predibility_seller.html')
 #搜索网站通知列表
 
-@bp.route('/')
+@bp.route('/a')
 def main_page():
     if session[config.FRONT_USER_ID]:
         userid=g.front_user.id
@@ -148,7 +148,7 @@ def tests():
 
 
 
-@bp.route('/a')
+@bp.route('/category/')
 def index():
     board_id=request.args.get('bd',type=int,default=None)
     banners = BannerModel.query.order_by(BannerModel.priority.desc()).limit(4)
@@ -338,6 +338,7 @@ class SignupView(views.MethodView):
             user = FrontUser(telephone=telephone, username=username, password=password,studentnumber=studentnumber)
             db.session.add(user)
             db.session.commit()
+            # return redirect(url_for('front.signin'))
             return restful.success()
         else:
             print(form.get_error())
