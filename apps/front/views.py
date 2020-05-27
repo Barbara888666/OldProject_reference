@@ -4,11 +4,12 @@ import os
 from flask import Blueprint, views, request, render_template, url_for, session, g, abort, jsonify, redirect
 from sqlalchemy import func
 
-from apps.front.forms import SignupForm, SigninForm, AddProductForm, AddCommentForm, ForgetPasswordForm, AddLikeForm
+from apps.front.forms import SignupForm, SigninForm, AddProductForm, AddCommentForm, ForgetPasswordForm, AddLikeForm, \
+    AddFollowForm
 from exts import sms,db
 from utils import restful,safeutils
 from utils.captcha import Captcha
-from .models import FrontUser, Product, CommentModel, LikeModel
+from .models import FrontUser, Product, CommentModel, LikeModel, FollowModel
 import config
 from ..models import BannerModel, BoardModel, HighlightProductModel, MessageModel
 from .decorators import login_required
@@ -229,7 +230,7 @@ bp.add_url_rule('/forget_password/',view_func=Forget_password.as_view('forget_pa
 
 @bp.route('/t/<user_id>')
 def ta_page(user_id):
-    ta = FrontUser.query.get(user_id)
+    ta = FrontUser.query.filter(FrontUser.id==user_id).first()
     if not ta:
         abort(404)
     page = request.args.get(get_page_parameter(), type=int, default=1)
@@ -239,12 +240,17 @@ def ta_page(user_id):
     products_obj = products_obj.filter_by(user_id =user_id)
     products=products_obj.slice(start, end)
     total = products_obj.count()
-
+    follow=FollowModel.query.filter(FollowModel.follower==g.front_user).filter(FollowModel.star==ta).first()
+    if follow:
+        follow=1
+    else:
+        follow=0
     pagination = Pagination(bs_version=3,page=page,total=total)
     context = {
         'ta': ta,
         'products':products,
         'pagination':pagination,
+        'follow':follow
     }
     return render_template('front/front_tapage.html', **context)
 
@@ -283,7 +289,7 @@ def add_comment():
             if not producttmp.comment:
                 producttmp.comment = 0
             producttmp.comment = producttmp.comment + 1
-            content="You are followed by ssss"
+            content="You are comment by ssss"
             message=MessageModel(content=content,user_id=product.user_id,type='comment')
             db.session.add(comment)
             db.session.add(message)
@@ -320,6 +326,32 @@ def add_like():
             return restful.success()
         else:
             return restful.params_error('没有这篇帖子！')
+    else:
+        return restful.params_error(form.get_error())
+
+@bp.route('/afollow/',methods=['POST'])
+@login_required
+def add_follow():
+    form = AddFollowForm(request.form)
+    if form.validate():
+        user_id = form.user_id.data
+        print(user_id)
+        print("             id+")
+        user = FrontUser.query.get(user_id)
+        print(user)
+        if user:
+            follow = FollowModel()
+            follow.follower = g.front_user
+            startmp = FrontUser.query.filter(FrontUser.id == user_id).first()
+            follow.star=startmp
+            content = "You are followed by ssss"
+            message = MessageModel(content=content, user_id=startmp.id, type='follow')
+            db.session.add(message)
+            db.session.add(follow)
+            db.session.commit()
+            return restful.success()
+        else:
+            return restful.params_error('没有这个用户！')
     else:
         return restful.params_error(form.get_error())
 

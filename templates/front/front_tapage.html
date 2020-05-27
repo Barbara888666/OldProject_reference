@@ -6,18 +6,26 @@
 {% endblock %}
 
 {% block head %}
-{#    <link rel="stylesheet" href="{{ static("front/css/front_index.css") }}">#}
+    <link rel="stylesheet" href="{{ static("front/css/front_ta.css") }}">
+<script src="{{ static('front/js/front_ta.js') }}"></script>
 {% endblock %}
 
 {% block body %}
     <div class="lg-container">
     <div class="background">
-        <div>
+        <div class="top-ta" id="top-ta" name="top-ta" data-da="{{ta.id}}">
             <div class="user-avatar-group">
               <img src="{{ ta.avatar or url_for('static',filename='common/images/logo.png') }}" alt="">
             </div>
             <div class="taname">
-                <span>username:{{ ta.name }}</span>
+                <span>username:{{ ta.username }}</span>
+            </div>
+            <div>
+            {% if follow == 0 %}
+            <button class="btn btn-warning" id="follow-btn" name="follow-btn" data="0">Follow</button></td>
+            {% else %}
+            <button class="btn btn-success" data="1" id="have-follow-btn">Have Followed</button></td>
+            {% endif %}
             </div>
         </div>
         <ul class="product-list-group">

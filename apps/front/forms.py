@@ -56,6 +56,9 @@ class AddCommentForm(BaseForm):
 class AddLikeForm(BaseForm):
     product_id = IntegerField(validators=[InputRequired(message='请输入帖子id！')])
 
+class AddFollowForm(BaseForm):
+    user_id = StringField(validators=[InputRequired(message='请输入用户id！')])
+
 class ForgetPasswordForm(BaseForm):
     telephone = StringField(validators=[Regexp(r"1[345789]\d{9}",message='请输入正确格式的手机号码！')])
     sms_captcha = StringField(validators=[Regexp(r"\w{6}",message='请输入正确格式的短信验证码！')])
