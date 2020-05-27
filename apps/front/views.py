@@ -177,14 +177,14 @@ def index():
     end=start+config.PER_PAGE
     products = None
     total = None
-    if (board_id!=0):
+    if board_id:
         # products_obj = Product.query.filter_by(board_id=board_id)
         products_obj = query_obj.filter(Product.board_id  == board_id)
         products=products_obj.slice(start, end)
         total = products_obj.count()
     else:
         products = query_obj.slice(start, end)
-        total=Product.query.count()
+        total = Product.query.count()
     pagination = Pagination(bs_version=3,page=page,total=total)
     context = {
         'banners': banners,
