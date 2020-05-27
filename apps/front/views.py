@@ -5,9 +5,9 @@ from sqlalchemy import func
 
 from apps.front.forms import SignupForm, SigninForm, AddProductForm, AddCommentForm
 from exts import sms,db
-from utils import restful,safeutils
+from utils import restful,safeutils,uploadproductimgs
 from utils.captcha import Captcha
-from .models import FrontUser, Product, CommentModel
+from .models import FrontUser, Product, CommentModel,product_imgs
 import config
 from ..models import BannerModel, BoardModel, HighlightProductModel
 from .decorators import login_required
@@ -312,7 +312,7 @@ def aproduct():
         boards = BoardModel.query.all()
         return render_template('front/front_aproduct2.html',boards=boards)
     else:
-
+        f = request.files.get('pic','')
         form = AddProductForm(request.form)
         if form.validate():
               name = form.name.data
@@ -322,11 +322,13 @@ def aproduct():
               situstion = form.situation.data
               term = form.term.data
               description = form.description.data
+              '''
               file = form.file.data
               print(file)
               if file!=None:
                   file = file.read()
                   filename = uptoken(file)
+                  '''
               if not board:
                  return restful.params_error(message='没有这个板块！')
               product = Product(name=name,price=price,board_id=board_id,situation=situstion,term=term,description=description)
@@ -335,6 +337,13 @@ def aproduct():
               product.user = g.front_user
               db.session.add(product)
               db.session.commit()
+              if f!='':
+                  fid=product.id
+                  r=uploadproductimgs(f,fid)
+                  for t,seq in zip(r,range(0,len(r))):
+                      pimg=product_imgs(pid=fid,imglink=r,seq=seq)
+                      db.session.add(pimg)
+                      db.session.commit()
               return restful.success()
         else:
             return restful.params_error(message=form.get_error())
