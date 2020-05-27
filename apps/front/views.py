@@ -312,7 +312,7 @@ def aproduct():
         boards = BoardModel.query.all()
         return render_template('front/front_aproduct2.html',boards=boards)
     else:
-        f = request.files.get('pic','')
+        f = request.files.getlist('pic','')
         form = AddProductForm(request.form)
         if form.validate():
               name = form.name.data
