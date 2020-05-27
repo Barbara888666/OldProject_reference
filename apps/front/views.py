@@ -203,10 +203,12 @@ def logout():
     del session[config.FRONT_USER_ID]
     return redirect(url_for('front.signin'))
 
-# @bp.route('/forget_password/')
-# def forget_password():
-#
-#     return render_template('front/front_forget_password.html')
+# @bp.route('/message/')
+# @login_required
+# def message():
+#     messages=MessageModel.query.filter(MessageModel.user_id==g.front_user.id)
+#     print(g.messages)
+#     return render_template('front/front_message.html',messages=messages)
 
 class Forget_password(views.MethodView):
     def get(self):

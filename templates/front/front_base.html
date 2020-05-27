@@ -36,6 +36,9 @@
           <ul class="nav navbar-nav navbar-right">
               {% if g.front_user %}
                   <span id="login-tag" data-is-login="1" style="display:none;"></span>
+              <div class="messages">
+                  <button class="btn btn-default" data-toggle="modal" data-target="#message-dialog">消息</button>
+              </div>
                   <li class="dropdown">
                       <a href="#" class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         {{ g.front_user.username }}
@@ -50,8 +53,6 @@
                   <li><a href="{{ url_for('front.signin') }}">登录</a></li>
                   <li><a href="{{ url_for("front.signup") }}">注册</a></li>
               {% endif %}
-{#            <li><a href="{{ url_for('front.signin') }}">登录</a></li>#}
-{#            <li><a href="{{ url_for("front.signup") }}">注册</a></li>#}
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
@@ -59,5 +60,24 @@
     <div class="main-container">
         {% block body %}{% endblock %}
     </div>
+    <div class="modal fade" id="message-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">消息</h4>
+      </div>
+      <div class="modal-body">
+          {% for message in g.messages %}
+          <div>{{message.content}}</div>
+          {% endfor %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+<!--        <button type="button" class="btn btn-primary" id="save-banner-btn">保存</button>-->
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
