@@ -32,9 +32,9 @@ $(function () {
             'success': function (data) {
                 if(data['code'] == 200){
                     alert.alertConfirm({
-                        'msg': '恭喜！商品发表成功！',
-                        'cancelText': '回到首页',
-                        'confirmText': '再发一篇',
+                        'msg': 'congratulations! Successful product launch!',
+                        'cancelText': 'Back to Home',
+                        'confirmText': 'Upload again',
                         'cancelCallback': function () {
                             window.location = '/';
                         },
