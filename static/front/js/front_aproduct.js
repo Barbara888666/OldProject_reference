@@ -8,7 +8,7 @@ $(function () {
         var termSelect = $("select[name='term']");
         var descpiptionInput = $("input[name='descpiption']");
         // var fileInput =$('#pic').fileinput
-        var fileInput = $("input[name='pic']");
+        // var fileInput = $("input[name='pic']");
 
 
         var name = nameInput.val();
@@ -17,9 +17,6 @@ $(function () {
         var situation = situationSelect.val();
         var term = termSelect.val();
         var descpiption = descpiptionInput.val();
-
-
-
 
         zlajax.post({
             'url': '/aproduct/',
@@ -30,7 +27,7 @@ $(function () {
                 'situation':situation,
                 'term':term,
                 'description':descpiption,
-                'file':fileInput,
+                // 'file':fileInput,
             },
             'success': function (data) {
                 if(data['code'] == 200){

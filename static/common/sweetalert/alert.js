@@ -9,7 +9,7 @@ var alert = {
             - msg：提示的内容（可选）
     */
     'alertError': function (msg) {
-        swal('提示',msg,'error');
+        swal('Hint',msg,'error');
     },
     /*
         功能：信息提示
@@ -17,7 +17,7 @@ var alert = {
             - msg：提示的内容（可选）
     */
     'alertInfo':function (msg) {
-        swal('提示',msg,'warning');
+        swal('Hint',msg,'warning');
     },
     /*
         功能：可以自定义标题的信息提示
@@ -35,7 +35,7 @@ var alert = {
     */
     'alertSuccess':function (msg,confirmCallback) {
         args = {
-            'title': '提示',
+            'title': 'Hint',
             'text': msg,
             'type': 'success',
         }
@@ -63,7 +63,7 @@ var alert = {
     */
     'alertConfirm':function (params) {
         swal({
-            'title': params['title'] ? params['title'] : '提示',
+            'title': params['title'] ? params['title'] : 'Hint',
             'showCancelButton': true,
             'showConfirmButton': true,
             'type': params['type'] ? params['type'] : '',
@@ -94,7 +94,7 @@ var alert = {
     */
     'alertOneInput': function (params) {
         swal({
-            'title': params['title'] ? params['title'] : '请输入',
+            'title': params['title'] ? params['title'] : 'Please Input',
             'text': params['text'] ? params['text'] : '',
             'type':'input',
             'showCancelButton': true,
@@ -107,7 +107,7 @@ var alert = {
         },function (inputValue) {
             if(inputValue === false) return false;
             if(inputValue === ''){
-                swal.showInputError('输入框不能为空！');
+                swal.showInputError('Cannot Empty！');
                 return false;
             }
             if(params['confirmCallback']){
@@ -120,7 +120,7 @@ var alert = {
         参数：无
     */
     'alertNetworkError':function () {
-        this.alertErrorToast('网络错误');
+        this.alertErrorToast('Network Errors');
     },
     /*
         功能：信息toast提示（1s后消失）
@@ -144,7 +144,7 @@ var alert = {
             - msg：提示消息
     */
     'alertSuccessToast':function (msg) {
-        if(!msg){msg = '成功！';}
+        if(!msg){msg = 'Success！';}
         this.alertToast(msg,'success');
     },
     /*
