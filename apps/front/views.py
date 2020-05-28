@@ -426,13 +426,6 @@ def aproduct():
               situstion = form.situation.data
               term = form.term.data
               description = form.description.data
-              '''
-              file = form.file.data
-              print(file)
-              if file!=None:
-                  file = file.read()
-                  filename = uptoken(file)
-                  '''
               if not board:
                  return restful.params_error(message='没有这个板块！')
               product = Product(name=name,price=price,board_id=board_id,situation=situstion,term=term,description=description,like=0,comment=0)

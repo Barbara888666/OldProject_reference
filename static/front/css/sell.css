@@ -72,7 +72,7 @@ a:link,a:visited{
 .table-right{
     width:380px;
     height: 400px;
-    background-color: wheat;
+    /*background-color: wheat;*/
     float: left;
     /*让div水平居中*/
 }
@@ -84,7 +84,7 @@ a:link,a:visited{
     text-align: left;
     float: left;
     /*margin: left;*/
-    background-color: cyan;
+    /*background-color: cyan;*/
     padding-top: 50px;
 
 
