@@ -10,7 +10,7 @@ def hash(word:str='',salt:bytes=None):
         h=md5()
     h.update(word.encode('UTF-8'))
     return h.hexdigest()
-def uploadimg(img,des:str,tid:[int,str],name:str):
+def uploadimg(img,des:str,tid:str,name:str):
     fpath=path.join(imgpath,des,tid)
     if not path.exists(fpath):
         makedirs(fpath)
