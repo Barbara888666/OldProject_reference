@@ -11,7 +11,7 @@ from utils import restful,safeutils
 from utils.captcha import Captcha
 from .models import FrontUser, Product, CommentModel, LikeModel, FollowModel
 import config
-from ..models import BannerModel, BoardModel, HighlightProductModel, MessageModel
+from ..models import BannerModel, BoardModel, HighlightProductModel, FollowMessageModel,CommemtMessageModel
 from .decorators import login_required
 from flask_paginate import Pagination, get_page_parameter
 from tasks import send_sms_captcha
@@ -293,7 +293,7 @@ def add_comment():
             producttmp.comment = producttmp.comment + 1
             content = "Your product %s is commented by %s" % (product.name, comment.commenter.username)
             # content="Your product %s is commented by %s",product.name,comment.commenter.username
-            message=MessageModel(content=content,user_id=product.user_id,type='comment')
+            message=CommemtMessageModel(content=comment.commenter.id,user_id=product.user_id)
             db.session.add(comment)
             db.session.add(message)
             db.session.commit()
@@ -321,10 +321,6 @@ def add_like():
             if not producttmp.like:
                 producttmp.like=0
             producttmp.like = producttmp.like+1
-            content = "Your product %s is liked by %s" %(product.name,like.liker.username)
-            print(content)
-            message = MessageModel(content=content, user_id=product.user_id, type='like')
-            db.session.add(message)
             db.session.add(like)
             db.session.commit()
             return restful.success()
@@ -349,7 +345,7 @@ def add_follow():
             startmp = FrontUser.query.filter(FrontUser.id == user_id).first()
             follow.star=startmp
             content = "You are followed by %s" %follow.follower.username
-            message = MessageModel(content=content, user_id=startmp.id, type='follow')
+            message = FollowMessageModel(content=follow.follower.id, user_id=startmp.id, type='follow')
             db.session.add(message)
             db.session.add(follow)
             db.session.commit()
