@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="{{ static("front/css/sell.css") }}">
     <!--link rel="stylesheet" href="css/sell.css"-->
 
-    <link rel="stylesheet" href="sell.css">
+    <link rel="stylesheet" href="/static/front/css/sell.css">
     <script src="{{ static("front/js/front_aproduct.js") }}"></script>
 
 {% endblock %}
@@ -129,7 +129,7 @@
 {#                                    <label class="col-md-2 control-label small"><span#}
 {#                                            class="text-danger">*</span></label>#}
 {#                                    <div class="col-md-10 has-success">#}
-{#                                        <input id="pic" name="pic" type="file" class="form-control"/>#}
+{#                                        <input id="pic" name="pic" type="file" multiple='multiple' class="form-control"/>#}
 {#                                    </div>#}
 {#                            </div>#}
                             <div id="main-form">
@@ -138,7 +138,7 @@
                                             class="text-danger">*</span></label>
                                     <div class="col-md-12 has-success">
 
-                                        <input id="pic" name="pic" type="file" class="form-control"/>
+                                        <input id="pic" name="pic" type="file" multiple='multiple' class="form-control"/>
                                     </div>
                                 </div>
                             </div>
@@ -171,7 +171,7 @@
 
                                     //minFileCount: 0, //文件最小大学， 单位为kb，如果为0表示不限制文件大小
 
-                                    maxFileCount: 1, //表示允许同时上传的最大文件个数
+                                    maxFileCount: 10, //表示允许同时上传的最大文件个数
 
                                     enctype: 'multipart/form-data',
 
