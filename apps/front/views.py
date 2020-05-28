@@ -416,7 +416,6 @@ def aproduct():
         boards = BoardModel.query.all()
         return render_template('front/front_aproduct3.html',boards=boards)
     else:
-        f = request.files.getlist('pic')
         form = AddProductForm(request.form)
         if form.validate():
               name = form.name.data
@@ -426,6 +425,9 @@ def aproduct():
               situstion = form.situation.data
               term = form.term.data
               description = form.description.data
+              file=form.file.data
+              print(file)
+              return
               if not board:
                  return restful.params_error(message='没有这个板块！')
               product = Product(name=name,price=price,board_id=board_id,situation=situstion,term=term,description=description,like=0,comment=0)
@@ -434,7 +436,7 @@ def aproduct():
               product.user = g.front_user
               db.session.add(product)
               db.session.commit()
-              if f!=[]:
+              if file!=[]:
                   fid=product.id
                   r=uploadproductimgs(f,fid)
                   for t,seq in zip(r,range(0,len(r))):

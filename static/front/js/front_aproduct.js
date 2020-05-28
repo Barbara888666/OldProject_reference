@@ -27,7 +27,7 @@ $(function () {
                 'situation':situation,
                 'term':term,
                 'description':descpiption,
-                // 'file':fileInput,
+                'file':fileInput,
             },
             'success': function (data) {
                 if(data['code'] == 200){
