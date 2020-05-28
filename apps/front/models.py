@@ -13,7 +13,7 @@ class GenderEnum(enum.Enum):
 class FrontUser(db.Model):
     __tablename__ = 'front_user'
     id = db.Column(db.String(100),primary_key=True,default=shortuuid.uuid)
-    studentnumber = db.Column(db.String(50),nullable=False,unique=True)
+    studentnumber = db.Column(db.String(50),nullable=False)
     telephone = db.Column(db.String(11),nullable=False,unique=True)
     username = db.Column(db.String(50),nullable=False)
     _password = db.Column(db.String(100), nullable=False)
@@ -63,6 +63,8 @@ class Product(db.Model):
     situation = db.Column(db.Enum(SituationEnum),default=SituationEnum.Slightly_used)
     term = db.Column(db.Enum(TermEnum),default=TermEnum.Long_term)
     join_time = db.Column(db.DateTime,default=datetime.now)
+    like= db.Column(db.INTEGER,default=0)
+    comment = db.Column(db.INTEGER, default=0)
 
     board_id = db.Column(db.INTEGER, db.ForeignKey('board.id'))
     user_id = db.Column(db.String(100), db.ForeignKey("front_user.id"))
@@ -85,3 +87,30 @@ class product_imgs(db.Model):
     pid=db.Column(db.INTEGER,db.ForeignKey('product.id'),primary_key=True)
     imglink=db.Column(db.String(80))
     seq=db.Column(db.INTEGER,primary_key=True)
+
+class LikeModel(db.Model):
+    __tablename__ = 'like'
+    id = db.Column(db.INTEGER, primary_key=True, autoincrement=True)
+    create_time = db.Column(db.DateTime,default=datetime.now)
+
+    product_id = db.Column(db.INTEGER, db.ForeignKey('product.id'))
+    liker_id = db.Column(db.String(100), db.ForeignKey("front_user.id"))
+
+    product = db.relationship("Product", backref="likes")
+    liker = db.relationship("FrontUser", backref='likes')
+
+class FollowModel(db.Model):
+    __tablename__ = 'follow'
+    id = db.Column(db.INTEGER, primary_key=True, autoincrement=True)
+    create_time = db.Column(db.DateTime,default=datetime.now)
+
+    follower_id = db.Column(db.String(100), db.ForeignKey("front_user.id"))
+    star_id = db.Column(db.String(100), db.ForeignKey("front_user.id"))
+
+    star = db.relationship("FrontUser", backref='follows',uselist=False,foreign_keys=[star_id])
+    follower = db.relationship("FrontUser", backref='stars',uselist=False,foreign_keys=[follower_id])
+    #initiator = db.relationship('TestUser', backref="tasks", uselist=False, foreign_keys=[initiatorId])
+    #errandor = db.relationship('TestUser', backref="orders", uselist=False,foreign_keys=[errandorId])
+
+
+

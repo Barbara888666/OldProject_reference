@@ -24,3 +24,7 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     width: 250px;
     float: right;
 }
+.messages{
+    float: left;
+    margin-top: 10px;
+}

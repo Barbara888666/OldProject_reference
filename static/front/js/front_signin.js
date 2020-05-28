@@ -34,3 +34,24 @@ $(function(){
         });
     });
 });
+
+$(function () {
+    $("#resetpwd-link").click(function (event) {
+        event.preventDefault();
+        alert.alertConfirm({
+                        'msg': 'reset Password means restart signup, are you sure?',
+                        'cancelText': 'Wrong Click',
+                        'confirmText': 'Sure',
+                        'cancelCallback': function () {
+                            window.location = '/signin/';
+                        },
+                        'confirmCallback': function () {
+                            window.location = '/forget_password/';
+                        }
+                    });
+
+    });
+
+});
+
+

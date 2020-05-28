@@ -7,7 +7,7 @@ from io import BytesIO
 from exts import sms
 from utils import restful
 from utils.captcha import Captcha
-from .forms import SMSCaptchaForm
+from .forms import SMSCaptchaForm, SMSCaptchaForm2
 import random
 import qiniu
 from tasks import send_sms_captcha
@@ -46,6 +46,22 @@ def graph_captcha():
 @bp.route('/sms_captcha/',methods=['POST'])
 def sms_captcha():
     form = SMSCaptchaForm(request.form)
+    if form.validate():
+        telephone = form.telephone.data
+        captcha = ''.join(str(i) for i in random.sample(range(0, 9), 6))  # sample(seq, n) 从序列seq中选择n个随机且独立的元素；
+        if sms.send(telephone,code=captcha):
+            cache.set(telephone,captcha)
+            return restful.success()
+        else:
+            return restful.params_error()
+            # cache.set(telephone,captcha)
+            # return restful.success()
+    else:
+        return restful.params_error(message='参数错误！')
+
+@bp.route('/sms_captcha2/',methods=['POST'])
+def sms_captcha2():
+    form = SMSCaptchaForm2(request.form)
     if form.validate():
         telephone = form.telephone.data
         captcha = ''.join(str(i) for i in random.sample(range(0, 9), 6))  # sample(seq, n) 从序列seq中选择n个随机且独立的元素；

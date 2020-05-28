@@ -17,15 +17,21 @@
             <div class="product-picture">
                 <img src="{{ url_for('static',filename='common/images/logo.png') }}" alt="">
             </div>
-            <ul class="product-info-group" id="product-information" data-da="1">
+            <ul class="product-info-group" id="product-information" data-da="{{ product.id}}">
             <li><span>发布时间：{{ product.join_time }}</span></li>
             <li><span>卖家：{{ product.user.username }}</span></li>
             <li><span>类别：{{ product.board.name }}</span></li>
             <li><span>描述:{{ product.description }}</span></li>
-            <li><span>时长:{{ product.price }}</span></li>
-            <li><span>点击数: 0</span></li>
-            <li><span>评论数: 0</span></li>
+            <li><span>价格:{{ product.price }}</span></li>
+            <li><span>点击数: {{ product.like }}</span></li>
+            <li><span>评论数: {{ product.comment }}</span></li>
             </ul>
+            {% if like == 0 %}
+            <button class="btn btn-warning" id="like-btn" name="like-btn" data="0">Like</button></td>
+            {% else %}
+            <button class="btn btn-success" data="1" id="have-like-btn">Have Liked</button></td>
+            {% endif %}
+
         </div>
 
         <div class="comment-group">

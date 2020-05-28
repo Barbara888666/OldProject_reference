@@ -1,0 +1,32 @@
+.top-ta{
+    height: 200px;
+    width: 80%;
+    margin: 0 auto;
+    background-color: cornsilk;
+}
+.product-list-group{
+    width: 80%;
+    margin: 0 auto;
+}
+.top-ta img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+
+.product-list-group li{
+    height: 300px;
+}
+
+.product-picture{
+    height: 50px;
+    width: 50px;
+    float: left;
+    background-color: cornflowerblue;
+}
+.product-picture img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}

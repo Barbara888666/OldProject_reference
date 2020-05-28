@@ -32,7 +32,6 @@
 {% block main_content %}
     <div class="top-box">
         <button class="btn btn-warning" data-toggle="modal" data-target="#banner-dialog">添加轮播图</button>
-
     </div>
     <table class="table table-bordered">
         <thead>
@@ -46,16 +45,6 @@
             </tr>
         </thead>
         <tbody>
-{#            <tr>#}
-{#                    <td></td>#}
-{#                    <td></td>#}
-{#                    <td width="300px"></td>#}
-{#                    <td></td>#}
-{#                    <td></td>#}
-{#                    <td>#}
-{##}
-{#                    </td>#}
-{#            </tr>#}
             {% for banner in banners %}
                 <tr data-name="{{ banner.name }}" data-image="{{ banner.image_url }}" data-link="{{ banner.link_url }}" data-priority="{{ banner.priority }}" data-id="{{ banner.id }}">
                     <td >{{ banner.name }}</td>

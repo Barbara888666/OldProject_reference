@@ -51,9 +51,9 @@
                     <li><a href="{{ url_for("front.index",st=1,bd=current_board) }}">最新</a></li>
                 {% endif %}
                 {% if current_sort == 2 %}
-                    <li class="active"><a href="{{ url_for("front.index",st=2,bd=current_board) }}">精华帖子</a></li>
+                    <li class="active"><a href="{{ url_for("front.index",st=2,bd=current_board) }}">官方推荐</a></li>
                 {% else %}
-                    <li><a href="{{ url_for("front.index",st=2,bd=current_board) }}">精华帖子</a></li>
+                    <li><a href="{{ url_for("front.index",st=2,bd=current_board) }}">官方推荐</a></li>
                 {% endif %}
                 {% if current_sort == 3 %}
                     <li class="active"><a href="{{ url_for("front.index",st=3,bd=current_board) }}">点赞最多</a></li>
@@ -61,9 +61,9 @@
                     <li><a href="{{ url_for("front.index",st=3,bd=current_board) }}">点赞最多</a></li>
                 {% endif %}
                 {% if current_sort == 4 %}
-                    <li class="active"><a href="{{ url_for("front.index",st=4,bd=current_board) }}">评论最多</a></li>
+                    <li class="active"><a href="{{ url_for("front.index",st=4,bd=current_board) }}">价格最低</a></li>
                 {% else %}
-                    <li><a href="{{ url_for("front.index",st=4,bd=current_board) }}">评论最多</a></li>
+                    <li><a href="{{ url_for("front.index",st=4,bd=current_board) }}">价格最低</a></li>
                 {% endif %}
                 </ul>
             <ul class="product-list-group">
@@ -76,7 +76,7 @@
                     <p class="product-name">
                         <a href="{{ url_for("front.product_detail",product_id=product.id)}}">{{ product.name }}</a>
                         {% if product.highlight %}
-                                    <span class="label label-danger">精华帖</span>
+                                    <span class="label label-danger">官方推荐</span>
                         {% endif %}
                     </p>
                     <p class="product-info1">
@@ -89,7 +89,10 @@
                         <span>描述:{{ product.description }}</span>
                     </p>
                     <p class="product-info3">
-                        <span>点击率:0</span>
+                        <span>点赞数:{{ product.like }}</span>
+                    </p>
+                    <p class="product-info3">
+                        <span>评论数:{{ product.comment }}</span>
                     </p>
                 </div>
                 <div class="product-picture">
@@ -110,9 +113,9 @@
         </div>
         <div class="list-group">
             {% if current_board %}
-                <a href="/" class="list-group-item">所有板块</a>
+                <a href="{{ url_for("front.index") }}" class="list-group-item">所有板块</a>
             {% else %}
-                <a href="/" class="list-group-item active">所有板块</a>
+                <a href="{{ url_for("front.index") }}" class="list-group-item active">所有板块</a>
             {% endif %}
 
             {% for board in boards %}

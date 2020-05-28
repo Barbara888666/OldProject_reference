@@ -1,19 +1,22 @@
 #encoding: utf-8
+import os
 
 from flask import Blueprint, views, request, render_template, url_for, session, g, abort, jsonify, redirect
 from sqlalchemy import func
 
-from apps.front.forms import SignupForm, SigninForm, AddProductForm, AddCommentForm
+from apps.front.forms import SignupForm, SigninForm, AddProductForm, AddCommentForm, ForgetPasswordForm, AddLikeForm, \
+    AddFollowForm
 from exts import sms,db
 from utils import restful,safeutils,uploadproductimgs
 from utils.captcha import Captcha
-from .models import FrontUser, Product, CommentModel,product_imgs
+from .models import FrontUser, Product, CommentModel, LikeModel, FollowModel,product_imgs
 import config
-from ..models import BannerModel, BoardModel, HighlightProductModel
+from ..models import BannerModel, BoardModel, HighlightProductModel, MessageModel
 from .decorators import login_required
 from flask_paginate import Pagination, get_page_parameter
 from tasks import send_sms_captcha
 from ..common.views import uptoken
+# from werkzeug.utils import secure_filename
 
 bp = Blueprint("front",__name__)
 
@@ -42,11 +45,13 @@ def highpres():
     return render_template('front/htmls/high_predibility_seller.html')
 #搜索网站通知列表
 
-@bp.route('/')
-@login_required
+@bp.route('/a')
 def main_page():
-    userid=g.front_user.id
-    return render_template('front/htmls/main_page.html',userid=userid)
+    if session[config.FRONT_USER_ID]:
+        userid=g.front_user.id
+        return render_template('front/htmls/main_page.html',userid=userid)
+    else:
+        return render_template('front/htmls/main_page.html')
 
 @bp.route('/news')
 def new():
@@ -144,7 +149,7 @@ def tests():
 
 
 
-@bp.route('/a')
+@bp.route('/category/')
 def index():
     board_id=request.args.get('bd',type=int,default=None)
     banners = BannerModel.query.order_by(BannerModel.priority.desc()).limit(4)
@@ -154,6 +159,7 @@ def index():
     query_obj = None
     print(sort)
     if sort == 1:
+        #添加的时间排序
         query_obj = Product.query.order_by(Product.join_time.desc())
     elif sort == 2:
         # 按照加精的时间倒叙排序
@@ -161,31 +167,24 @@ def index():
             HighlightProductModel.create_time.desc(), Product.join_time.desc())
     elif sort == 3:
         # 按照点赞的数量排序
-        query_obj = Product.query.order_by(Product.join_time.desc())
+        query_obj = Product.query.order_by(Product.like.desc())
     elif sort == 4:
-        # 按照评论的数量排序
-        query_obj = db.session.query(Product).outerjoin(CommentModel).group_by(Product.id).order_by(
-            func.count(CommentModel.id).desc(), Product.join_time.desc())
+        # 按照价格便宜排序
+        query_obj = Product.query.order_by(Product.price.asc())
 
     page = request.args.get(get_page_parameter(), type=int, default=1)
     start=(page-1)*config.PER_PAGE
     end=start+config.PER_PAGE
     products = None
     total = None
-    # if board_id:
-    #     products = Product.query.filter_by(board_id=board_id).slice(start, end)
-    #     total = Product.query.filter_by(board_id=board_id).count()
-    # else:
-    #     products = Product.query.slice(start, end)
-    # pagination = Pagination(bs_version=3,page=page,total=total)
     if board_id:
         # products_obj = Product.query.filter_by(board_id=board_id)
         products_obj = query_obj.filter(Product.board_id  == board_id)
         products=products_obj.slice(start, end)
         total = products_obj.count()
     else:
-        products = Product.query.slice(start, end)
-        total=Product.query.count()
+        products = query_obj.slice(start, end)
+        total = Product.query.count()
     pagination = Pagination(bs_version=3,page=page,total=total)
     context = {
         'banners': banners,
@@ -204,9 +203,36 @@ def logout():
     del session[config.FRONT_USER_ID]
     return redirect(url_for('front.signin'))
 
+# @bp.route('/message/')
+# @login_required
+# def message():
+#     messages=MessageModel.query.filter(MessageModel.user_id==g.front_user.id)
+#     print(g.messages)
+#     return render_template('front/front_message.html',messages=messages)
+
+class Forget_password(views.MethodView):
+    def get(self):
+        return render_template('front/front_forget_password.html')
+
+    def post(self):
+        form = ForgetPasswordForm(request.form)
+        if form.validate():
+            telephone= form.telephone.data
+            print(telephone)
+            user = FrontUser.query.filter(FrontUser.telephone==telephone).first()
+            print(user)
+            db.session.delete(user)
+            db.session.commit()
+            print("delete success")
+            return restful.success("confirm success")
+        else:
+            print(form.get_error())
+            return restful.params_error(message=form.get_error())
+bp.add_url_rule('/forget_password/',view_func=Forget_password.as_view('forget_password'))
+
 @bp.route('/t/<user_id>')
 def ta_page(user_id):
-    ta = FrontUser.query.get(user_id)
+    ta = FrontUser.query.filter(FrontUser.id==user_id).first()
     if not ta:
         abort(404)
     page = request.args.get(get_page_parameter(), type=int, default=1)
@@ -216,12 +242,17 @@ def ta_page(user_id):
     products_obj = products_obj.filter_by(user_id =user_id)
     products=products_obj.slice(start, end)
     total = products_obj.count()
-
+    follow=FollowModel.query.filter(FollowModel.follower==g.front_user).filter(FollowModel.star==ta).first()
+    if follow:
+        follow=1
+    else:
+        follow=0
     pagination = Pagination(bs_version=3,page=page,total=total)
     context = {
         'ta': ta,
         'products':products,
         'pagination':pagination,
+        'follow':follow
     }
     return render_template('front/front_tapage.html', **context)
 
@@ -229,10 +260,19 @@ def ta_page(user_id):
 def product_detail(product_id):
     product=Product.query.get(product_id)
     print(product.user)
-    print("YONGHU")
+    # user_id=product.user.id
+    like=LikeModel.query.filter(LikeModel.product_id==product_id).filter(LikeModel.liker==g.front_user).first()
+    # query.filter(User.name == 'ed').filter(User.fullname == 'Ed Jones')
+    # like=LikeModel.query.get(product_id)
+    # like=like.filter_by(user_id=user_id)
+    print(like)
     if not product:
         abort(404)
-    return render_template('front/front_product_detail.html',product=product)
+    if not like:
+        like=0
+    else:
+        like=1
+    return render_template('front/front_product_detail.html',product=product,like=like)
 
 
 @bp.route('/acomment/',methods=['POST'])
@@ -247,7 +287,15 @@ def add_comment():
             comment = CommentModel(content=content)
             comment.product = product
             comment.commenter= g.front_user
+            producttmp = Product.query.filter(Product.id == product_id).first()
+            if not producttmp.comment:
+                producttmp.comment = 0
+            producttmp.comment = producttmp.comment + 1
+            content = "Your product %s is commented by %s" % (product.name, comment.commenter.username)
+            # content="Your product %s is commented by %s",product.name,comment.commenter.username
+            message=MessageModel(content=content,user_id=product.user_id,type='comment')
             db.session.add(comment)
+            db.session.add(message)
             db.session.commit()
             return restful.success()
         else:
@@ -255,6 +303,61 @@ def add_comment():
     else:
         return restful.params_error(form.get_error())
 
+@bp.route('/alike/',methods=['POST'])
+@login_required
+def add_like():
+    form = AddLikeForm(request.form)
+    if form.validate():
+        product_id = form.product_id.data
+        print(product_id)
+        print("             id+")
+        product = Product.query.get(product_id)
+        print(product)
+        if product:
+            like = LikeModel()
+            like.product = product
+            like.liker = g.front_user
+            producttmp = Product.query.filter(Product.id == product_id).first()
+            if not producttmp.like:
+                producttmp.like=0
+            producttmp.like = producttmp.like+1
+            content = "Your product %s is liked by %s" %(product.name,like.liker.username)
+            print(content)
+            message = MessageModel(content=content, user_id=product.user_id, type='like')
+            db.session.add(message)
+            db.session.add(like)
+            db.session.commit()
+            return restful.success()
+        else:
+            return restful.params_error('没有这篇帖子！')
+    else:
+        return restful.params_error(form.get_error())
+
+@bp.route('/afollow/',methods=['POST'])
+@login_required
+def add_follow():
+    form = AddFollowForm(request.form)
+    if form.validate():
+        user_id = form.user_id.data
+        print(user_id)
+        print("             id+")
+        user = FrontUser.query.get(user_id)
+        print(user)
+        if user:
+            follow = FollowModel()
+            follow.follower = g.front_user
+            startmp = FrontUser.query.filter(FrontUser.id == user_id).first()
+            follow.star=startmp
+            content = "You are followed by %s" %follow.follower.username
+            message = MessageModel(content=content, user_id=startmp.id, type='follow')
+            db.session.add(message)
+            db.session.add(follow)
+            db.session.commit()
+            return restful.success()
+        else:
+            return restful.params_error('没有这个用户！')
+    else:
+        return restful.params_error(form.get_error())
 
 
 class SignupView(views.MethodView):
@@ -271,6 +374,7 @@ class SignupView(views.MethodView):
             user = FrontUser(telephone=telephone, username=username, password=password,studentnumber=studentnumber)
             db.session.add(user)
             db.session.commit()
+            # return redirect(url_for('front.signin'))
             return restful.success()
         else:
             print(form.get_error())
@@ -310,9 +414,9 @@ bp.add_url_rule('/signin/',view_func=SigninView.as_view('signin'))
 def aproduct():
     if request.method == 'GET':
         boards = BoardModel.query.all()
-        return render_template('front/front_aproduct2.html',boards=boards)
+        return render_template('front/front_aproduct3.html',boards=boards)
     else:
-        f = request.files.getlist('pic','')
+        f = request.files.getlist('pic')
         form = AddProductForm(request.form)
         if form.validate():
               name = form.name.data
@@ -331,13 +435,13 @@ def aproduct():
                   '''
               if not board:
                  return restful.params_error(message='没有这个板块！')
-              product = Product(name=name,price=price,board_id=board_id,situation=situstion,term=term,description=description)
+              product = Product(name=name,price=price,board_id=board_id,situation=situstion,term=term,description=description,like=0,comment=0)
               product.board = board
               product.user_id = g.front_user.id
               product.user = g.front_user
               db.session.add(product)
               db.session.commit()
-              if f!='':
+              if f!=[]:
                   fid=product.id
                   r=uploadproductimgs(f,fid)
                   for t,seq in zip(r,range(0,len(r))):
