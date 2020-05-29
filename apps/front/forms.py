@@ -40,14 +40,24 @@ class SigninForm(BaseForm):
     remeber = StringField()
 
 class AddProductForm(BaseForm):
-    name = StringField(validators=[InputRequired(message='请输入商品名字！')])
-    price = StringField(validators=[InputRequired(message='请输入价格！')])
-    board_id = IntegerField(validators=[InputRequired(message='请输入板块id！')])
-    situation = StringField(validators=[InputRequired(message='请输入状况')])
-    term=StringField(validators=[InputRequired(message='请输入时期！')])
+    # name = StringField(validators=[InputRequired(message='请输入商品名字！')])
+    # price = StringField(validators=[InputRequired(message='请输入价格！')])
+    # board_id = IntegerField(validators=[InputRequired(message='请输入板块id！')])
+    # situation = StringField(validators=[InputRequired(message='请输入状况')])
+    # term = StringField(validators=[InputRequired(message='请输入时期！')])
+    # # term = StringField()
+    # description = StringField()
+    # # file=FileField(validators=[InputRequired(message='请输入图片！')])
+    # file = FileField()
+    name = StringField()
+    price = StringField()
+    board_id = IntegerField()
+    situation = StringField()
+    term = StringField()
+    # term = StringField()
     description = StringField()
-    file= FileField()
-
+    # file=FileField(validators=[InputRequired(message='请输入图片！')])
+    file = FileField()
 
 class AddCommentForm(BaseForm):
     content = StringField(validators=[InputRequired(message='请输入评论内容！')])

@@ -3,6 +3,7 @@ import os
 
 from flask import Blueprint, views, request, render_template, url_for, session, g, abort, jsonify, redirect
 from sqlalchemy import func
+from werkzeug.utils import secure_filename
 
 from apps.front.forms import SignupForm, SigninForm, AddProductForm, AddCommentForm, ForgetPasswordForm, AddLikeForm, \
     AddFollowForm
@@ -409,45 +410,140 @@ bp.add_url_rule('/signin/',view_func=SigninView.as_view('signin'))
 
 
 
-@bp.route('/aproduct/',methods=['GET','POST'])
-@login_required
-def aproduct():
+@bp.route('/aproduct_form/')
+#@login_required
+def aproduct1():
     if request.method == 'GET':
         boards = BoardModel.query.all()
         return render_template('front/front_aproduct3.html',boards=boards)
     else:
-        f = request.files.get('pic', '')
+        dic = dict(
+            Category=request.form.get('Category'),
+            Situation=request.form.get('Situation'),
+            time=request.form.get('time'),
+            Short_term=request.form.get('short time'),
+            long_time=request.form.get("long time"),
+            Note=request.form.get('Note'),
+        )
+        print(dic)
+        f = request.files['file']
+        basepath = os.path.dirname(__file__)  # 当前文件所在路径
+        upload_path = os.path.join(basepath, 'upload_file_dir', secure_filename(f.filename))
+        # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
+        print(upload_path)
+        upload_path = os.path.abspath(upload_path)  # 将路径转换为绝对路径
+        print(upload_path)
+        f.save(upload_path)
+        return "success";
+        form1 = AddPictureForm(request.form)
+        f = form1.file
+        f=request.files['fileI'] # 保存图片
+        print(f)
         if (f != None):
             basepath = os.path.dirname(__file__)
+            print("tupian")
+            print(f)
             print(basepath)
-            # upload_path = os.path.join(basepath, 'upload_file_dir', secure_filename(f.filename))
+            f.save(basepath)
+        f = request.files.get('pic', '')
+        f1 = request.files['pictest']
+        f = request.files.get('pictest')
+        file_content = f.read()
+        print(f)
+        print(file_content)
+        f1 = form.file
+        print(f1)
+        if (f1 != None):
+            basepath = os.path.dirname(__file__)
+            print("tupian")
+            print(f1)
+            print(basepath)
+            f1.save(basepath)
+        if 1==1:
+            # file = request.files['file']
+            # print(file)
+            postdata = request.form['name']
+            print(postdata)
+            postdata = request.form['price']
+            print(postdata)
+            postdata = request.form['board_id']
+            print(postdata)
+            postdata = request.form['situation']
+            print(postdata)
+            postdata = request.form['pic']
+            print(postdata)
+            #没有pic 会报400
+            # formData.append('name', name);
+            # formData.append('price', price);
+            # formData.append('board_id', board_id);
+            # formData.append('situation', situation);
+            # formData.append('term', term);
+            # formData.append('description', descpiption);
+
+        # form = AddProductForm(request.form)
+        # if form.validate():
+        #       file=form.file.data
+        #       name = form.name.data
+        #       price = form.price.data
+        #       board_id = form.board_id.data
+        #       board = BoardModel.query.get(board_id)
+        #       situstion = form.situation.data
+        #       term = form.term.data
+        #       description = form.description.data
+        #       print(name)
+        #       print(price)
+        #       print(board_id)
+        #       if not board:
+        #          return restful.params_error(message='没有这个板块！')
+        #       product = Product(name=name,price=price,board_id=board_id,situation=situstion,term=term,description=description,like=0,comment=0)
+        #       product.board = board
+        #       product.user_id = g.front_user.id
+        #       product.user = g.front_user
+        #       db.session.add(product)
+        #       db.session.commit()
+            return restful.success()
+        # else:
+        #       return restful.params_error(message=form.get_error())
+
+class aproductView(views.MethodView):
+    def get(self):
+        return render_template('front/front_aproduct3.html')
+
+    def post(self):
+        # form = SignupForm(request.form)
+        # if form.validate():
+        if 1==1:
+            dic = dict(
+                Category=request.form.get('Category'),
+                Situation=request.form.get('Situation'),
+                time=request.form.get('time'),
+                Short_term=request.form.get('short time'),
+                long_time=request.form.get("long time"),
+                Note=request.form.get('Note'),
+            )
+            print(dic)
+            f = request.files['file']
+            basepath = os.path.dirname(__file__)  # 当前文件所在路径
+            upload_path = os.path.join(basepath, 'upload_file_dir', secure_filename(f.filename))
             # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
-            # print(upload_path)
-            # upload_path = os.path.abspath(upload_path)  # 将路径转换为绝对路径
-            # print(upload_path)
-            # f.save(upload_path)
-        form = AddProductForm(request.form)
-        if form.validate():
-              name = form.name.data
-              price = form.price.data
-              board_id = form.board_id.data
-              board = BoardModel.query.get(board_id)
-              situstion = form.situation.data
-              term = form.term.data
-              description = form.description.data
-
-              if not board:
-                 return restful.params_error(message='没有这个板块！')
-              product = Product(name=name,price=price,board_id=board_id,situation=situstion,term=term,description=description,like=0,comment=0)
-              product.board = board
-              product.user_id = g.front_user.id
-              product.user = g.front_user
-              db.session.add(product)
-              db.session.commit()
-              return restful.success()
+            print(upload_path)
+            upload_path = os.path.abspath(upload_path)  # 将路径转换为绝对路径
+            print(upload_path)
+            f.save(upload_path)
+            return "success";
+            # telephone = form.telephone.data
+            # username = form.username.data
+            # studentnumber = form.studentnumber.data
+            # password = form.password1.data
+            # user = FrontUser(telephone=telephone, username=username, password=password,studentnumber=studentnumber)
+            # db.session.add(user)
+            # db.session.commit()
+            # return redirect(url_for('front.signin'))
+            # return restful.success()
         else:
+            print(form.get_error())
             return restful.params_error(message=form.get_error())
-
+bp.add_url_rule('/aproduct/',view_func=aproductView.as_view('aproduct'))
 
 
 
