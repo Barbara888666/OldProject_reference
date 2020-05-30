@@ -24,9 +24,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.9/js/fileinput.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.9/themes/fa/theme.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.9/js/locales/(lang).js"></script>??这个是bootstarp里面的？
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.7/js/locales/(lang).js"></script>
 
-    <!--<link rel="stylesheet" href="{{ url_for('static',filename='/css/sell.css')}}">
+
+<!--<link rel="stylesheet" href="{{ url_for('static',filename='/css/sell.css')}}">
     link rel="stylesheet" href="css/front_aproduct.css"-->
 
    <!-- <link rel="stylesheet" href="../static/css/sell.css">-->
@@ -42,9 +43,10 @@
 
 {% block body %}
     <div class="se_layout">
+
             <table border="0" style="border:10px solid lavender;" class="tablemyself">
                 <tr>
-                    <form method="post" action="#" enctype='multipart/form-data'>
+                    <form method="post" action="/aproduct_form/" enctype='multipart/form-data'>
                     <td class="table-left">
                         <div class="form-group">
                             <span for="firstname" class="col-sm-4 control-label">Name</span>
@@ -109,7 +111,7 @@
                         </div>
                         <div>
                         <br>
-                            <button class="btn btn-warning btn-block table-btn"name="submit-product-btn" id="submit-product-btn">Submit</button>
+                            <input class="btn btn-warning btn-block table-btn"name="submit-product-btn" id="submit-product-btn" type="submit" value="提交" />
                         </div>
                     </td>
 
@@ -123,7 +125,7 @@
                                     <label class="col-md-2 control-label small"><span
                                             class="text-danger">*</span></label>
                                     <div class="col-md-12 has-success">
-                                        <input id="pic" type="file" name="pic" class="form-control"/>
+                                        <input id="pic" type="file" name="file" class="form-control"/>
                                     </div>
                                 </div>
                             </div>
@@ -184,5 +186,6 @@
                 </form>
             <tr>
     </table>
+
 </div>
 {% endblock %}
