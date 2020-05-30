@@ -161,18 +161,17 @@ def index():
     print(sort)
     if sort == 1:
         #添加的时间排序
-        query_obj = Product.query.outerjoin(product_imgs).filter(product_imgs.seq==0).order_by(Product.join_time.desc())
+        query_obj = db.session.query(Product,product_imgs).outerjoin(product_imgs).filter(product_imgs.seq==0).order_by(Product.join_time.desc())
     elif sort == 2:
         # 按照加精的时间倒叙排序
-        query_obj = db.session.query(Product).outerjoin(HighlightProductModel).outerjoin(product_imgs).filter(product_imgs.seq==0).order_by(
+        query_obj = db.session.query(Product,product_imgs).outerjoin(HighlightProductModel).outerjoin(product_imgs).filter(product_imgs.seq==0).order_by(
             HighlightProductModel.create_time.desc(), Product.join_time.desc())
     elif sort == 3:
         # 按照点赞的数量排序
-        query_obj = Product.query.outerjoin(product_imgs).filter(product_imgs.seq==0).order_by(Product.like.desc())
+        query_obj = db.session.query(Product,product_imgs).filter(product_imgs.seq==0).order_by(Product.like.desc())
     elif sort == 4:
         # 按照价格便宜排序
-        query_obj = Product.query.outerjoin(product_imgs).filter(product_imgs.seq==0).order_by(Product.price.asc())
-
+        query_obj = db.session.query(Product,product_imgs).filter(product_imgs.seq==0).order_by(Product.price.asc())
     page = request.args.get(get_page_parameter(), type=int, default=1)
     start=(page-1)*config.PER_PAGE
     end=start+config.PER_PAGE
@@ -185,7 +184,10 @@ def index():
         total = products_obj.count()
     else:
         products = query_obj.slice(start, end)
-        total = Product.query.count()
+        total = query_obj.count()
+    #调用imglink的示例
+    #print(products[0][1].imglink) imglink换成seq
+    #调用product的示例: products[0][0].x
     pagination = Pagination(bs_version=3,page=page,total=total)
     context = {
         'banners': banners,

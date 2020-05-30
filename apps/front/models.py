@@ -88,6 +88,7 @@ class product_imgs(db.Model):
     pid=db.Column(db.INTEGER,db.ForeignKey('product.id'),primary_key=True)
     imglink=db.Column(db.String(80))
     seq=db.Column(db.INTEGER,primary_key=True)
+    product = db.relationship("Product", backref="img")
 
 class LikeModel(db.Model):
     __tablename__ = 'like'
