@@ -172,7 +172,6 @@ def index():
     elif sort == 4:
         # 按照价格便宜排序
         query_obj = db.session.query(Product,product_imgs).filter(product_imgs.seq==0).order_by(Product.price.asc())
-
     page = request.args.get(get_page_parameter(), type=int, default=1)
     start=(page-1)*config.PER_PAGE
     end=start+config.PER_PAGE
@@ -185,9 +184,9 @@ def index():
         total = products_obj.count()
     else:
         products = query_obj.slice(start, end)
-        total = Product.query.count()
+        total = query_obj.count()
     #调用imglink的示例
-    #print(products[0][1].imglink) 
+    #print(products[0][1].imglink) imglink换成seq
     #调用product的示例: products[0][0].x
     pagination = Pagination(bs_version=3,page=page,total=total)
     context = {
