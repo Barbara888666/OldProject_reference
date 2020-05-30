@@ -36,7 +36,12 @@ class FollowMessageModel(db.Model):
 
     user_id = db.Column(db.String(100), db.ForeignKey("front_user.id"))
 
-    User = db.relationship("FrontUser", backref="messages")
+    #srcuser = db.relationship("FrontUser", backref="follow_messages_src",foreign_keys=user_id)
+    #desuser = db.relationship("FrontUser", backref="follow_messages_des",foreign_keys=content)
+    def __init__(self, user_id, content):
+        self.user_id = user_id
+        self.content = content
+
 
 class CommemtMessageModel(db.Model):
     __tablename__ = 'comment_messages'
@@ -45,8 +50,11 @@ class CommemtMessageModel(db.Model):
     create_time = db.Column(db.DateTime, default=datetime.now)
 
     user_id = db.Column(db.String(100), db.ForeignKey("front_user.id"))
-
-    User = db.relationship("FrontUser", backref="messages")
+    srcuser = db.relationship("FrontUser", backref="follow_messages_src",foreign_keys=user_id)
+    desuser = db.relationship("FrontUser", backref="follow_messages_des",foreign_keys=content)
+    def __init__(self, user_id, content):
+        self.user_id = user_id
+        self.content = content   
 
 class DeleteMessageModel(db.Model):
     __tablename__ = 'delete_messages'
@@ -56,7 +64,8 @@ class DeleteMessageModel(db.Model):
 
     user_id = db.Column(db.String(100), db.ForeignKey("front_user.id"))
 
-    User = db.relationship("FrontUser", backref="messages")
+    #srcuser = db.relationship("FrontUser", backref="follow_messages_src",foreign_keys=user_id)
+    #target = db.relationship("product", backref="follow_messages_tar",foreign_keys=content)
 
 class AlertMessageModel(db.Model):
     __tablename__ = 'alert_messages'
@@ -66,4 +75,4 @@ class AlertMessageModel(db.Model):
 
     user_id = db.Column(db.String(100), db.ForeignKey("front_user.id"))
 
-    User = db.relationship("FrontUser", backref="messages")    
+    User = db.relationship("FrontUser", backref="alert_messages")    
