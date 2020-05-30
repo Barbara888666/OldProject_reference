@@ -20,7 +20,7 @@ $(function () {
         var boardSelect = $("select[name='board_id']");
         var situationSelect = $("select[name='situation']");
         var termSelect = $("select[name='term']");
-        var descpiptionInput = $("input[name='descpiption']");
+        var descpiptionInput = $("textarea[name='descpiption']");
         var finput=$("#pic").get(0).files;
          var formData = new FormData();
         for(var a=0;a<finput.length;a++){
