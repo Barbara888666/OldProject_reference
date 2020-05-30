@@ -34,19 +34,21 @@ def create_cms_user(username,password,email):
 
 @manager.command
 def create_role():
-    # 1. 访问者（可以修改个人信息）
+    # 1. visitor（CHANGE PERSONAL INFORMATION）
     visitor = CMSRole(name='Visitor',desc='Only view')
     visitor.permissions = CMSPermission.VISITOR
-
-    # 2. 运营角色（修改个人个人信息，管理帖子，管理评论，管理前台用户）
+    # 2. operator（CHANGE PERSONAL INFORMATION，FRONT DATA）
     operator = CMSRole(name='Front',desc='INFORMATION,PRODUCTS,USERS')
-    operator.permissions = CMSPermission.VISITOR|CMSPermission.POSTER|CMSPermission.COMMENTER|CMSPermission.FRONTUSER|CMSPermission.BOARDER
-
-    # 3. 管理员（拥有绝大部分权限）
+    operator.permissions = CMSPermission.VISITOR|CMSPermission.POSTER|\
+                           CMSPermission.COMMENTER|CMSPermission.FRONTUSER|\
+                           CMSPermission.BOARDER
+    # 3. admin（MORE IS CMS USER MANAGER）
     admin = CMSRole(name='Manager',desc='All permissions')
-    admin.permissions = CMSPermission.VISITOR|CMSPermission.POSTER|CMSPermission.CMSUSER|CMSPermission.COMMENTER|CMSPermission.FRONTUSER|CMSPermission.BOARDER
-
-    # 4. 开发者
+    admin.permissions = CMSPermission.VISITOR|\
+                        CMSPermission.POSTER|CMSPermission.CMSUSER|\
+                        CMSPermission.COMMENTER|CMSPermission.FRONTUSER|\
+                        CMSPermission.BOARDER
+    # 4. boss（ALL PERMISSION）
     developer = CMSRole(name='Boss',desc='Primary power')
     developer.permissions = CMSPermission.ALL_PERMISSION
 

@@ -3,6 +3,7 @@ import os
 
 from flask import Blueprint, views, request, render_template, url_for, session, g, abort, jsonify, redirect
 from sqlalchemy import func
+from werkzeug.utils import secure_filename
 
 from apps.front.forms import SignupForm, SigninForm, AddProductForm, AddCommentForm, ForgetPasswordForm, AddLikeForm, \
     AddFollowForm
@@ -11,7 +12,7 @@ from utils import restful,safeutils,uploadproductimgs
 from utils.captcha import Captcha
 from .models import FrontUser, Product, CommentModel, LikeModel, FollowModel,product_imgs
 import config
-from ..models import BannerModel, BoardModel, HighlightProductModel, MessageModel
+from ..models import BannerModel, BoardModel, HighlightProductModel, FollowMessageModel,CommemtMessageModel
 from .decorators import login_required
 from flask_paginate import Pagination, get_page_parameter
 from tasks import send_sms_captcha
@@ -293,7 +294,7 @@ def add_comment():
             producttmp.comment = producttmp.comment + 1
             content = "Your product %s is commented by %s" % (product.name, comment.commenter.username)
             # content="Your product %s is commented by %s",product.name,comment.commenter.username
-            message=MessageModel(content=content,user_id=product.user_id,type='comment')
+            message=CommemtMessageModel(content=comment.commenter.id,user_id=product.user_id)
             db.session.add(comment)
             db.session.add(message)
             db.session.commit()
@@ -321,10 +322,6 @@ def add_like():
             if not producttmp.like:
                 producttmp.like=0
             producttmp.like = producttmp.like+1
-            content = "Your product %s is liked by %s" %(product.name,like.liker.username)
-            print(content)
-            message = MessageModel(content=content, user_id=product.user_id, type='like')
-            db.session.add(message)
             db.session.add(like)
             db.session.commit()
             return restful.success()
@@ -349,7 +346,7 @@ def add_follow():
             startmp = FrontUser.query.filter(FrontUser.id == user_id).first()
             follow.star=startmp
             content = "You are followed by %s" %follow.follower.username
-            message = MessageModel(content=content, user_id=startmp.id, type='follow')
+            message = FollowMessageModel(content=follow.follower.id, user_id=startmp.id, type='follow')
             db.session.add(message)
             db.session.add(follow)
             db.session.commit()
@@ -395,6 +392,8 @@ class SigninView(views.MethodView):
             telephone = form.telephone.data
             password = form.password.data
             remember = form.remeber.data
+            print(telephone)
+            print(password)
             user = FrontUser.query.filter_by(telephone=telephone).first()
             if user and user.check_password(password):
                 session[config.FRONT_USER_ID] = user.id
@@ -409,13 +408,14 @@ bp.add_url_rule('/signin/',view_func=SigninView.as_view('signin'))
 
 
 
-@bp.route('/aproduct/',methods=['GET','POST'])
-@login_required
-def aproduct():
+@bp.route('/aproduct_form/',methods=['POST'])
+#@login_required
+def aproduct1():
     if request.method == 'GET':
         boards = BoardModel.query.all()
         return render_template('front/front_aproduct3.html',boards=boards)
     else:
+<<<<<<< HEAD
         form = AddProductForm(request.form)
         if form.validate():
               name = form.name.data
@@ -444,9 +444,146 @@ def aproduct():
                       db.session.add(pimg)
                       db.session.commit()
               return restful.success()
-        else:
-            return restful.params_error(message=form.get_error())
+=======
+        print('success')
+        # dic = dict(
+        #     Category=request.form.get('Category'),
+        #     Situation=request.form.get('Situation'),
+        #     time=request.form.get('time'),
+        #     Short_term=request.form.get('short time'),
+        # #     long_time=request.form.get("long time"),
+        # #     Note=request.form.get('Note'),
+        # # )
+        # # print(dic)
+        print(request)
+        f = request.files['file']
+        print(f)
+        #
+        # basepath = os.path.dirname(__file__)  # 当前文件所在路径
+        # upload_path = os.path.join(basepath, 'upload_file_dir', secure_filename(f.filename))
+        # # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
+        # print(upload_path)
+        # upload_path = os.path.abspath(upload_path)  # 将路径转换为绝对路径
+        # print(upload_path)
+        # f.save(upload_path)
+        # return "success";
+        # form1 = AddPictureForm(request.form)
+        # f = form1.file
+        # f=request.files['fileI'] # 保存图片
+        # print(f)
+        # if (f != None):
+        #     basepath = os.path.dirname(__file__)
+        #     print("tupian")
+        #     print(f)
+        #     print(basepath)
+        #     f.save(basepath)
+        # f = request.files.get('pic', '')
+        # f1 = request.files['pictest']
+        # f = request.files.get('pictest')
+        # file_content = f.read()
+        # print(f)
+        # print(file_content)
+        # f1 = form.file
+        # print(f1)
+        # if (f1 != None):
+        #     basepath = os.path.dirname(__file__)
+        #     print("tupian")
+        #     print(f1)
+        #     print(basepath)
+        #     f1.save(basepath)
+        # if 1==1:
+        # file = request.files['file']
+        # print(file)
+        postdata = request.form['name']
+        print('name')
+        print(postdata)
+        # postdata = request.form['name']
+        # print(postdata)
+        postdata = request.form['price']
+        print('price')
+        print(postdata)
+        postdata = request.form['board_id']
+        print('board_id')
+        print(postdata)
+        #     postdata = request.form['situation']
+        #     print(postdata)
+        #     postdata = request.form['pic']
+        #     print(postdata)
+        #     #没有pic 会报400
+            # formData.append('name', name);
+            # formData.append('price', price);
+            # formData.append('board_id', board_id);
+            # formData.append('situation', situation);
+            # formData.append('term', term);
+            # formData.append('description', descpiption);
 
+        # form = AddProductForm(request.form)
+        # if form.validate():
+        #       file=form.file.data
+        #       name = form.name.data
+        #       price = form.price.data
+        #       board_id = form.board_id.data
+        #       board = BoardModel.query.get(board_id)
+        #       situstion = form.situation.data
+        #       term = form.term.data
+        #       description = form.description.data
+        #       print(name)
+        #       print(price)
+        #       print(board_id)
+        #       if not board:
+        #          return restful.params_error(message='没有这个板块！')
+        #       product = Product(name=name,price=price,board_id=board_id,situation=situstion,term=term,description=description,like=0,comment=0)
+        #       product.board = board
+        #       product.user_id = g.front_user.id
+        #       product.user = g.front_user
+        #       db.session.add(product)
+        #       db.session.commit()
+        # return restful.success()
+        return  jsonify('succcess')
+        # else/
+        #       return restful.params_error(message=form.get_error())
+
+class aproductView(views.MethodView):
+    def get(self):
+        boards = BoardModel.query.all()
+        return render_template('front/front_aproduct3.html', boards=boards)
+
+    def post(self):
+
+        # if form.validate():
+        if 1==1:
+            dic = dict(
+                Category=request.form.get('Category'),
+                Situation=request.form.get('Situation'),
+                time=request.form.get('time'),
+                Short_term=request.form.get('short time'),
+                long_time=request.form.get("long time"),
+                Note=request.form.get('Note'),
+            )
+            print(dic)
+            f = request.files['file']
+            basepath = os.path.dirname(__file__)  # 当前文件所在路径
+            upload_path = os.path.join(basepath, 'upload_file_dir', secure_filename(f.filename))
+            # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
+            print(upload_path)
+            upload_path = os.path.abspath(upload_path)  # 将路径转换为绝对路径
+            print(upload_path)
+            f.save(upload_path)
+            return "success";
+            # telephone = form.telephone.data
+            # username = form.username.data
+            # studentnumber = form.studentnumber.data
+            # password = form.password1.data
+            # user = FrontUser(telephone=telephone, username=username, password=password,studentnumber=studentnumber)
+            # db.session.add(user)
+            # db.session.commit()
+            # return redirect(url_for('front.signin'))
+            # return restful.success()
+>>>>>>> 3964e0dde84a5b9ca17d2fb3216e78b56d651429
+        else:
+            print(form.get_error())
+            return restful.params_error(message=form.get_error())
+bp.add_url_rule('/aproduct/',view_func=aproductView.as_view('aproduct'))
 
 
 

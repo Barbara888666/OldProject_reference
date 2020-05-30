@@ -17,7 +17,7 @@ $(function () {
                     'product_id': product_id
                 },
                 'success': function (data) {
-                    if(data['code'] == 200){
+                    if(data['code'] == 200){//都是这样 都有的
                         window.location.reload();
                     }else{
                         alert.alertInfo(data['message']);

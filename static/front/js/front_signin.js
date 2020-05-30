@@ -18,7 +18,7 @@ $(function(){
                 'telephone': telephone,
                 'password': password,
                 'remember': remember
-            },
+            },//mei
             'success': function (data) {
                 if(data['code'] == 200){
                     var return_to = $("#return-to-span").text();

@@ -27,21 +27,43 @@ class HighlightProductModel(db.Model):
 
     product = db.relationship("Product", backref="highlight")
 
-class MessageEnum(enum.Enum):
-    like= 1
-    comment = 2
-    warning = 3
-    follow = 4
 
-class MessageModel(db.Model):
-    __tablename__ = 'messages'
+class FollowMessageModel(db.Model):
+    __tablename__ = 'follow_messages'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    content = db.Column(db.String(255),nullable=False)
+    content = db.Column(db.String(100),db.ForeignKey('front_user.id'),nullable=False)
     create_time = db.Column(db.DateTime, default=datetime.now)
-    type=db.Column(db.Enum(MessageEnum),default=MessageEnum.like)
+
     user_id = db.Column(db.String(100), db.ForeignKey("front_user.id"))
 
     User = db.relationship("FrontUser", backref="messages")
 
+class CommemtMessageModel(db.Model):
+    __tablename__ = 'comment_messages'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    content = db.Column(db.String(100),db.ForeignKey('front_user.id'),nullable=False)
+    create_time = db.Column(db.DateTime, default=datetime.now)
 
+    user_id = db.Column(db.String(100), db.ForeignKey("front_user.id"))
 
+    User = db.relationship("FrontUser", backref="messages")
+
+class DeleteMessageModel(db.Model):
+    __tablename__ = 'delete_messages'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    content = db.Column(db.Integer,db.ForeignKey('product.id'),nullable=False)
+    create_time = db.Column(db.DateTime, default=datetime.now)
+
+    user_id = db.Column(db.String(100), db.ForeignKey("front_user.id"))
+
+    User = db.relationship("FrontUser", backref="messages")
+
+class AlertMessageModel(db.Model):
+    __tablename__ = 'alert_messages'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    content = db.Column(db.String(255),nullable=False)
+    create_time = db.Column(db.DateTime, default=datetime.now)
+
+    user_id = db.Column(db.String(100), db.ForeignKey("front_user.id"))
+
+    User = db.relationship("FrontUser", backref="messages")    

@@ -10,7 +10,10 @@ class CMSPermission(object):
     COMMENTER =      0b00000100
     BOARDER =        0b00001000
     FRONTUSER =      0b00010000
+
     CMSUSER =        0b00100000
+
+
     ADMINER =        0b01000000
 
 cms_role_user = db.Table(

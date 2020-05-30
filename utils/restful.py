@@ -11,7 +11,8 @@ def restful_result(code,message,data):
     return jsonify({"code":code,"message":message,"data":data or {}})
 
 def success(message="",data=None):
-    return restful_result(code=HttpCode.ok,message=message,data=data)
+    # return restful_result(code=HttpCode.ok,message=message,data=data)
+    return restful_result(code=200,message=message,data=data)
 
 def unauth_error(message=""):
     return restful_result(code=HttpCode.unautherror,message=message,data=None)
