@@ -415,36 +415,6 @@ def aproduct1():
         boards = BoardModel.query.all()
         return render_template('front/front_aproduct3.html',boards=boards)
     else:
-<<<<<<< HEAD
-        form = AddProductForm(request.form)
-        if form.validate():
-              name = form.name.data
-              price = form.price.data
-              board_id = form.board_id.data
-              board = BoardModel.query.get(board_id)
-              situstion = form.situation.data
-              term = form.term.data
-              description = form.description.data
-              file=form.file.data
-              print(file)
-              return
-              if not board:
-                 return restful.params_error(message='没有这个板块！')
-              product = Product(name=name,price=price,board_id=board_id,situation=situstion,term=term,description=description,like=0,comment=0)
-              product.board = board
-              product.user_id = g.front_user.id
-              product.user = g.front_user
-              db.session.add(product)
-              db.session.commit()
-              if file!=[]:
-                  fid=product.id
-                  r=uploadproductimgs(f,fid)
-                  for t,seq in zip(r,range(0,len(r))):
-                      pimg=product_imgs(pid=fid,imglink=r,seq=seq)
-                      db.session.add(pimg)
-                      db.session.commit()
-              return restful.success()
-=======
         print('success')
         # dic = dict(
         #     Category=request.form.get('Category'),
@@ -579,7 +549,6 @@ class aproductView(views.MethodView):
             # db.session.commit()
             # return redirect(url_for('front.signin'))
             # return restful.success()
->>>>>>> 3964e0dde84a5b9ca17d2fb3216e78b56d651429
         else:
             print(form.get_error())
             return restful.params_error(message=form.get_error())
