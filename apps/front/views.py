@@ -468,11 +468,11 @@ def aproduct():
         print(situation)
         term = request.form['term']
         print(term)
-        descpiption = request.form['descpiption']
-        print(descpiption)
+        description = request.form['description']
+        print(description)
         board = BoardModel.query.get(board_id)
         product = Product(name=name, price=price, board_id=board_id, situation=situation, term=term,
-                          description=descpiption, like=0, comment=0)
+                          description=description, like=0, comment=0)
         product.board = board
         product.user_id = g.front_user.id
         product.user = g.front_user
