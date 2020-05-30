@@ -428,6 +428,7 @@ def aproduct1():
         print(request)
         f = request.files.getlist('file')
         print(f)
+        uploadproductimgs(f,1)
         #
         # basepath = os.path.dirname(__file__)  # 当前文件所在路径
         # upload_path = os.path.join(basepath, 'upload_file_dir', secure_filename(f.filename))

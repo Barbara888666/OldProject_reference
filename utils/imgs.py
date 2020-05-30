@@ -15,19 +15,19 @@ def uploadimg(img,des:str,tid:str,name:str):
     if not path.exists(fpath):
         makedirs(fpath)
     suffix=img.filename.split('.')[-1]
-    fname='.'.join(name,suffix)
+    fname='.'.join([name,suffix])
     fp=path.join(fpath,fname)
     if not path.isfile(fp):
-        with open(fp):
+        with open(fp,'w'):
             pass
     img.save(fp)
 def uploadimgs(imgs:list,des:str,tid:[int,str]):
     tid=str(tid)
     r=[]
     for i,n in zip(imgs,range(0,len(imgs))):
-        fn=hash(''.join(des,tid),bytes(n))
+        fn=hash(des+tid,bytes(n))
         uploadimg(i,des,tid,fn)
-        r.append('/'.join('imgs',des,tid,fn))
+        r.append('/'.join(['imgs',des,tid,fn]))
     return r
 def delimg(des:str,tid:str):
     dpath=path.join(imgpath,des,tid)
