@@ -48,11 +48,10 @@ def highpres():
 
 @bp.route('/a')
 def main_page():
-    if session[config.FRONT_USER_ID]:
-        userid=g.front_user.id
-        return render_template('front/htmls/main_page.html',userid=userid)
-    else:
-        return render_template('front/htmls/main_page.html')
+    userid=None
+    if config.FRONT_USER_ID in session:
+        userid=g.front_user.id      
+    return render_template('front/htmls/main_page.html',userid=userid)
 
 @bp.route('/news')
 def new():
