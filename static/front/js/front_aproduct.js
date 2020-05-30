@@ -36,7 +36,7 @@ $(function () {
         var descpiption = descpiptionInput.val();
         zlajax.post({
             type:'post',
-            url: '/aproduct_form/',
+            url: '/aproduct/',
             dataType :'text',
             data:formData,
             processData: false,
