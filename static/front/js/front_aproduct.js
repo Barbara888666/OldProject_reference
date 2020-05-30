@@ -5,13 +5,14 @@ $(function () {
         var name = nameInput.val();
         console.log('name')
         console.log(name)
-        if(name){
+        if(!name){
+            console.log(name)
             alert.alertInfoToast('请输入名字！');
             return;
         }
         var priceInput = $("input[name='price']");
         var price = priceInput.val();
-        if(price==null){
+        if(!price){
             alert.alertInfoToast('请输入价格！');
             return;
         }
@@ -24,6 +25,12 @@ $(function () {
          //$('#pic_img')[0].files[0]
        // alert(fileInput);
         //var file = document.getElementById('pic').files;
+        if (!fileInput){
+            console.log(name)
+            alert.alertInfoToast('请输入图片！');
+            return;
+        }
+
          console.log(fileInput);
         // // var file = $("input[name='pic']").file
          // var file = $("input[name='pic']").files;
