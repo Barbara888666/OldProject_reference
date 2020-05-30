@@ -20,7 +20,8 @@ $(function () {
         var boardSelect = $("select[name='board_id']");
         var situationSelect = $("select[name='situation']");
         var termSelect = $("select[name='term']");
-        var descpiptionInput = $("textarea[name='descpiption']");
+        var descriptionInput = $("textarea[name='description']");
+        // var descriptionInput = $("Input[name='description']");
         var finput=$("#pic").get(0).files;
          var formData = new FormData();
         for(var a=0;a<finput.length;a++){
@@ -35,8 +36,8 @@ $(function () {
         formData.append('situation',situation);
         var term = termSelect.val();
         formData.append('term',term);
-        var descpiption = descpiptionInput.val();
-        formData.append('description',descpiption)
+        var description = descriptionInput.val();
+        formData.append('description',description)
         zlajax.post({
             type:'post',
             url: '/aproduct/',

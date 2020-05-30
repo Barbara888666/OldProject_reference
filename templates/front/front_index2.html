@@ -71,7 +71,7 @@
                 <li>
                 <div class="user-avatar-group">
                        <img src="{{url_for('static',filename='common/images/logo.png') }}" alt="">
-                    llllalalalallalla{{product.imglink}}
+<!--                       {{product.imglink}}-->
                 </div>
                 <div class="product-info-group1">
                     <p class="product-name">
@@ -100,7 +100,7 @@
                     {%if product[1].imglink=='none'%}
                        <img src="{{url_for('static',filename='common/images/logo.png') }}" alt="">
                     {%else%}
-                    <img src="/static/{{product[1].imglink }}" alt="">
+                     <img src="/static/{{product[1].imglink }}" alt="">
                     {%endif%}
                 </div>
                 </li>
