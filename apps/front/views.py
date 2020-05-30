@@ -409,13 +409,12 @@ bp.add_url_rule('/signin/',view_func=SigninView.as_view('signin'))
 
 
 @bp.route('/aproduct/',methods=['GET','POST'])
-#@login_required
+@login_required
 def aproduct1():
     if request.method == 'GET':
         boards = BoardModel.query.all()
         return render_template('front/front_aproduct3.html',boards=boards)
     else:
-        print('success')
         # dic = dict(
         #     Category=request.form.get('Category'),
         #     Situation=request.form.get('Situation'),
@@ -425,10 +424,6 @@ def aproduct1():
         # #     Note=request.form.get('Note'),
         # # )
         # # print(dic)
-        print(request)
-        f = request.files.getlist('file')
-        print(f)
-        uploadproductimgs(f,1)
         #
         # basepath = os.path.dirname(__file__)  # 当前文件所在路径
         # upload_path = os.path.join(basepath, 'upload_file_dir', secure_filename(f.filename))
@@ -465,29 +460,27 @@ def aproduct1():
         # if 1==1:
         # file = request.files['file']
         # print(file)
-        postdata = request.form['name']
+        name = request.form['name']
         print('name')
-        print(postdata)
         # postdata = request.form['name']
         # print(postdata)
-        postdata = request.form['price']
-        print('price')
-        print(postdata)
-        postdata = request.form['board_id']
-        print('board_id')
-        print(postdata)
-        #     postdata = request.form['situation']
-        #     print(postdata)
-        #     postdata = request.form['pic']
-        #     print(postdata)
-        #     #没有pic 会报400
-            # formData.append('name', name);
-            # formData.append('price', price);
-            # formData.append('board_id', board_id);
-            # formData.append('situation', situation);
-            # formData.append('term', term);
-            # formData.append('description', descpiption);
-
+        price = request.form['price']
+        f = request.files.getlist('file')
+        board_id = request.form['board_id']
+        situation=request.form['situation']
+        term=request.form['term']
+        description=request.form['description']
+        product = Product(name=name,price=price,board_id=board_id,situation=situation,term=term,description=description,like=0,comment=0)
+        product.user = g.front_user
+        product.user_id = g.front_user.id
+        db.session.add(product)
+        db.session.commit()
+        pid=product.id
+        r=uploadproductimgs(f,pid)
+        for t,seq in zip(r,range(0,len(r))):
+            pimg=product_imgs(pid=pid,imglink=t,seq=seq)
+            db.session.add(pimg)
+        db.session.commit()
         # form = AddProductForm(request.form)
         # if form.validate():
         #       file=form.file.data

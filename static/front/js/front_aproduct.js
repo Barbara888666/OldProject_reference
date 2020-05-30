@@ -26,6 +26,7 @@ $(function () {
         for(var a=0;a<finput.length;a++){
             formData.append('file',finput[a]);
         }
+
         formData.append('name',name);
         formData.append('price',price);
         var board_id = boardSelect.val();
@@ -33,7 +34,9 @@ $(function () {
         var situation = situationSelect.val();
         formData.append('situation',situation);
         var term = termSelect.val();
+        formData.append('term',term);
         var descpiption = descpiptionInput.val();
+        formData.append('description',descpiption)
         zlajax.post({
             type:'post',
             url: '/aproduct/',
