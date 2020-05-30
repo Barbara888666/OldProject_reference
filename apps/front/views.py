@@ -531,4 +531,6 @@ class aproductView(views.MethodView):
         else:
             return 'gg'
 
-
+@bp.route('/category/')
+def category():
+    return 'td'
