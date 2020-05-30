@@ -474,12 +474,13 @@ def aproduct1():
         product.user_id = g.front_user.id
         db.session.add(product)
         db.session.commit()
-        pid=product.id
-        r=uploadproductimgs(f,pid)
-        for t,seq in zip(r,range(0,len(r))):
-            pimg=product_imgs(pid=pid,imglink=t,seq=seq)
-            db.session.add(pimg)
-        db.session.commit()
+        if not f==[]:
+            pid=product.id
+            r=uploadproductimgs(f,pid)
+            for t,seq in zip(r,range(0,len(r))):
+                pimg=product_imgs(pid=pid,imglink=t,seq=seq)
+                db.session.add(pimg)
+            db.session.commit()        
         # form = AddProductForm(request.form)
         # if form.validate():
         #       file=form.file.data
