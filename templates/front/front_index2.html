@@ -96,7 +96,11 @@
                     </p>
                 </div>
                 <div class="product-picture">
+                    {%if product[1].imglink=='none'%}
                        <img src="{{url_for('static',filename='common/images/logo.png') }}" alt="">
+                    {%else%}
+                    <img src="/static/{{product[1].imglink }}" alt="">
+                    {%endif%}
                 </div>
                 </li>
                 {% endfor %}
