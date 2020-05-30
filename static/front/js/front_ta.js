@@ -23,3 +23,34 @@ $(function () {
         }
     });
 });
+
+$(function () {
+    $("#have-follow-btn").click(function (event) {
+        event.preventDefault();
+        var loginTag = $("#login-tag").attr("data-is-login");
+        if(!loginTag){
+            alert.alertInfoToast("请登陆后再关注！")
+            window.location = '/signin/';
+        }else{
+            var follow_id = $("#top-ta").attr("data-follow");
+            alert.alertConfirm({
+            "msg":"您确定要删除这个关注？",
+            'confirmCallback': function () {
+                zlajax.post({
+                    'url': '/dfollow/',
+                    'data':{
+                        'follow_id': follow_id
+                    },
+                    'success': function (data) {
+                        if(data['code'] == 200){
+                            window.location.reload();
+                        }else{
+                            alert.alertInfo(data['message']);
+                        }
+                    }
+                })
+            }
+         });
+        }
+    });
+});

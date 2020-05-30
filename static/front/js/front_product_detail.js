@@ -53,3 +53,61 @@ $(function () {
         }
     });
 });
+
+$(function () {
+    $("#delete-comment-btn").click(function (event) {
+        event.preventDefault();
+        var loginTag = $("#login-tag").attr("data-is-login");
+        if(!loginTag){
+            alert.alertInfoToast("请登陆后再点赞！")
+            window.location = '/signin/';
+        }else{
+            var comment_id = $("#comment-info-group").attr("data-da");
+            alert.alertConfirm({
+            "msg":"您确定要删除这个评论吗？",
+            'confirmCallback': function () {
+                zlajax.post({
+                    'url': '/dcomment/',
+                    'data':{
+                        'comment_id': comment_id
+                    },
+                    'success': function (data) {
+                        if(data['code'] == 200){
+                            window.location.reload();
+                        }else{
+                            alert.alertInfo(data['message']);
+                        }
+                    }
+                })
+            }
+         });
+        }
+    });
+});
+
+$(function () {
+    $("#have-like-btn").click(function (event) {
+        event.preventDefault();
+        var loginTag = $("#login-tag").attr("data-is-login");
+        if(!loginTag){
+            alert.alertInfoToast("请登陆后再点赞！")
+            window.location = '/signin/';
+        }else{
+            var like_id = $("#product-information").attr("data-like");
+            console.log(like_id)
+            zlajax.post({
+                'url': '/dlike/',
+                'data':{
+                    'like_id': like_id
+                },
+                'success': function (data) {
+                    if(data['code'] == 200){
+                        window.location.reload();
+                    }else{
+                        alert.alertInfo(data['message']);
+                    }
+                }
+            });
+        }
+    });
+});
