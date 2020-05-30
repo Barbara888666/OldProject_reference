@@ -531,28 +531,11 @@ class aproductView(views.MethodView):
                 Note=request.form.get('Note'),
             )
             print(dic)
-            f = request.files['file']
-            basepath = os.path.dirname(__file__)  # 当前文件所在路径
-            upload_path = os.path.join(basepath, 'upload_file_dir', secure_filename(f.filename))
-            # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
-            print(upload_path)
-            upload_path = os.path.abspath(upload_path)  # 将路径转换为绝对路径
-            print(upload_path)
-            f.save(upload_path)
-            return "success";
-            # telephone = form.telephone.data
-            # username = form.username.data
-            # studentnumber = form.studentnumber.data
-            # password = form.password1.data
-            # user = FrontUser(telephone=telephone, username=username, password=password,studentnumber=studentnumber)
-            # db.session.add(user)
-            # db.session.commit()
-            # return redirect(url_for('front.signin'))
-            # return restful.success()
-        else:
-            print(form.get_error())
-            return restful.params_error(message=form.get_error())
-bp.add_url_rule('/aproduct/',view_func=aproductView.as_view('aproduct'))
+            f = request.files.getlist('file')
 
+            return "success"
+
+        else:
+            return 'gg'
 
 
