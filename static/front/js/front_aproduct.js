@@ -49,15 +49,15 @@ $(function () {
         var situation = situationSelect.val();
         formData.append('situation',situation);
         var term = termSelect.val();
-       // formData.append('term',term);
+        formData.append('term',term);
         var descpiption = descpiptionInput.val();
-
+        formData.append('descpiption',descpiption);
 //console.log(file);
 
         // $.zlajax({
         zlajax.post({
             type:'post',
-            url: '/aproduct_form/',
+            url: '/aproduct/',
             dataType :'text',
             data:formData,
             processData: false,

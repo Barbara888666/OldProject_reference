@@ -17,7 +17,7 @@
             <div class="product-picture">
                 <img src="{{ url_for('static',filename='common/images/logo.png') }}" alt="">
             </div>
-            <ul class="product-info-group" id="product-information" data-da="{{ product.id}}">
+            <ul class="product-info-group" id="product-information" data-da="{{ product.id}}" data-like="{{like.id}}">
             <li><span>发布时间：{{ product.join_time }}</span></li>
             <li><span>卖家：{{ product.user.username }}</span></li>
             <li><span>类别：{{ product.board.name }}</span></li>
@@ -29,15 +29,15 @@
             {% if like == 0 %}
             <button class="btn btn-warning" id="like-btn" name="like-btn" data="0">Like</button></td>
             {% else %}
-            <button class="btn btn-success" data="1" id="have-like-btn">Have Liked</button></td>
+            <button class="btn btn-success" data="1"  id="have-like-btn">Cancel Liked</button></td>
             {% endif %}
-
         </div>
 
         <div class="comment-group">
             <h3>评论列表</h3>
             <ul class="comment-list-group">
                 {% for comment in product.comments %}
+                <ul class="comment-info-group" id="comment-info-group" data-da="{{comment.id}}">
                     <li>
                         <div class="avatar-group">
                             <img src="{{ comment.commenter.avatar or static('common/images/logo.png') }}" alt="">
@@ -50,8 +50,16 @@
                             <p class="comment-txt">
                                 {{ comment.content|safe }}
                             </p>
+
                         </div>
+                        <div class="button-delete-comment">
+                                {% if g.front_user==product.user or g.front_user==commenter %}
+                                <button class="btn btn-success" data="1" id="delete-comment-btn" name="delete-comment-btn">Delete</button></td>
+                                {% endif %}
+                        </div>
+
                     </li>
+                    </ul>
                 {% endfor %}
             </ul>
         </div>
