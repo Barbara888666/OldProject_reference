@@ -158,21 +158,20 @@ def index():
     boards = BoardModel.query.all()
     # products = Product.query.all()
     sort=request.args.get('st',type=int,default=1)
-    query_obj = None
     print(sort)
     if sort == 1:
         #添加的时间排序
-        query_obj = Product.query.order_by(Product.join_time.desc())
+        query_obj = Product.query.outerjoin(product_imgs).filter(product_imgs.seq==0).order_by(Product.join_time.desc())
     elif sort == 2:
         # 按照加精的时间倒叙排序
-        query_obj = db.session.query(Product).outerjoin(HighlightProductModel).order_by(
+        query_obj = db.session.query(Product).outerjoin(HighlightProductModel).outerjoin(product_imgs).filter(product_imgs.seq==0).order_by(
             HighlightProductModel.create_time.desc(), Product.join_time.desc())
     elif sort == 3:
         # 按照点赞的数量排序
-        query_obj = Product.query.order_by(Product.like.desc())
+        query_obj = Product.query.outerjoin(product_imgs).filter(product_imgs.seq==0).order_by(Product.like.desc())
     elif sort == 4:
         # 按照价格便宜排序
-        query_obj = Product.query.order_by(Product.price.asc())
+        query_obj = Product.query.outerjoin(product_imgs).filter(product_imgs.seq==0).order_by(Product.price.asc())
 
     page = request.args.get(get_page_parameter(), type=int, default=1)
     start=(page-1)*config.PER_PAGE
@@ -496,14 +495,16 @@ def aproduct():
         product.user_id = g.front_user.id
         db.session.add(product)
         db.session.commit()
+        pid=product.id
         if not f==[]:
-            pid=product.id
             r=uploadproductimgs(f,pid)
             for t,seq in zip(r,range(0,len(r))):
                 pimg=product_imgs(pid=pid,imglink=t,seq=seq)
                 db.session.add(pimg)
-            db.session.commit()        
-
+        else:
+            pimg=product_imgs(pid=pid,imglink='none',seq=0)
+            db.session.add(pimg)       
+        db.session.commit() 
         return  jsonify('succcess')
         # else/
         #       return restful.params_error(message=form.get_error())
