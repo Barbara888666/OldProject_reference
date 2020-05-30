@@ -82,6 +82,11 @@ class CommentModel(db.Model):
 
     product = db.relationship("Product", backref="comments")
     commenter = db.relationship("FrontUser", backref='comments')
+class product_imgs(db.Model):
+    __tablename__='product_imgs'
+    pid=db.Column(db.INTEGER,db.ForeignKey('product.id'),primary_key=True)
+    imglink=db.Column(db.String(80))
+    seq=db.Column(db.INTEGER,primary_key=True)
 
 class LikeModel(db.Model):
     __tablename__ = 'like'

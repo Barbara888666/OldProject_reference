@@ -3,6 +3,8 @@ import os
 
 SECRET_KEY = 'liangluya'
 
+imgpath=os.path.join(os.getcwd(),'static','imgs')
+
 DEBUG = True
 
 DB_USERNAME = 'root'

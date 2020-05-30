@@ -119,13 +119,12 @@
                     <td class="table-right">
                         <div class="right-input">
                         <div class="picture">
-
                             <div id="main-form">
                                 <div class="form-group" align="left">
                                     <label class="col-md-2 control-label small"><span
                                             class="text-danger">*</span></label>
                                     <div class="col-md-12 has-success">
-                                        <input id="pic" type="file" name="file" class="form-control"/>
+                                        <input id="pic" type="file" name="file" multiple='multiple' class="form-control"/>
                                     </div>
                                 </div>
                             </div>
@@ -158,7 +157,7 @@
 
                                     //minFileCount: 0, //文件最小大学， 单位为kb，如果为0表示不限制文件大小
 
-                                    maxFileCount: 1, //表示允许同时上传的最大文件个数
+                                    maxFileCount: 10, //表示允许同时上传的最大文件个数
 
                                     // enctype: 'multipart/form-data',
 

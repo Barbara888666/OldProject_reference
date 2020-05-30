@@ -8,9 +8,9 @@ from werkzeug.utils import secure_filename
 from apps.front.forms import SignupForm, SigninForm, AddProductForm, AddCommentForm, ForgetPasswordForm, AddLikeForm, \
     AddFollowForm
 from exts import sms,db
-from utils import restful,safeutils
+from utils import restful,safeutils,uploadproductimgs
 from utils.captcha import Captcha
-from .models import FrontUser, Product, CommentModel, LikeModel, FollowModel
+from .models import FrontUser, Product, CommentModel, LikeModel, FollowModel,product_imgs
 import config
 from ..models import BannerModel, BoardModel, HighlightProductModel, FollowMessageModel,CommemtMessageModel
 from .decorators import login_required
@@ -407,14 +407,13 @@ bp.add_url_rule('/signin/',view_func=SigninView.as_view('signin'))
 
 
 
-@bp.route('/aproduct_form/',methods=['POST'])
-#@login_required
+@bp.route('/aproduct/',methods=['GET','POST'])
+@login_required
 def aproduct1():
     if request.method == 'GET':
         boards = BoardModel.query.all()
         return render_template('front/front_aproduct3.html',boards=boards)
     else:
-        print('success')
         # dic = dict(
         #     Category=request.form.get('Category'),
         #     Situation=request.form.get('Situation'),
@@ -424,9 +423,6 @@ def aproduct1():
         # #     Note=request.form.get('Note'),
         # # )
         # # print(dic)
-        print(request)
-        f = request.files['file']
-        print(f)
         #
         # basepath = os.path.dirname(__file__)  # 当前文件所在路径
         # upload_path = os.path.join(basepath, 'upload_file_dir', secure_filename(f.filename))
@@ -463,29 +459,27 @@ def aproduct1():
         # if 1==1:
         # file = request.files['file']
         # print(file)
-        postdata = request.form['name']
+        name = request.form['name']
         print('name')
-        print(postdata)
         # postdata = request.form['name']
         # print(postdata)
-        postdata = request.form['price']
-        print('price')
-        print(postdata)
-        postdata = request.form['board_id']
-        print('board_id')
-        print(postdata)
-        #     postdata = request.form['situation']
-        #     print(postdata)
-        #     postdata = request.form['pic']
-        #     print(postdata)
-        #     #没有pic 会报400
-            # formData.append('name', name);
-            # formData.append('price', price);
-            # formData.append('board_id', board_id);
-            # formData.append('situation', situation);
-            # formData.append('term', term);
-            # formData.append('description', descpiption);
-
+        price = request.form['price']
+        f = request.files.getlist('file')
+        board_id = request.form['board_id']
+        situation=request.form['situation']
+        term=request.form['term']
+        description=request.form['description']
+        product = Product(name=name,price=price,board_id=board_id,situation=situation,term=term,description=description,like=0,comment=0)
+        product.user = g.front_user
+        product.user_id = g.front_user.id
+        db.session.add(product)
+        db.session.commit()
+        pid=product.id
+        r=uploadproductimgs(f,pid)
+        for t,seq in zip(r,range(0,len(r))):
+            pimg=product_imgs(pid=pid,imglink=t,seq=seq)
+            db.session.add(pimg)
+        db.session.commit()
         # form = AddProductForm(request.form)
         # if form.validate():
         #       file=form.file.data
@@ -530,28 +524,11 @@ class aproductView(views.MethodView):
                 Note=request.form.get('Note'),
             )
             print(dic)
-            f = request.files['file']
-            basepath = os.path.dirname(__file__)  # 当前文件所在路径
-            upload_path = os.path.join(basepath, 'upload_file_dir', secure_filename(f.filename))
-            # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
-            print(upload_path)
-            upload_path = os.path.abspath(upload_path)  # 将路径转换为绝对路径
-            print(upload_path)
-            f.save(upload_path)
-            return "success";
-            # telephone = form.telephone.data
-            # username = form.username.data
-            # studentnumber = form.studentnumber.data
-            # password = form.password1.data
-            # user = FrontUser(telephone=telephone, username=username, password=password,studentnumber=studentnumber)
-            # db.session.add(user)
-            # db.session.commit()
-            # return redirect(url_for('front.signin'))
-            # return restful.success()
-        else:
-            print(form.get_error())
-            return restful.params_error(message=form.get_error())
-bp.add_url_rule('/aproduct/',view_func=aproductView.as_view('aproduct'))
+            #f = request.files.getlist('file')
 
+            return "success"
+
+        else:
+            return 'gg'
 
 
