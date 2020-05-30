@@ -10,7 +10,7 @@ from apps.front.forms import SignupForm, SigninForm, AddProductForm, AddCommentF
 from exts import sms,db
 from utils import restful,safeutils
 from utils.captcha import Captcha
-from .models import FrontUser, Product, CommentModel, LikeModel, FollowModel
+from .models import FrontUser, Product, CommentModel, LikeModel, FollowModel, product_imgs
 import config
 from ..models import BannerModel, BoardModel, HighlightProductModel, FollowMessageModel,CommemtMessageModel
 from .decorators import login_required
@@ -242,6 +242,8 @@ def ta_page(user_id):
     products_obj = Product.query.order_by(Product.join_time.desc())
     products_obj = products_obj.filter_by(user_id =user_id)
     products=products_obj.slice(start, end)
+    products=products.join(product_imgs,Product.id==product_imgs.pid)
+    #b=Follow.query.join(Post,Follow.followed_id==Post.author_id).filter(Follow.follower_id==2)
     total = products_obj.count()
     follow=FollowModel.query.filter(FollowModel.follower==g.front_user).filter(FollowModel.star==ta).first()
     if follow:
