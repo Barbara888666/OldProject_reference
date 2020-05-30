@@ -408,7 +408,7 @@ bp.add_url_rule('/signin/',view_func=SigninView.as_view('signin'))
 
 
 
-@bp.route('/aproduct_form/',methods=['POST'])
+@bp.route('/aproduct/',methods=['GET','POST'])
 #@login_required
 def aproduct1():
     if request.method == 'GET':
@@ -426,7 +426,7 @@ def aproduct1():
         # # )
         # # print(dic)
         print(request)
-        f = request.files['file']
+        f = request.files.getlist('file')
         print(f)
         #
         # basepath = os.path.dirname(__file__)  # 当前文件所在路径
@@ -531,7 +531,7 @@ class aproductView(views.MethodView):
                 Note=request.form.get('Note'),
             )
             print(dic)
-            f = request.files.getlist('file')
+            #f = request.files.getlist('file')
 
             return "success"
 
