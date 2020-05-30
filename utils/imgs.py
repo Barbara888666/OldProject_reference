@@ -14,7 +14,7 @@ def uploadimg(img,des:str,tid:str,name:str):
     fpath=path.join(imgpath,des,tid)
     if not path.exists(fpath):
         makedirs(fpath)
-    suffix=img.filename.split('.')[1]
+    suffix=img.filename.split('.')[-1]
     print(suffix)
     fname='.'.join([name,suffix])
     print(fname)
