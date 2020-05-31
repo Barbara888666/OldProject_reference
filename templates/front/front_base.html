@@ -73,7 +73,7 @@
 
               </ul>
           </div>
-          {% for message in g.messages %}
+          {% for message in g.messages['commentmsg'] %}
           <div>{{message.content}}</div>
           {% endfor %}
       </div>
