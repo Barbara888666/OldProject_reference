@@ -108,8 +108,8 @@ $(function () {
 
 $(function () {
     qiniu.setUp({
-        // 'domain': 'http://liangluya.s3-cn-east-1.qiniucs.com/',
-        'domain': 'qakijx68u.bkt.clouddn.com/',
+        'domain': 'http://liangluya.s3-cn-east-1.qiniucs.com/',
+        // 'domain': 'qakijx68u.bkt.clouddn.com/',
         'browse_btn': 'upload-btn',
         'uptoken_url': '/c/uptoken/',
         'success': function (up,file,info) {

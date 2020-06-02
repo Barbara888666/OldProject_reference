@@ -75,7 +75,7 @@
                 </div>
                 <div class="product-info-group1">
                     <p class="product-name">
-                        <a href="{{ url_for("front.product_detail",product_id=product.id)}}">{{ product[0].name }}</a>
+                        <a href="{{ url_for("front.product_detail",product_id=product[0].id)}}">{{ product[0].name }}</a>
                         {% if product[0].highlight %}
                                     <span class="label label-danger">官方推荐</span>
                         {% endif %}
