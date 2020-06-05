@@ -53,7 +53,7 @@
                           {% for product in products %}
 						<div class="span4">
 							<h2>
-								物品{{ product[0].name }}
+								<a href="{{ url_for("front.product_detail",product_id=product[0].id)}}">{{ product[0].name }}</a>
 							</h2>
 							<p>
 								物品描述{{ product[0].description }}
