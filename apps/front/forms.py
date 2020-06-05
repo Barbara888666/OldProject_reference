@@ -18,6 +18,7 @@ class SignupForm(BaseForm):
         telephone = self.telephone.data
 
         sms_captcha_mem = cache.get(telephone)
+        print('1' + sms_captcha_mem)
         if not sms_captcha_mem or sms_captcha_mem != sms_captcha:
             raise ValidationError(message='短信验证码错误！')
 
