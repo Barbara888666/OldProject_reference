@@ -12,7 +12,7 @@ $(function () {
             },
             'success': function (data) {
                 if (data['code'] == 200) {
-                    window.location='/search/';
+                    window.location='/search/'+search;
                 } else {
                     alert.alertInfo(data['message']);
                 }

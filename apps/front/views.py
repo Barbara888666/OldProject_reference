@@ -69,14 +69,12 @@ def main_page():
 class SearchView(views.MethodView):
     def get(self):
         serach_content= cache.get('search')
-        print('tiaozuanhou'+serach_content)
-        return render_template('front/htmls/search_web_page.html')
+        return render_template('front/front_search.html')
 
     def post(self):
         form = SearchForm(request.form)
         if form.validate():
             search_content = form.search.data
-            print(search_content)
             cache.set('search',search_content)
             # return redirect(url_for('front.signin'))
             return restful.success()
@@ -100,8 +98,7 @@ def searchss(content):
     boards = BoardModel.query.all()
     # products = Product.query.all()
     sort = request.args.get('st', type=int, default=1)
-    print(sort)
-    query_obj = db.session.query(Product, product_imgs).outerjoin(product_imgs).filter(product_imgs.seq == 0).filter(Product.name==content)
+    query_obj = db.session.query(Product, product_imgs).outerjoin(product_imgs).filter(product_imgs.seq == 0).filter(Product.name.like("%"+content+"%"))
     if sort == 1:
         # 添加的时间排序
         query_obj = query_obj.order_by(Product.join_time.desc())
@@ -123,14 +120,11 @@ def searchss(content):
     if board_id:
         # products_obj = Product.query.filter_by(board_id=board_id)
         products_obj = query_obj.filter(Product.board_id == board_id)
-        products = products_obj.slice(start, end)
+        products = products_obj.slice(start, end).all()
         total = products_obj.count()
     else:
-        products = query_obj.slice(start, end)
+        products = query_obj.slice(start, end).all()
         total = query_obj.count()
-    # 调用imglink的示例
-    # print(products[0][1].imglink) imglink换成seq
-    # 调用product的示例: products[0][0].x
     pagination = Pagination(bs_version=3, page=page, total=total)
     context = {
         'banners': banners,
@@ -265,6 +259,8 @@ bp.add_url_rule('/forget_password/',view_func=Forget_password.as_view('forget_pa
 
 @bp.route('/t/<user_id>')
 def ta_page(user_id):
+    if user_id==session[config.FRONT_USER_ID]:
+        return redirect('/personal/')
     ta = FrontUser.query.filter(FrontUser.id==user_id).first()
     if not ta:
         abort(404)
