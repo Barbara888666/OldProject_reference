@@ -13,26 +13,39 @@
 {% block body %}
     <div class="lg-container">
         <div class="product-container">
-            <h2>{{ product.name }}</h2>
+            <h1 class="bg-info">{{ product.name }}</h1>
             <div class="product-picture">
+                {%if productimgs[0].imglink=='none'%}
                 <img src="{{ url_for('static',filename='common/images/logo.png') }}" alt="">
+                {%else%}
+                <img src="/static/{{ productimgs[0].imglink }}" alt="">
+                {%endif%}
             </div>
+            <div class="col-md-6"></div>
             <ul class="product-info-group" id="product-information" data-da="{{ product.id}}" data-like="{{like.id}}">
-            <li><span>发布时间：{{ product.join_time }}</span></li>
-            <li><span>卖家：{{ product.user.username }}</span></li>
-            <li><span>类别：{{ product.board.name }}</span></li>
-            <li><span>描述:{{ product.description }}</span></li>
-            <li><span>价格:{{ product.price }}</span></li>
-            <li><span>点击数: {{ product.like }}</span></li>
-            <li><span>评论数: {{ product.comment }}</span></li>
+            <li class="col-md-12"><h1>价格:{{ product.price }}</h1></li>
+            <li class="col-md-4"><strong>卖家：{{ product.user.username }}</strong></li>
+            <li class="col-md-4"><strong>类别：{{ product.board.name }}</strong></li>
+            <li class="col-md-12"><span>描述:{{ product.description }}</span></li>
+
+                <li class="col-md-12"><small>发布时间：{{ product.join_time }}</small></li>
+            <li class="col-md-4" color="blue"><small>点击数: {{ product.like }}</small></li>
+            <li class="col-md-4"><small>评论数: {{ product.comment }}</small></li>
             </ul>
-            {% if like == 0 %}
+            {% if like == 0 or like==None%}
             <button class="btn btn-warning" id="like-btn" name="like-btn" data="0">Like</button></td>
             {% else %}
             <button class="btn btn-success" data="1"  id="have-like-btn">Cancel Liked</button></td>
             {% endif %}
+            {%if productimgs[0].imglink!='none'%}
+            {%for p in productimgs%}
+            <div class="product-picture">
+                <img  src="/static/{{ p.imglink }}" alt="">
+            </div>
+            {%endfor%}
+            {%endif%}
         </div>
-
+<div class="col-md-12" ></div>
         <div class="comment-group">
             <h3>评论列表</h3>
             <ul class="comment-list-group">
@@ -44,11 +57,11 @@
                         </div>
                         <div class="comment-content">
                             <p class="user-info">
-                                <span>{{ comment.commenter.username }}</span>
-                                <span>{{ comment.create_time }}</span>
+                                <strong class="col-md-6">{{ comment.commenter.username }}</strong>
+                                <small class="col-md-6">{{ comment.create_time }}</small>
                             </p>
-                            <p class="comment-txt">
-                                {{ comment.content|safe }}
+                            <p class="comment-txt"><small class="col-md-12">{{ comment.content|safe }}</small>
+
                             </p>
 
                         </div>
@@ -75,15 +88,16 @@
 
     <div class="sm-container">
         <div style="padding-bottom:10px;">
-            <div class="saler"><a href="#">卖家</a></div>
+            <div class="col-md-6"> <div class="saler"><a href="#">卖家</a></div></div>
 
-
-            <div class="user-avatar-group">
-                <img src="{{ url_for('static',filename='common/images/logo.png') }}" alt="">
-            </div>
-            <div>
+<div class="col-md-6">
                 <button class="btn btn-warning btn-block hispage"><a href="{{ url_for("front.ta_page",user_id=product.user.id)}}">Ta的主页</a></button>
             </div>
+<div class="col-md-12"><div class="user-avatar-group">
+                <img src="{{ url_for('static',filename='common/images/logo.png') }}" alt="">
+            </div></div>
+
+
 
         </div>
 

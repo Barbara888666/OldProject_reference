@@ -2,7 +2,7 @@
     height: 200px;
     width: 80%;
     margin: 0 auto;
-    background-color: cornsilk;
+    background-color: rgba(255, 255, 255, 0);
 }
 .product-list-group{
     width: 80%;

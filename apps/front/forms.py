@@ -2,8 +2,7 @@ from ..forms import BaseForm
 from wtforms import StringField, IntegerField, FileField
 from wtforms.validators import Regexp, EqualTo, ValidationError, InputRequired
 from utils import cache
-from .models import FrontUser
-
+from .models import FrontUser 
 class SignupForm(BaseForm):
     telephone = StringField(validators=[Regexp(r"1[345789]\d{9}",message='请输入正确格式的手机号码！')])
     sms_captcha = StringField(validators=[Regexp(r"\w{6}",message='请输入正确格式的短信验证码！')])

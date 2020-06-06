@@ -1,0 +1,200 @@
+{% extends "front/front_base.html" %}
+{% from "common/_macros.html" import static %}
+
+{% block title %}BJUT Second Market{% endblock %}
+
+
+{% block head %}
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="{{ static("front/css/front_index.css") }}">
+<link rel="stylesheet" href="{{ static("front/cs/bootstrap.min.css") }}">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src={{ static("front/cs/personal.js") }}></script>
+
+
+{% endblock %}
+
+{% block body %}
+   <div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+			<h3  class="bg-primary">
+				Information
+			</h3>
+		</div>
+	</div>
+		<div class="row-fluid">
+<button type="button" class="btn btn-default" ><a data-toggle="modal" data-target="#myModal">更改信息</a></button>
+
+            <!-- 请求表单，aciton需要自己绑定-->
+        <form method="post" action="#" id="form_add">
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"></span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">更改信息</h4>
+                        </div>
+                            <div class="modal-body">
+                                <!--数据项-->
+                                <div class="form-group form-inline">
+                                    用户名<input type="text" name="name" class="form-control" >
+                                </div>
+                                 <div class="form-group form-inline">
+                                     email<input type="text" name="email" class="form-control" >
+                                </div>
+                                <div class="form-group form-inline">
+									<select name="gender" class="form-control">
+										<option value=1>Male</option>
+										<option value=2>Female</option>
+										<option value=3>Secret</option>
+										<option value=4>Unknown</option>
+										<option selected></option>
+									</select>
+								</div>
+								<div class="form-group form-inline">
+									Personal description<input type="text" name="singature" class="form-control" >
+							   </div>
+		 <div class="form-group">
+    <label for="exampleInputFile">Avatar</label>
+    <input type="file" id="exampleInputFile" name="file">
+    <p class="help-block">修改头像</p>
+  </div>
+                                <!-- end-->
+
+                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="addSure btn btn-info">添加</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </body>
+    <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script>
+      //提交表单的方法
+      $(".addSure").click(function(event){
+		  event.preventDefault();
+	  var f =new FormData();
+	  f.append('uname',$("input[name='name']").val());
+	  f.append('email',$("input[name='email']").val());
+	  f.append('gender',$("select[name='gender']").val());
+	  f.append('des',$("input[name='signature']").val());
+	  f.append('file',$("#exampleInputFile").get(0).files[0]);
+	  zlajax.post({
+		  type:'post',
+		  url:"/changeinfo/",
+		  dataType:'text',
+		  data:f,
+		  processData: false,
+		  contentType: false,
+		  'success': function (data) {
+			if(data=='success'){
+				alert.alertConfirm({
+					'msg':'Success!',
+					'ConfirmText':'OK'
+				});
+			}else{
+				alert.alertConfirm({
+					'msg':'Success!',
+					'ConfirmText':'Upload again'
+				});
+			}
+		  } 
+		  });
+		});
+   </script>
+
+		<div class="span6">
+			<h3 class="col-md-8" >
+				<div  class="col-sm-9" >Username</div>
+			</h3>
+			<h3 class="col-md-8" >
+				<div  class="col-sm-6" >{{user.username}}</div>
+			</h3>
+			{%if user.avatar==None%}
+			<img   class="col-md-4" alt="140x140" src="img/a.jpg" />
+			{%else%}
+			<img   class="col-md-4" alt="140x140" src="/static/{{user.avatar}}" />
+			{%endif%}
+			<h3 class="col-md-8" >
+				<div  class="col-sm-9" >Description</div>
+			</h3>
+            <h3 class="col-md-8" >
+				<div  class="col-sm-6" >{{user.signature}}</div>
+			</h3>
+			<h3 class="col-md-8" >
+				<div  class="col-sm-9" >Telephone</div>
+			</h3>
+			<h3 class="col-md-8" >
+				<div  class="col-sm-6" >{{user.telephone}}</div>
+			</h3>
+			<h3 class="col-md-8" >
+				<div  class="col-sm-9" >Email</div>
+			</h3>
+            <h3 class="col-md-8" >
+				<div  class="col-sm-6" >{{user.email}}</div>
+			</h3>
+			<h3 class="col-md-8" >
+				<div  class="col-sm-9" >Gender</div>
+			</h3>
+			<h3 class="col-md-8" >
+				<div  class="col-sm-6" >{{gender}}</div>
+			</h3>
+
+		</div>
+
+	</div>
+	<div class="row-fluid">
+		<div class="span4">
+			<h3 class="col-md-12"><div  class="bg-info">product list</div>
+				</h3>
+
+				{%for t in product%}
+				{%if t[1].imglink=='none'%}
+			<img class="col-md-4" alt="140x140" src="img/a.jpg" />
+			{%else%}
+			<img class="col-md-4" alt="140x140" src="/static/{{t[2].imglink}}" />
+			{%endif%}
+			<p class="col-sm-9">物品</p>
+			<div  class="col-sm-6" ><li><a href="/p/{{t[1]}}">{{t[0]}}</a></li></div>
+			<div class="col-sm-9">物品分类</div>
+			<div  class="col-sm-6" >{{t[3]}}</div>
+			{%endfor%}
+
+		</div>
+
+
+	</div>
+<nav aria-label="Page navigation" class="col-xs-12">
+  <ul class="pagination">
+    <li>
+		{%if c==1%}
+		<a aria-disabled="true" aria-label="Previous"></a>
+		{%else%}
+	  <a href="/personal/?p={{c-1}}" aria-label="Previous">
+		{%endif%}
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+	</li>
+	{%for p in range%}
+    <li><a href="/personal/?p={{p}}">{{p}}</a></li>
+	{%endfor%}
+    <li>
+		{%if c==t%}
+		<a aria-disabled="true" aria-label="Previous"></a>
+		{%else%}
+	  <a href="/personal/?p={{c+1}}" aria-label="Next">
+		{%endif%}
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+</div>
+{% endblock %}

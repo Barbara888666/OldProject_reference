@@ -12,13 +12,14 @@
 
 {% block body %}
     <div class="lg-container">
+        <div class="bg-info"><h3>personal information</h3></div>
     <div class="background">
         <div class="top-ta" id="top-ta" name="top-ta" data-da="{{ta.id}}" data-follow="{{follow.id}}">
             <div class="user-avatar-group">
               <img src="{{ ta.avatar or url_for('static',filename='common/images/logo.png') }}" alt="">
             </div>
             <div class="taname">
-                <span>username:{{ ta.username }}</span>
+                <span ><h1>username:{{ ta.username }}</h1></span>
             </div>
             <div>
             {% if follow == 0 %}
@@ -28,18 +29,19 @@
             {% endif %}
             </div>
         </div>
+        <div class="bg-info"><h3>product list</h3></div>
         <ul class="product-list-group">
                 {% for product in products %}
                 <li>
                 <div class="product-info-group1">
                     <p class="product-name">
-                        <a href="{{ url_for("front.product_detail",product_id=product.id)}}">{{ product.name }}</a>
+                        <h1><a href="{{ url_for("front.product_detail",product_id=product.id)}}">{{ product.name }}</a></h1>
                         {% if product.highlight %}
                                     <span class="label label-danger">管理员推荐</span>
                         {% endif %}
                     </p>
                     <p class="product-info1">
-                        <span>价格:{{ product.price }}</span>
+                        <h4><strong>价格:{{ product.price }}</strong></h4>
                     </p>
                 </div>
                 <div class="product-info-group2">
@@ -47,7 +49,7 @@
                         <span>描述:{{ product.description }}</span>
                     </p>
                     <p class="product-info3">
-                        <span>点击率:0</span>
+                        <small>点击率:0</small>
                     </p>
                 </div>
                 <div class="product-picture">

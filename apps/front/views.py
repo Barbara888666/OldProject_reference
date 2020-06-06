@@ -9,7 +9,7 @@ from apps.front.forms import SignupForm, SigninForm, AddProductForm, AddCommentF
     AddFollowForm, SearchForm
 from exts import sms,db
 from utils import cache
-from utils import restful,safeutils,uploadproductimgs
+from utils import restful,safeutils,uploadproductimgs,uploadavatar,delavatar
 from utils.captcha import Captcha
 from .models import FrontUser, Product, CommentModel, LikeModel, FollowModel, product_imgs
 import config
@@ -50,39 +50,12 @@ def highpres():
 
 @bp.route('/a')
 def main_page():
-    if session[config.FRONT_USER_ID]:
+    if config.FRONT_USER_ID in session:
         userid=g.front_user.id
         return render_template('front/htmls/main_page.html',userid=userid)
     else:
         return render_template('front/htmls/main_page.html')
 
-@bp.route('/news')
-def new():
-    return render_template('front/htmls/my_news.html')
-#有多少人想联系我、有多少人收藏我的物品
-
-@bp.route('/notice')
-def notices():
-    return render_template('front/htmls/website_notice.html')
-#搜索网站通知列表
-
-@bp.route('/personal')
-@login_required
-def personals():
-    # userid = g.front_user.id
-    t = g.front_user.id
-    # username = t[0][0]
-    # email = t[0][1]
-    # phone = t[0][2]
-    # return render_template('front/htmls/personal_information.html', username=username, email=email, phone=phone)
-    return render_template('front/htmls/personal_information.html')
-
-
-
-@bp.route('/popular')
-def populars():
-    return render_template('front/htmls/popular_products.html')
-#商品名字，商品图片，卖家
 
 # @search.route('/search',classmethod=('GET','POST'))
 # def searchtest():
@@ -112,71 +85,107 @@ class SearchView(views.MethodView):
             return restful.params_error(message=form.get_error())
 bp.add_url_rule('/search/',view_func=SearchView.as_view('search'))
 
-@bp.route('/testsearch/')
-def searchs():
-    return render_template('front/htmls/testsearch.html')
-#搜索分类列表及分类物品
-#物品列表：物品id，物品图片，物品名，卖家名字，卖家信誉度，物品介绍信息
-#更换排序（名字，卖家信誉度，买家喜爱度（可取舍该功能）
+@bp.route('/s/',methods=['POST'])
+def s():
+    if request.method=='POST':
+        s=request.forms.get('search','')
+        if s!='':
+            return redirect('/search/'+s)
+    abort(404)
 
-@bp.route('/testmain/')
+@bp.route('/search/<content>')
+def searchss(content):
+    board_id = request.args.get('bd', type=int, default=None)
+    banners = BannerModel.query.order_by(BannerModel.priority.desc()).limit(4)
+    boards = BoardModel.query.all()
+    # products = Product.query.all()
+    sort = request.args.get('st', type=int, default=1)
+    print(sort)
+    query_obj = db.session.query(Product, product_imgs).outerjoin(product_imgs).filter(product_imgs.seq == 0).filter(Product.name==content)
+    if sort == 1:
+        # 添加的时间排序
+        query_obj = query_obj.order_by(Product.join_time.desc())
+    elif sort == 2:
+        # 按照加精的时间倒叙排序
+        query_obj = query_obj.order_by(
+            HighlightProductModel.create_time.desc(), Product.join_time.desc())
+    elif sort == 3:
+        # 按照点赞的数量排序
+        query_obj = query_obj.order_by(Product.like.desc())
+    elif sort == 4:
+        # 按照价格便宜排序
+        query_obj = query_obj.order_by(Product.price.asc())
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    start = (page - 1) * config.PER_PAGE
+    end = start + config.PER_PAGE
+    products = None
+    total = None
+    if board_id:
+        # products_obj = Product.query.filter_by(board_id=board_id)
+        products_obj = query_obj.filter(Product.board_id == board_id)
+        products = products_obj.slice(start, end)
+        total = products_obj.count()
+    else:
+        products = query_obj.slice(start, end)
+        total = query_obj.count()
+    # 调用imglink的示例
+    # print(products[0][1].imglink) imglink换成seq
+    # 调用product的示例: products[0][0].x
+    pagination = Pagination(bs_version=3, page=page, total=total)
+    context = {
+        'banners': banners,
+        'boards': boards,
+        'products': products,
+        'pagination': pagination,
+        'current_board': board_id,
+        'current_sort': sort,
+    }
+    return render_template('front/front_search.html',**context)
+@bp.route('/personal/')
 @login_required
-def tests():
-    t = g.front_user.id
-    # a = searchitems()
-    # img=searchavatar(int(session['id'])
-    # album = searchalbum(int(session['id'])
-    #
-    # itemimg =searchitemimg()
-    username = t[0][0]
-    email = t[0][1]
-    phone = t[0][2]
-    return render_template('front/htmls/maintest.html', username=username, email=email, phone=phone)
+def searchp():
+    user=FrontUser.query.filter(FrontUser.id==g.front_user.id).first()
+    userproducts=db.session.query(Product.name,Product.id,product_imgs,BoardModel.name).outerjoin(product_imgs,BoardModel).filter(Product.user_id==g.front_user.id).filter(product_imgs.seq==0)
+    total=int(userproducts.count()/5)+1
+    currentpage=int(request.args.get('p',1))
+    start=(currentpage-1)*5
+    end=start+5
+    pdisplay=userproducts.slice(start,end)
+    prange=range(1,total+1)
+    return render_template('front/front_personal.html',user=user,gender=str(user.gender).strip('GenderEnum.'),product=pdisplay,range=prange,c=currentpage,t=total)
 
-#卖家信息：卖家名字，卖家个人介绍，卖家信誉度，卖家qq、微信、电话
-#卖家商品列表：商品图片，商品名字，商品分类
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+@bp.route('/changeinfo/',methods=['POST'])
+@login_required
+def changeinfo():
+    name=request.form.get('uname','')
+    email=request.form.get('email','')
+    gender=request.form.get('gender','')
+    signature=request.form.get('des','')
+    avatar=request.files.get('file','')
+    info={}
+    if name!='':
+        info.update({'username':name})
+    if email!='':
+        info.update({'email':email})
+    if gender!='':
+        info.update({'gender':gender})
+    if signature!='undefined':
+        info.update({'signature':signature})
+    if avatar!='':
+        delavatar(g.front_user.id)
+        link=uploadavatar(avatar,g.front_user.id)
+        info.update({'avatar':link})
+    if info!={}:
+        db.session.query(FrontUser).filter(FrontUser.id==g.front_user.id).update(info)
+        db.session.commit()
+    return jsonify('success')
 
 @bp.route('/category/')
 def index():
     board_id=request.args.get('bd',type=int,default=None)
     banners = BannerModel.query.order_by(BannerModel.priority.desc()).limit(4)
     boards = BoardModel.query.all()
+
     # products = Product.query.all()
     sort=request.args.get('st',type=int,default=1)
     print(sort)
@@ -262,17 +271,13 @@ def ta_page(user_id):
     page = request.args.get(get_page_parameter(), type=int, default=1)
     start = (page - 1) * config.PER_PAGE
     end = start + config.PER_PAGE
-    products_obj = Product.query.order_by(Product.join_time.desc())
-    products_obj = products_obj.filter_by(user_id =user_id)
-    products=products_obj.slice(start, end)
-    #products=products.join(product_imgs,Product.id==product_imgs.pid)
+    products_obj = Product.query.order_by(Product.join_time.desc()).filter_by(user_id =user_id)
+    products=products_obj.join(product_imgs,Product.id==product_imgs.pid).slice(start, end)
     #b=Follow.query.join(Post,Follow.followed_id==Post.author_id).filter(Follow.follower_id==2)
     total = products_obj.count()
-    follow=FollowModel.query.filter(FollowModel.follower==g.front_user).filter(FollowModel.star==ta).first()
-    if follow:
-        pass
-    else:
-        follow=0
+    follow=0
+    if config.FRONT_USER_ID in session:
+        follow=FollowModel.query.filter(FollowModel.follower==g.front_user).filter(FollowModel.star==ta).first()
     pagination = Pagination(bs_version=3,page=page,total=total)
     context = {
         'ta': ta,
@@ -285,21 +290,13 @@ def ta_page(user_id):
 @bp.route('/p/<product_id>')
 def product_detail(product_id):
     product=Product.query.get(product_id)
-    print(product.user)
-    # user_id=product.user.id
-    like=LikeModel.query.filter(LikeModel.product_id==product_id).filter(LikeModel.liker==g.front_user).first()
-    # query.filter(User.name == 'ed').filter(User.fullname == 'Ed Jones')
-    # like=LikeModel.query.get(product_id)
-    # like=like.filter_by(user_id=user_id)
-    print(like)
+    pimgs=product_imgs.query.filter(product_imgs.pid==product_id).order_by(product_imgs.seq).all()
+    like=0
+    if config.FRONT_USER_ID in session:
+        like=LikeModel.query.filter(LikeModel.product_id==product_id).filter(LikeModel.liker==g.front_user).first()
     if not product:
         abort(404)
-    if not like:
-        like=0
-    else:
-        pass
-        print(like)
-    return render_template('front/front_product_detail.html',product=product,like=like)
+    return render_template('front/front_product_detail.html',product=product,like=like,productimgs=pimgs)
 
 
 @bp.route('/acomment/',methods=['POST'])

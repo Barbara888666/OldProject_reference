@@ -1,5 +1,6 @@
 from config import imgpath
-from os import path,makedirs,removedirs
+from os import path,makedirs
+from shutil import rmtree
 from hashlib import md5
 def hash(word:str='',salt:bytes=None):
     if word=='':
@@ -15,9 +16,7 @@ def uploadimg(img,des:str,tid:str,name:str):
     if not path.exists(fpath):
         makedirs(fpath)
     suffix=img.filename.split('.')[-1]
-    print(suffix)
     fname='.'.join([name,suffix])
-    print(fname)
     fp=path.join(fpath,fname)
     if not path.isfile(fp):
         with open(fp,'w'):
@@ -34,4 +33,4 @@ def uploadimgs(imgs:list,des:str,tid:[int,str]):
 def delimg(des:str,tid:str):
     dpath=path.join(imgpath,des,tid)
     if path.exists(dpath):
-        removedirs(dpath)
+        rmtree(dpath)
