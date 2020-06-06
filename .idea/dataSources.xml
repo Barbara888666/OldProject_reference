@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="info" uuid="77d381f1-acea-4394-9235-bb490151a0e8">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:C:\Users\Inknon\.market\info.db</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="users" uuid="42d268c8-e10d-4c9f-8565-09a6b66fab01">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:C:\Users\Inknon\Desktop\1\db\users.db</jdbc-url>
+    </data-source>
+  </component>
+</project>
