@@ -75,19 +75,19 @@
                 </div>
                 <div class="product-info-group1">
                     <p class="product-name">
-                        <a href="{{ url_for("front.product_detail",product_id=product[0].id)}}">{{ product[0].name }}</a>
+                        <h2><a href="{{ url_for("front.product_detail",product_id=product[0].id)}}">{{ product[0].name }}</a></h2>
                         {% if product[0].highlight %}
                                     <span class="label label-danger">官方推荐</span>
                         {% endif %}
                     </p>
                     <p class="product-info1">
-                        <span>价格:{{ product[0].price }}</span>
+                        <span>price:{{ product[0].price }}</span>
                     </p>
 
                 </div>
                 <div class="product-info-group2">
                     <p class="product-info2">
-                        <span>描述:{{ product[0].description }}</span>
+                        <span>description:{{ product[0].description }}</span>
                     </p>
                     <p class="product-info3">
                         <span>点赞数:{{ product[0].like }}</span>
@@ -113,14 +113,14 @@
 
     <div class="sm-container">
         <div style="padding-bottom:10px;" >
-             <a href="{{ url_for("front.aproduct") }}" class="btn btn-warning btn-block">发布帖子</a>
+             <a href="{{ url_for("front.aproduct") }}" class="btn btn-warning btn-block">new product</a>
 {#            <button class="btn btn-warning btn-block">发布帖子</button>#}
         </div>
         <div class="list-group">
             {% if current_board %}
-                <a href="{{ url_for("front.index") }}" class="list-group-item">所有板块</a>
+                <a href="{{ url_for("front.index") }}" class="list-group-item">category</a>
             {% else %}
-                <a href="{{ url_for("front.index") }}" class="list-group-item active">所有板块</a>
+                <a href="{{ url_for("front.index") }}" class="list-group-item active">category</a>
             {% endif %}
 
             {% for board in boards %}

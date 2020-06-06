@@ -11,6 +11,23 @@
 {% endblock %}
 
 {% block body %}
+<div class="col-md-6">
+                <button class="btn btn-default "><a href="{{ url_for("front.ta_page",user_id=product.user.id)}}">seller information</a></button>
+            </div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">product information</h3>
+  </div>
+  <div class="panel-body">
+
+    <div class="sm-container col-md-6">
+        <div style="padding-bottom:10px;">
+<!--            <div class="col-md-6"> <div class="saler"><a href="#">卖家</a></div></div>-->
+
+
+<!--<div class="col-md-12"><div class="user-avatar-group">-->
+<!--                <img src="{{ url_for('static',filename='common/images/logo.png') }}" alt="">-->
+<!--            </div></div>-->
     <div class="lg-container">
         <div class="product-container">
             <h1 class="bg-info">{{ product.name }}</h1>
@@ -23,14 +40,14 @@
             </div>
             <div class="col-md-6"></div>
             <ul class="product-info-group" id="product-information" data-da="{{ product.id}}" data-like="{{like.id}}">
-            <li class="col-md-12"><h1>价格:{{ product.price }}</h1></li>
-            <li class="col-md-4"><strong>卖家：{{ product.user.username }}</strong></li>
-            <li class="col-md-4"><strong>类别：{{ product.board.name }}</strong></li>
-            <li class="col-md-12"><span>描述:{{ product.description }}</span></li>
+            <li class="col-md-12"><h1>price:{{ product.price }}</h1></li>
+            <li class="col-md-4"><strong>seller：{{ product.user.username }}</strong></li>
+            <li class="col-md-4"><strong>category：{{ product.board.name }}</strong></li>
+            <li class="col-md-12"><span>description:{{ product.description }}</span></li>
 
-                <li class="col-md-12"><small>发布时间：{{ product.join_time }}</small></li>
-            <li class="col-md-4" color="blue"><small>点击数: {{ product.like }}</small></li>
-            <li class="col-md-4"><small>评论数: {{ product.comment }}</small></li>
+                <li class="col-md-12"><small>time：{{ product.join_time }}</small></li>
+            <li class="col-md-4" color="blue"><small>read: {{ product.like }}</small></li>
+            <li class="col-md-4"><small>comments: {{ product.comment }}</small></li>
             </ul>
             {% if like == 0 or like==None%}
             <button class="btn btn-warning" id="like-btn" name="like-btn" data="0">Like</button></td>
@@ -46,8 +63,23 @@
             {%endif%}
         </div>
 <div class="col-md-12" ></div>
+
+    </div>
+
+
+        </div>
+
+    </div>
+  </div>
+</div>
+<div class="col-md-12">       </div>
+        <div class="col-md-12">         </div>
+        <div class="col-md-12">        </div>
+    <div class="lg-container">
+
+<div class="col-md-12" ></div>
         <div class="comment-group">
-            <h3>评论列表</h3>
+            <h3>comment list</h3>
             <ul class="comment-list-group">
                 {% for comment in product.comments %}
                 <ul class="comment-info-group" id="comment-info-group" data-da="{{comment.id}}">
@@ -76,12 +108,13 @@
                 {% endfor %}
             </ul>
         </div>
+
         <div class="add-comment-group">
-            <span>评论</span>
+            <span>comment</span>
             <input type="text" class="form-control" id="comment-content"
                    name="comment-content" placeholder="欢迎评论">
             <div class="comment-btn-group">
-                <button class="btn btn-primary" id="comment-btn" name="comment-btn" data="1">发布</button></td>
+                <button class="btn btn-primary" id="comment-btn" name="comment-btn" data="1">submit</button></td>
             </div>
         </div>
     </div>
