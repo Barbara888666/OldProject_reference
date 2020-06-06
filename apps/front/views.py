@@ -174,7 +174,7 @@ def changeinfo():
         db.session.commit()
     return jsonify('success')
 
-@bp.route('/category/')
+@bp.route('/')
 def index():
     board_id=request.args.get('bd',type=int,default=None)
     banners = BannerModel.query.order_by(BannerModel.priority.desc()).limit(4)
