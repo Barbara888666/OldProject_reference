@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="{{ static("front/css/front_index.css") }}">
 <link rel="stylesheet" href="{{ static("front/cs/bootstrap.min.css") }}">
-<!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+<<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">>
 {% endblock %}
 
 {% block body %}
@@ -32,9 +32,9 @@
 							</p>
 							<div class="span4">
 								{%if product[1].imglink=='none'%}
-							<img alt="140x140" src="img/a.jpg" />
+							<img alt="140x140"  src="{{ url_for('static',filename='common/images/logo.png') }}" class="img-thumbnail" />
 							{%else%}
-							<img alt="140x140" src="/static/{{product[1].imglink}}" />
+							<img alt="140x140" src="/static/{{product[1].imglink}}" class="img-thumbnail"/>
 							{%endif%}
 						</div>
 							{% endfor %}
