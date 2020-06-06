@@ -49,7 +49,7 @@ def highpres():
 
 @bp.route('/a')
 def main_page():
-    if session[config.FRONT_USER_ID]:
+    if config.FRONT_USER_ID in session:
         userid=g.front_user.id
         return render_template('front/htmls/main_page.html',userid=userid)
     else:
@@ -88,38 +88,37 @@ def populars():
 #     #由后端传送文件的示范
 #     file="/images/test.jpg"
 #     return render_template('search_web_page.html',file=file)
-@bp.route('/search')
-def searchtest():
-    return render_template('front/htmls/search_web_page.html')
-@bp.route('/testsearch/')
-def searchs():
-    return render_template('front/htmls/testsearch.html')
-#搜索分类列表及分类物品
-#物品列表：物品id，物品图片，物品名，卖家名字，卖家信誉度，物品介绍信息
-#更换排序（名字，卖家信誉度，买家喜爱度（可取舍该功能）
-@bp.route('/searchfinal/')
-def searchss():
+
+@bp.route('/s/',methods=['POST'])
+def s():
+    if request.method=='POST':
+        s=request.forms.get('search','')
+        if s!='':
+            return redirect('/search/'+s)
+    abort(404)
+
+@bp.route('/search/<content>')
+def searchss(content):
     board_id = request.args.get('bd', type=int, default=None)
     banners = BannerModel.query.order_by(BannerModel.priority.desc()).limit(4)
     boards = BoardModel.query.all()
     # products = Product.query.all()
     sort = request.args.get('st', type=int, default=1)
     print(sort)
+    query_obj = db.session.query(Product, product_imgs).outerjoin(product_imgs).filter(product_imgs.seq == 0).filter(Product.name==content)
     if sort == 1:
         # 添加的时间排序
-        query_obj = db.session.query(Product, product_imgs).outerjoin(product_imgs).filter(
-            product_imgs.seq == 0).order_by(Product.join_time.desc())
+        query_obj = query_obj.order_by(Product.join_time.desc())
     elif sort == 2:
         # 按照加精的时间倒叙排序
-        query_obj = db.session.query(Product, product_imgs).outerjoin(HighlightProductModel).outerjoin(
-            product_imgs).filter(product_imgs.seq == 0).order_by(
+        query_obj = query_obj.order_by(
             HighlightProductModel.create_time.desc(), Product.join_time.desc())
     elif sort == 3:
         # 按照点赞的数量排序
-        query_obj = db.session.query(Product, product_imgs).filter(product_imgs.seq == 0).order_by(Product.like.desc())
+        query_obj = query_obj.order_by(Product.like.desc())
     elif sort == 4:
         # 按照价格便宜排序
-        query_obj = db.session.query(Product, product_imgs).filter(product_imgs.seq == 0).order_by(Product.price.asc())
+        query_obj = query_obj.order_by(Product.price.asc())
     page = request.args.get(get_page_parameter(), type=int, default=1)
     start = (page - 1) * config.PER_PAGE
     end = start + config.PER_PAGE
@@ -207,6 +206,7 @@ def index():
     board_id=request.args.get('bd',type=int,default=None)
     banners = BannerModel.query.order_by(BannerModel.priority.desc()).limit(4)
     boards = BoardModel.query.all()
+
     # products = Product.query.all()
     sort=request.args.get('st',type=int,default=1)
     print(sort)
@@ -292,17 +292,13 @@ def ta_page(user_id):
     page = request.args.get(get_page_parameter(), type=int, default=1)
     start = (page - 1) * config.PER_PAGE
     end = start + config.PER_PAGE
-    products_obj = Product.query.order_by(Product.join_time.desc())
-    products_obj = products_obj.filter_by(user_id =user_id)
-    products=products_obj.slice(start, end)
-    products=products.join(product_imgs,Product.id==product_imgs.pid)
+    products_obj = Product.query.order_by(Product.join_time.desc()).filter_by(user_id =user_id)
+    products=products_obj.join(product_imgs,Product.id==product_imgs.pid).slice(start, end)
     #b=Follow.query.join(Post,Follow.followed_id==Post.author_id).filter(Follow.follower_id==2)
     total = products_obj.count()
-    follow=FollowModel.query.filter(FollowModel.follower==g.front_user).filter(FollowModel.star==ta).first()
-    if follow:
-        pass
-    else:
-        follow=0
+    follow=0
+    if config.FRONT_USER_ID in session:
+        follow=FollowModel.query.filter(FollowModel.follower==g.front_user).filter(FollowModel.star==ta).first()
     pagination = Pagination(bs_version=3,page=page,total=total)
     context = {
         'ta': ta,
@@ -315,21 +311,13 @@ def ta_page(user_id):
 @bp.route('/p/<product_id>')
 def product_detail(product_id):
     product=Product.query.get(product_id)
-    print(product.user)
-    # user_id=product.user.id
-    like=LikeModel.query.filter(LikeModel.product_id==product_id).filter(LikeModel.liker==g.front_user).first()
-    # query.filter(User.name == 'ed').filter(User.fullname == 'Ed Jones')
-    # like=LikeModel.query.get(product_id)
-    # like=like.filter_by(user_id=user_id)
-    print(like)
+    pimgs=product_imgs.query.filter(product_imgs.pid==product_id).order_by(product_imgs.seq).all()
+    like=0
+    if config.FRONT_USER_ID in session:
+        like=LikeModel.query.filter(LikeModel.product_id==product_id).filter(LikeModel.liker==g.front_user).first()
     if not product:
         abort(404)
-    if not like:
-        like=0
-    else:
-        pass
-        print(like)
-    return render_template('front/front_product_detail.html',product=product,like=like)
+    return render_template('front/front_product_detail.html',product=product,like=like,productimgs=pimgs)
 
 
 @bp.route('/acomment/',methods=['POST'])

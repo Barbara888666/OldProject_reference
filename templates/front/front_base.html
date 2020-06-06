@@ -27,9 +27,9 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">首页<span class="sr-only">(current)</span></a></li>
           </ul>
-          <form class="navbar-form navbar-left">
+          <form action="/s/" method="post" class="navbar-form navbar-left" >
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="请输入关键字">
+              <input type="text" class="form-control" placeholder="请输入关键字" name="search">
             </div>
             <button type="submit" class="btn btn-default">搜索</button>
           </form>
@@ -73,9 +73,11 @@
 
               </ul>
           </div>
+          {% if g.front_user %}
           {% for message in g.messages['commentmsg'] %}
           <div>{{message.content}}</div>
           {% endfor %}
+          {%endif%}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

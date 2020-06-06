@@ -15,7 +15,11 @@
         <div class="product-container">
             <h2>{{ product.name }}</h2>
             <div class="product-picture">
+                {%if productimgs[0].imglink=='none'%}
                 <img src="{{ url_for('static',filename='common/images/logo.png') }}" alt="">
+                {%else%}
+                <img src="/static/{{ productimgs[0].imglink }}" alt="">
+                {%endif%}
             </div>
             <ul class="product-info-group" id="product-information" data-da="{{ product.id}}" data-like="{{like.id}}">
             <li><span>发布时间：{{ product.join_time }}</span></li>
@@ -26,11 +30,18 @@
             <li><span>点击数: {{ product.like }}</span></li>
             <li><span>评论数: {{ product.comment }}</span></li>
             </ul>
-            {% if like == 0 %}
+            {% if like == 0 or like==None%}
             <button class="btn btn-warning" id="like-btn" name="like-btn" data="0">Like</button></td>
             {% else %}
             <button class="btn btn-success" data="1"  id="have-like-btn">Cancel Liked</button></td>
             {% endif %}
+            {%if productimgs[0].imglink!='none'%}
+            {%for p in productimgs%}
+            <div class="product-picture">
+                <img src="/static/{{ p.imglink }}" alt="">
+            </div>
+            {%endfor%}
+            {%endif%}
         </div>
 
         <div class="comment-group">
