@@ -89,35 +89,36 @@ def populars():
 #     file="/images/test.jpg"
 #     return render_template('search_web_page.html',file=file)
 
-@bp.route('/testsearch/')
-def searchs():
-    return render_template('front/htmls/testsearch.html')
-#搜索分类列表及分类物品
-#物品列表：物品id，物品图片，物品名，卖家名字，卖家信誉度，物品介绍信息
-#更换排序（名字，卖家信誉度，买家喜爱度（可取舍该功能）
-@bp.route('/search/')
-def searchss():
+@bp.route('/s/',methods=['POST'])
+def s():
+    if request.method=='POST':
+        s=request.forms.get('search','')
+        if s!='':
+            return redirect('/search/'+s)
+    abort(404)
+
+@bp.route('/search/<content>')
+def searchss(content):
     board_id = request.args.get('bd', type=int, default=None)
     banners = BannerModel.query.order_by(BannerModel.priority.desc()).limit(4)
     boards = BoardModel.query.all()
     # products = Product.query.all()
     sort = request.args.get('st', type=int, default=1)
     print(sort)
+    query_obj = db.session.query(Product, product_imgs).outerjoin(product_imgs).filter(product_imgs.seq == 0).filter(Product.name==content)
     if sort == 1:
         # 添加的时间排序
-        query_obj = db.session.query(Product, product_imgs).outerjoin(product_imgs).filter(
-            product_imgs.seq == 0).order_by(Product.join_time.desc())
+        query_obj = query_obj.order_by(Product.join_time.desc())
     elif sort == 2:
         # 按照加精的时间倒叙排序
-        query_obj = db.session.query(Product, product_imgs).outerjoin(HighlightProductModel).outerjoin(
-            product_imgs).filter(product_imgs.seq == 0).order_by(
+        query_obj = query_obj.order_by(
             HighlightProductModel.create_time.desc(), Product.join_time.desc())
     elif sort == 3:
         # 按照点赞的数量排序
-        query_obj = db.session.query(Product, product_imgs).filter(product_imgs.seq == 0).order_by(Product.like.desc())
+        query_obj = query_obj.order_by(Product.like.desc())
     elif sort == 4:
         # 按照价格便宜排序
-        query_obj = db.session.query(Product, product_imgs).filter(product_imgs.seq == 0).order_by(Product.price.asc())
+        query_obj = query_obj.order_by(Product.price.asc())
     page = request.args.get(get_page_parameter(), type=int, default=1)
     start = (page - 1) * config.PER_PAGE
     end = start + config.PER_PAGE
