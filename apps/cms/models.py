@@ -4,17 +4,20 @@ from datetime import datetime
 from werkzeug.security import generate_password_hash,check_password_hash
 
 class CMSPermission(object):
-    ALL_PERMISSION = 0b11111111
-    VISITOR =        0b00000001
-    POSTER =         0b00000010
-    COMMENTER =      0b00000100
-    BOARDER =        0b00001000
-    FRONTUSER =      0b00010000
+    ALL_PERMISSION =  0b11111111
 
-    CMSUSER =        0b00100000
+    PERSONAL =        0b00000001
+    PRODUCT =         0b00000010
+    COMMENT =         0b00000100
+    BOARD =           0b00001000
+    FRONTUSER =       0b00010000
+    # ——————————————————————————————————————
+    OPERATOR =        0b00011111
 
 
-    ADMINER =        0b01000000
+
+    CMSUSER =         0b00100000
+
 
 cms_role_user = db.Table(
     'cms_role_user',
@@ -28,7 +31,7 @@ class CMSRole(db.Model):
     name = db.Column(db.String(50), nullable=False)
     desc = db.Column(db.String(200),nullable=True)
     create_time = db.Column(db.DateTime,default=datetime.now)
-    permissions = db.Column(db.Integer, default=CMSPermission.VISITOR)
+    permissions = db.Column(db.Integer, default=CMSPermission.PERSONAL)
 
     users = db.relationship('CMSUser',secondary=cms_role_user,backref='roles')
 

@@ -28,3 +28,19 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     float: left;
     margin-top: 10px;
 }
+
+.message1{
+    color: darkorange;
+}
+
+.message2{
+    color: blueviolet;
+}
+
+.message3{
+    color: greenyellow;
+}
+
+.message4{
+    color: pink;
+}

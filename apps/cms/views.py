@@ -14,7 +14,7 @@ from flask import (
     jsonify
 )
 from .forms import LoginForm, ResetpwdForm, ResetEmailForm, AddBannerForm, UpdateBannerForm, AddBoardForm, \
-    UpdateBoardForm, AddCmsUserForm
+    UpdateBoardForm, AddCmsUserForm, WarnUserForm
 from .models import CMSUser, CMSPermission, cms_role_user,CMSRole
 from ..front.models import Product, CommentModel,FrontUser
 from .decorators import login_required,permission_required
@@ -36,14 +36,14 @@ def index():
 
 @bp.route('/posts/')
 @login_required
-@permission_required(CMSPermission.POSTER)
+@permission_required(CMSPermission.PRODUCT)
 def posts():
     post_list = Product.query.all()
     return render_template('cms/cms_posts.html',products=post_list)
 
 @bp.route('/hpost/',methods=['POST'])
 @login_required
-@permission_required(CMSPermission.POSTER)
+@permission_required(CMSPermission.PRODUCT)
 def hpost():
     product_id = request.form.get("product_id")
     if not product_id:
@@ -60,7 +60,7 @@ def hpost():
 
 @bp.route('/uhpost/',methods=['POST'])
 @login_required
-@permission_required(CMSPermission.POSTER)
+@permission_required(CMSPermission.PRODUCT)
 def uhpost():
     product_id = request.form.get("product_id")
     if not product_id:
@@ -75,7 +75,7 @@ def uhpost():
 
 @bp.route('/dpost/',methods=['POST'])
 @login_required
-@permission_required(CMSPermission.POSTER)
+@permission_required(CMSPermission.PRODUCT)
 def dpost():
     product_id = request.form.get("product_id")
     print(product_id)
@@ -92,7 +92,7 @@ def dpost():
 
 @bp.route('/comments/')
 @login_required
-@permission_required(CMSPermission.COMMENTER)
+@permission_required(CMSPermission.COMMENT)
 def comments():
     comment_models = CommentModel.query.all()
     context = {
@@ -102,7 +102,7 @@ def comments():
 
 @bp.route('/dcomment/',methods=['POST'])
 @login_required
-@permission_required(CMSPermission.COMMENTER)
+@permission_required(CMSPermission.COMMENT)
 def dcomment():
     comment_id = request.form.get("comment_id")
     print(comment_id)
@@ -118,7 +118,7 @@ def dcomment():
 
 @bp.route('/boards/')
 @login_required
-@permission_required(CMSPermission.BOARDER)
+@permission_required(CMSPermission.BOARD)
 def boards():
     board_models = BoardModel.query.all()
     context = {
@@ -128,7 +128,7 @@ def boards():
 
 @bp.route('/aboard/',methods=['POST'])
 @login_required
-@permission_required(CMSPermission.BOARDER)
+@permission_required(CMSPermission.BOARD)
 def aboard():
     form = AddBoardForm(request.form)
     if form.validate():
@@ -143,7 +143,7 @@ def aboard():
 
 @bp.route('/uboard/',methods=['POST'])
 @login_required
-@permission_required(CMSPermission.BOARDER)
+@permission_required(CMSPermission.BOARD)
 def uboard():
     form = UpdateBoardForm(request.form)
     if form.validate():
@@ -162,7 +162,7 @@ def uboard():
 
 @bp.route('/dboard/',methods=['POST'])
 @login_required
-@permission_required(CMSPermission.BOARDER)
+@permission_required(CMSPermission.BOARD)
 def dboard():
     board_id = request.form.get("board_id")
     if not board_id:
@@ -185,6 +185,21 @@ def fusers():
         'front_users': front_usermodels
     }
     return render_template('cms/cms_fusers.html',**context)
+
+@bp.route('/warnfuser/',methods=['POST'])
+@login_required
+@permission_required(CMSPermission.FRONTUSER)
+def warnfuser():
+    form = WarnUserForm(request.form)
+    if form.validate():
+        user_id = form.user_id.data
+        print(user_id)
+        front_usermodels = FrontUser.query.get(user_id)
+        print(front_usermodels.id)
+        return restful.success()
+    else:
+        return restful.params_error(message=form.get_error())
+    return render_template('cms/cms_fusers.html')
 
 @bp.route('/cusers/')
 @login_required
@@ -218,7 +233,7 @@ def addcusers():
             db.session.add(user)
             db.session.commit()
             if not permission:
-                permission='Visitor'
+                permission='PERSONAL'
             user = CMSUser.query.filter_by(email=email).first()
             if user:
                 role = CMSRole.query.filter_by(name=permission).first()
@@ -384,7 +399,7 @@ class ResetPwdView(views.MethodView):
                 return restful.params_error("The Old Password is Wrong")
         else:
             return restful.params_error(form.get_error())
-# app(iOS/Andorid)
+
 
 class ResetEmailView(views.MethodView):
     decorator=[login_required]

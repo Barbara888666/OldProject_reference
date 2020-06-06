@@ -51,19 +51,19 @@
                     </ul>
                 </li>
                   {% set cms_user =g.cms_user %}
-                  {% if cms_user.has_permission(CMSPermission.POSTER) %}
+                  {% if cms_user.has_permission(CMSPermission.PERSONAL) %}
                       <li class="nav-group user-manage"><a href="{{ url_for('cms.banners') }}">轮播管理</a></li>
                   {% endif %}
 
-                  {% if cms_user.has_permission(CMSPermission.POSTER) %}
+                  {% if cms_user.has_permission(CMSPermission.PRODUCT) %}
                       <li class="nav-group post-manage"><a href="{{ url_for('cms.posts') }}">帖子管理</a></li>
                   {% endif %}
 
-                  {% if cms_user.has_permission(CMSPermission.COMMENTER) %}
+                  {% if cms_user.has_permission(CMSPermission.COMMENT) %}
                       <li class="comments-manage"><a href="{{ url_for('cms.comments') }}">评论管理</a></li>
                   {% endif %}
 
-                  {% if cms_user.has_permission(CMSPermission.BOARDER) %}
+                  {% if cms_user.has_permission(CMSPermission.BOARD) %}
                       <li class="board-manage"><a href="{{ url_for('cms.boards') }}">板块管理</a></li>
                   {% endif %}
 
@@ -71,7 +71,7 @@
                       <li class="nav-group user-manage"><a href="{{ url_for('cms.fusers') }}">用户管理</a></li>
                   {% endif %}
 
-                  {% if cms_user.has_permission(CMSPermission.ADMINER) %}
+                  {% if cms_user.has_permission(CMSPermission.CMSUSER) %}
                       <li class="nav-group cmsuser-manage"><a href="{{ url_for('cms.cusers') }}">CMS用户管理</a></li>
                   {% endif %}
 

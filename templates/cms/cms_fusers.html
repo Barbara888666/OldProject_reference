@@ -3,7 +3,7 @@
 {% block title %}前台用户管理{% endblock %}
 
 {% block head %}
-
+    <script src="{{ static('cms/js/frontuser.js') }}"></script>
 {% endblock %}
 
 {% block page_title %}
@@ -34,7 +34,7 @@
                     <td>{{ front_user.Signature }}</td>
                     <td>{{ front_user.avatar }}</td>
                     <td>
-                        <button class="btn btn-danger btn-xs delete-comment-btn" name="warning-user-btn"id="delete-comment-btn">警告</button>
+                        <button class="btn btn-danger btn-xs delete-comment-btn warning-user-btn" name="warning-user-btn"id="warning-user-btn">警告</button>
                     </td>
                 </tr>
             {% endfor %}
