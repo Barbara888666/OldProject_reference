@@ -83,7 +83,7 @@ class SearchView(views.MethodView):
         else:
             print(form.get_error())
             return restful.params_error(message=form.get_error())
-bp.add_url_rule('/search/',view_func=SearchView.as_view('search'))
+bp.add_url_rule('/search/',view_func=SearchView.as_view('search'))#work success
 
 @bp.route('/s/',methods=['POST'])
 def s():
