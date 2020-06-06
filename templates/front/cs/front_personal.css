@@ -1,0 +1,19 @@
+.biaoti{
+
+    padding: 10px;
+    margin: 10px;
+}
+.span12{
+    background-color: #FFD026;
+    width: 100%;
+    height: 40px;
+}
+.col-md-8{
+    color: #1b6d85;
+}
+.product{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-style: solid;
+
+}

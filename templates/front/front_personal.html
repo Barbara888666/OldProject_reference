@@ -8,6 +8,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="{{ static("front/css/front_index.css") }}">
 <link rel="stylesheet" href="{{ static("front/cs/bootstrap.min.css") }}">
+<link rel="stylesheet" href="{{ static("front/cs/front_personal.css") }}">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script src={{ static("front/cs/personal.js") }}></script>
 
@@ -15,16 +16,9 @@
 {% endblock %}
 
 {% block body %}
-   <div class="container-fluid">
-	<div class="row-fluid">
-		<div class="span12">
-			<h3  class="bg-primary">
-				Information
-			</h3>
-		</div>
-	</div>
+
 		<div class="row-fluid">
-<button type="button" class="btn btn-default" ><a data-toggle="modal" data-target="#myModal">更改信息</a></button>
+<button type="button" class="btn btn-default btn-lg" ><a data-toggle="modal" data-target="#myModal">change information</a></button>
 
             <!-- 请求表单，aciton需要自己绑定-->
         <form method="post" action="#" id="form_add">
@@ -35,12 +29,12 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true"></span>
                             </button>
-                            <h4 class="modal-title" id="myModalLabel">更改信息</h4>
+                            <h4 class="modal-title" id="myModalLabel">change information</h4>
                         </div>
                             <div class="modal-body">
                                 <!--数据项-->
                                 <div class="form-group form-inline">
-                                    用户名<input type="text" name="name" class="form-control" >
+                                    username<input type="text" name="name" class="form-control" >
                                 </div>
                                  <div class="form-group form-inline">
                                      email<input type="text" name="email" class="form-control" >
@@ -60,14 +54,14 @@
 		 <div class="form-group">
     <label for="exampleInputFile">Avatar</label>
     <input type="file" id="exampleInputFile" name="file">
-    <p class="help-block">修改头像</p>
+    <p class="help-block">change avatar</p>
   </div>
                                 <!-- end-->
 
                             </div>
                         <div class="modal-footer">
-                            <button type="button" class="addSure btn btn-info">添加</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="addSure btn btn-info">change</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
                         </div>
                     </div>
                 </div>
@@ -105,73 +99,83 @@
 					'ConfirmText':'Upload again'
 				});
 			}
-		  } 
+		  }
 		  });
 		});
    </script>
 
-		<div class="span6">
-			<h3 class="col-md-8" >
-				<div  class="col-sm-9" >Username</div>
-			</h3>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">information</h3>
+  </div>
+  <div class="panel-body">
+    <div class="span6">
+			<h5 class="col-md-8" >
+				<div  class="col-sm-6" >Username:</div>
+			</h5>
 			<h3 class="col-md-8" >
 				<div  class="col-sm-6" >{{user.username}}</div>
 			</h3>
 			{%if user.avatar==None%}
-			<img   class="col-md-4" alt="140x140" src="img/a.jpg" />
+			<img   class="col-md-6" alt="140x140" src="img/a.jpg" />
 			{%else%}
-			<img   class="col-md-4" alt="140x140" src="/static/{{user.avatar}}" />
+			<img   class="col-md-6" alt="140x140" src="/static/{{user.avatar}}" />
 			{%endif%}
-			<h3 class="col-md-8" >
-				<div  class="col-sm-9" >Description</div>
-			</h3>
+			<h5 class="col-md-8" >
+				<div  class="col-sm-9" >Description:</div>
+			</h5>
             <h3 class="col-md-8" >
 				<div  class="col-sm-6" >{{user.signature}}</div>
 			</h3>
-			<h3 class="col-md-8" >
-				<div  class="col-sm-9" >Telephone</div>
-			</h3>
-			<h3 class="col-md-8" >
+			<h5 class="col-md-8" >
+				<div  class="col-sm-9" >Telephone:</div>
+			</h5>
+			<h3 class="col-md-6" >
 				<div  class="col-sm-6" >{{user.telephone}}</div>
 			</h3>
-			<h3 class="col-md-8" >
-				<div  class="col-sm-9" >Email</div>
-			</h3>
-            <h3 class="col-md-8" >
+			<h5 class="col-md-8" >
+				<div  class="col-sm-9" >Email:</div>
+			</h5>
+            <h3 class="col-md-6" >
 				<div  class="col-sm-6" >{{user.email}}</div>
 			</h3>
-			<h3 class="col-md-8" >
-				<div  class="col-sm-9" >Gender</div>
-			</h3>
+			<h5 class="col-md-8" >
+				<div  class="col-sm-9" >Gender:</div>
+			</h5>
 			<h3 class="col-md-8" >
 				<div  class="col-sm-6" >{{gender}}</div>
 			</h3>
 
 		</div>
+  </div>
+</div>
 
 	</div>
-	<div class="row-fluid">
-		<div class="span4">
-			<h3 class="col-md-12"><div  class="bg-info">product list</div>
-				</h3>
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title">product list</h3>
+  </div>
+  <div class="panel-body">
+    <div class="span4">
+
 
 				{%for t in product%}
 				{%if t[1].imglink=='none'%}
+			<div class="product"></div>
 			<img class="col-md-4" alt="140x140" src="img/a.jpg" />
 			{%else%}
 			<img class="col-md-4" alt="140x140" src="/static/{{t[2].imglink}}" />
 			{%endif%}
-			<p class="col-sm-9">物品</p>
-			<div  class="col-sm-6" ><li><a href="/p/{{t[1]}}">{{t[0]}}</a></li></div>
-			<div class="col-sm-9">物品分类</div>
-			<div  class="col-sm-6" >{{t[3]}}</div>
+			<p class="col-sm-9">product name</p>
+			<div  class="col-sm-6" ><li><a href="/p/{{t[1]}}"><h3>{{t[0]}}</h3></a></li></div>
+			<div class="col-sm-9">category</div>
+			<div  class="col-sm-6" ><h3>{{t[3]}}</h3></div>
 			{%endfor%}
 
 		</div>
 
 
-	</div>
-<nav aria-label="Page navigation" class="col-xs-12">
+	</div><nav aria-label="Page navigation" class="col-xs-12">
   <ul class="pagination">
     <li>
 		{%if c==1%}
@@ -196,5 +200,7 @@
     </li>
   </ul>
 </nav>
+  </div>
 </div>
+
 {% endblock %}
