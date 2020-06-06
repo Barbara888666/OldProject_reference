@@ -21,15 +21,16 @@
                 <img src="/static/{{ productimgs[0].imglink }}" alt="">
                 {%endif%}
             </div>
+            <div class="col-md-6"></div>
             <ul class="product-info-group" id="product-information" data-da="{{ product.id}}" data-like="{{like.id}}">
             <li class="col-md-12"><h1>价格:{{ product.price }}</h1></li>
-            <li class="col-md-12"><strong>卖家：{{ product.user.username }}</strong></li>
-            <li class="col-md-12"><strong>类别：{{ product.board.name }}</strong></li>
+            <li class="col-md-4"><strong>卖家：{{ product.user.username }}</strong></li>
+            <li class="col-md-4"><strong>类别：{{ product.board.name }}</strong></li>
             <li class="col-md-12"><span>描述:{{ product.description }}</span></li>
 
                 <li class="col-md-12"><small>发布时间：{{ product.join_time }}</small></li>
-            <li class="col-md-12" color="blue"><small>点击数: {{ product.like }}</small></li>
-            <li class="col-md-12"><small>评论数: {{ product.comment }}</small></li>
+            <li class="col-md-4" color="blue"><small>点击数: {{ product.like }}</small></li>
+            <li class="col-md-4"><small>评论数: {{ product.comment }}</small></li>
             </ul>
             {% if like == 0 or like==None%}
             <button class="btn btn-warning" id="like-btn" name="like-btn" data="0">Like</button></td>
@@ -56,11 +57,11 @@
                         </div>
                         <div class="comment-content">
                             <p class="user-info">
-                                <span>{{ comment.commenter.username }}</span>
-                                <span>{{ comment.create_time }}</span>
+                                <strong class="col-md-6">{{ comment.commenter.username }}</strong>
+                                <small class="col-md-6">{{ comment.create_time }}</small>
                             </p>
-                            <p class="comment-txt">
-                                {{ comment.content|safe }}
+                            <p class="comment-txt"><small class="col-md-12">{{ comment.content|safe }}</small>
+
                             </p>
 
                         </div>
