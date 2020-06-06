@@ -6,7 +6,7 @@
 
 {% block head %}
 <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="{{ static("front/css/front_index.css") }}">
+<link rel="stylesheet" href="{{ static("front/css/front_index.css") }}">
 <link rel="stylesheet" href="{{ static("front/cs/bootstrap.min.css") }}">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script src={{ static("front/cs/personal.js") }}></script>
@@ -18,12 +18,12 @@
    <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="span12">
-			<h3>
+			<h3  class="bg-primary">
 				Information
 			</h3>
 		</div>
 	</div>
-	<div class="row-fluid">
+		<div class="row-fluid">
 <button type="button" class="btn btn-default" ><a data-toggle="modal" data-target="#myModal">更改信息</a></button>
 
             <!-- 请求表单，aciton需要自己绑定-->
@@ -136,8 +136,8 @@
 	</div>
 	<div class="row-fluid">
 		<div class="span4">
-			<h3 class="col-md-8" >
-				product list</h3>
+			<h3 class="col-md-12"><div  class="bg-info">product list</div>
+				</h3>
 
 				{%for t in product%}
 				{%if t[1].imglink=='none'%}
@@ -155,5 +155,24 @@
 
 
 	</div>
+<nav aria-label="Page navigation" class="col-xs-12">
+  <ul class="pagination">
+    <li>
+      <a href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li>
+      <a href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
 </div>
 {% endblock %}
