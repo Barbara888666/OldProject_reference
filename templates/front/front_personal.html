@@ -50,7 +50,8 @@
 										<option value=1>Male</option>
 										<option value=2>Female</option>
 										<option value=3>Secret</option>
-										<option value=4  selected = "selected" >Unknown</option>
+										<option value=4>Unknown</option>
+										<option selected></option>
 									</select>
 								</div>
 								<div class="form-group form-inline">
@@ -77,21 +78,36 @@
     <script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script>
       //提交表单的方法
-      $(".addSure").click(function(){
+      $(".addSure").click(function(event){
+		  event.preventDefault();
 	  var f =new FormData();
-	  f.append('uname',$("input[name='name']"));
-	  f.append('email',$("input[name='email']"));
-	  f.append('gender',$("select[name='gender']"));
-	  f.append('des',$("input[name='signature']"));
+	  f.append('uname',$("input[name='name']").val());
+	  f.append('email',$("input[name='email']").val());
+	  f.append('gender',$("select[name='gender']").val());
+	  f.append('des',$("input[name='signature']").val());
 	  f.append('file',$("#exampleInputFile").get(0).files[0]);
-	  $.post(
-		  URL="/changeinfo/",
-		  data=f,
-		  function(status){
-			  alert(status)
-		  }
-	  )
-	  });
+	  zlajax.post({
+		  type:'post',
+		  url:"/changeinfo/",
+		  dataType:'text',
+		  data:f,
+		  processData: false,
+		  contentType: false,
+		  'success': function (data) {
+			if(data=='success'){
+				alert.alertConfirm({
+					'msg':'Success!',
+					'ConfirmText':'OK'
+				});
+			}else{
+				alert.alertConfirm({
+					'msg':'Success!',
+					'ConfirmText':'Upload again'
+				});
+			}
+		  } 
+		  });
+		});
    </script>
 
 		<div class="span6">
@@ -101,7 +117,7 @@
 			<h3 class="col-md-8" >
 				<div  class="col-sm-6" >{{user.username}}</div>
 			</h3>
-			{%if user.avatar!=None%}
+			{%if user.avatar==None%}
 			<img   class="col-md-4" alt="140x140" src="img/a.jpg" />
 			{%else%}
 			<img   class="col-md-4" alt="140x140" src="/static/{{user.avatar}}" />
@@ -158,17 +174,23 @@
 <nav aria-label="Page navigation" class="col-xs-12">
   <ul class="pagination">
     <li>
-      <a href="#" aria-label="Previous">
+		{%if c==1%}
+		<a aria-disabled="true" aria-label="Previous"></a>
+		{%else%}
+	  <a href="/personal/?p={{c-1}}" aria-label="Previous">
+		{%endif%}
         <span aria-hidden="true">&laquo;</span>
       </a>
-    </li>
-    <li><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
+	</li>
+	{%for p in range%}
+    <li><a href="/personal/?p={{p}}">{{p}}</a></li>
+	{%endfor%}
     <li>
-      <a href="#" aria-label="Next">
+		{%if c==total%}
+		<a aria-disabled="true" aria-label="Previous"></a>
+		{%else%}
+	  <a href="/personal/?p={{c+1}}" aria-label="Next">
+		{%endif%}
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>

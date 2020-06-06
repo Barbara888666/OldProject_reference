@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 from apps.front.forms import SignupForm, SigninForm, AddProductForm, AddCommentForm, ForgetPasswordForm, AddLikeForm, \
     AddFollowForm
 from exts import sms,db
-from utils import restful,safeutils,uploadproductimgs
+from utils import restful,safeutils,uploadproductimgs,uploadavatar,delavatar
 from utils.captcha import Captcha
 from .models import FrontUser, Product, CommentModel, LikeModel, FollowModel, product_imgs
 import config
@@ -55,33 +55,6 @@ def main_page():
     else:
         return render_template('front/htmls/main_page.html')
 
-@bp.route('/news')
-def new():
-    return render_template('front/htmls/my_news.html')
-#有多少人想联系我、有多少人收藏我的物品
-
-@bp.route('/notice')
-def notices():
-    return render_template('front/htmls/website_notice.html')
-#搜索网站通知列表
-
-@bp.route('/personal')
-@login_required
-def personals():
-    # userid = g.front_user.id
-    t = g.front_user.id
-    # username = t[0][0]
-    # email = t[0][1]
-    # phone = t[0][2]
-    # return render_template('front/htmls/personal_information.html', username=username, email=email, phone=phone)
-    return render_template('front/htmls/personal_information.html')
-
-
-
-@bp.route('/popular')
-def populars():
-    return render_template('front/htmls/popular_products.html')
-#商品名字，商品图片，卖家
 
 # @search.route('/search',classmethod=('GET','POST'))
 # def searchtest():
@@ -145,13 +118,18 @@ def searchss(content):
         'current_sort': sort,
     }
     return render_template('front/front_search.html',**context)
-@bp.route('/personal/',methods=['GET','POST'])
+@bp.route('/personal/')
 @login_required
 def searchp():
     user=FrontUser.query.filter(FrontUser.id==g.front_user.id).first()
-    userproducts=db.session.query(Product.name,Product.id,product_imgs,BoardModel.name).outerjoin(product_imgs,BoardModel).filter(Product.user_id==g.front_user.id).filter(product_imgs.seq==0).all()
-    print(userproducts)
-    return render_template('front/front_personal.html',user=user,gender=str(user.gender).strip('GenderEnum.'),product=userproducts)
+    userproducts=db.session.query(Product.name,Product.id,product_imgs,BoardModel.name).outerjoin(product_imgs,BoardModel).filter(Product.user_id==g.front_user.id).filter(product_imgs.seq==0)
+    total=int(userproducts.count()/5)+1
+    currentpage=int(request.args.get('p',1))
+    start=(currentpage-1)*5
+    end=start+5
+    pdisplay=userproducts.slice(start,end)
+    prange=range(1,total+1)
+    return render_template('front/front_personal.html',user=user,gender=str(user.gender).strip('GenderEnum.'),product=pdisplay,range=prange,c=currentpage,t=total)
 
 @bp.route('/changeinfo/',methods=['POST'])
 @login_required
@@ -168,13 +146,16 @@ def changeinfo():
         info.update({'email':email})
     if gender!='':
         info.update({'gender':gender})
-    if signature!='':
+    if signature!='undefined':
         info.update({'signature':signature})
     if avatar!='':
-        info.update({'avatar':avatar})
+        delavatar(g.front_user.id)
+        link=uploadavatar(avatar,g.front_user.id)
+        info.update({'avatar':link})
     if info!={}:
-        FrontUser.query.filter(FrontUser.id==g.front_user.id).update(info).commit()
-    return jsonify("success")
+        db.session.query(FrontUser).filter(FrontUser.id==g.front_user.id).update(info)
+        db.session.commit()
+    return jsonify('success')
 
 @bp.route('/category/')
 def index():
