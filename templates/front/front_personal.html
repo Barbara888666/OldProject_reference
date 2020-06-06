@@ -166,15 +166,15 @@
 
 
 </div>
-			<img class="col-md-4" alt="140x140" src="img/a.jpg" />
+			<img class="col-md-4 media-left" alt="140x140" src="img/a.jpg" />
 			{%else%}
-			<img class="img-thumbnail col-md-4 " alt="140x140" src="/static/{{t[2].imglink}}" />
+			<img class="img-thumbnail col-md-4 media-left media-middle" alt="140x140" src="/static/{{t[2].imglink}}" />
 			{%endif%}
 <!--			<p class="label label-default col-md-1">product name</p>-->
-			<div  class="col-sm-8" ><li><a href="/p/{{t[1]}}"><h1>{{t[0]}}</h1></a></li></div>
+			<div  class="col-sm-8 media-heading" ><li><a href="/p/{{t[1]}}"><h1>{{t[0]}}</h1></a></li></div>
 <!--			<div class="col-sm-9">category</div>-->
 			<div  class="col-sm-8" ><h3></h3></div>
-		<span class="label label-info col-md-1">{{t[3]}}</span>
+		<span class="label label-info col-md-1 media-heading">{{t[3]}}</span>
 		<div class="col-md-12"></div>
 			{%endfor%}
 

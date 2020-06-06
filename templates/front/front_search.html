@@ -11,45 +11,17 @@
 {% endblock %}
 
 {% block body %}
-   <div class="container-fluid">
-	<div class="row-fluid">
-		<div class="span12">
-			<div class="row-fluid">
-				<div class="span2">
-				</div>
-				<div class="span6">
-					<h1 class="bg-primary">
-						搜索结果
-					</h1>
-				</div>
-				<div class="span4">
-				</div>
-			</div>
-			<div class="row-fluid">
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">search result</h3>
+  </div>
+  <div class="panel-body">
+    	<div class="row-fluid">
 				<div class="span2">
 				</div>
 				<div class="span6">
 					<div class="row-fluid">
-						<div class="span4">
-							<ul class="nav nav-list">
-								<li class="bg-info">
-									类别
-								</li>
-								<li class="active">
-									<a href="#">书</a>
-								</li>
-								<li>
-									<a href="#">食物</a>
-								</li>
-								<li>
-									<a href="#">衣服</a>
-								</li>
-								<li class="nav-header">
-								</li>
-								<li class="divider">
-								</li>
-							</ul>
-						</div>
+
                           {% for product in products %}
 						<div class="span4">
 							<h2 class="bg-info">
@@ -71,7 +43,13 @@
 				<div class="span4">
 				</div>
 			</div>
-		</div>
+  </div>
+</div>
+
+
+   <div class="container-fluid">
+	<div class="row-fluid">
+
 	</div>
 	   <nav aria-label="Page navigation" class="col-xs-12">
   <ul class="pagination">
@@ -92,7 +70,15 @@
     </li>
   </ul>
 </nav>
-</div>
+
+<!--</div><div class="list-group ">-->
+<!--  <a href="#" class="list-group-item active">-->
+<!--    category-->
+<!--  </a>-->
+<!--  <a href="#" class="list-group-item">book</a>-->
+<!--  <a href="#" class="list-group-item">clothes</a>-->
+
+<!--</div>-->
 
 
 {% endblock %}
