@@ -70,9 +70,12 @@
                 {% for product in products %}
                 <li>
                 <div class="user-avatar-group">
+                    {%if product[2].avatar==None%}
                        <img src="{{url_for('static',filename='common/images/logo.png') }}" alt="">
-<!--                       {{product.imglink}}-->
-                </div>
+                    {%else%}
+                    <img src="/static/{{product[2].avatar}}" alt="">
+                    {%endif%}
+                    </div>
                 <div class="product-info-group1">
                     <p class="product-name">
                         <h2><a href="{{ url_for("front.product_detail",product_id=product[0].id)}}">{{ product[0].name }}</a></h2>
