@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     {% include "common/_heads.html" %}
     <link rel="stylesheet" href="{{ static('front/css/front_base.css') }}">
+    <script src="{{ static("front/js/front_base.js") }}"></script>
     <title>
         {% block title %}{% endblock %}
     </title>
-    {% block head %}{% endblock %}
+    {% block head %}
+    {% endblock %}
 </head>
 <body>
     <nav class="navbar navbar-default">
@@ -29,9 +31,9 @@
           </ul>
           <form class="navbar-form navbar-left">
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="请输入关键字">
+              <input type="text" class="form-control" name="search-content" placeholder="请输入关键字">
             </div>
-            <button type="submit" class="btn btn-default">搜索</button>
+            <button type="submit" class="btn btn-default" id="search-submit-btn" name="search-submit-btn">搜索</button>
           </form>
           <ul class="nav navbar-nav navbar-right">
               {% if g.front_user %}
@@ -51,7 +53,7 @@
                   </li>
               {% else %}
                   <li><a href="{{ url_for('front.signin') }}">登录</a></li>
-                  <li><a href="{{ url_for("front.signup") }}">注册</a></li>
+                  <li><a href="{{ url_for('front.signup') }}">注册</a></li>
               {% endif %}
           </ul>
         </div><!-- /.navbar-collapse -->
