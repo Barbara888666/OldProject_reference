@@ -147,7 +147,7 @@ def searchss(content):
     return render_template('front/front_search.html',**context)
 @bp.route('/searchper/')
 def searchp():
-    render_template('front/front_personal.html')
+    return render_template('front/front_personal.html')
 @bp.route('/testmain/')
 @login_required
 def tests():
