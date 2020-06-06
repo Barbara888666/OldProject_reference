@@ -74,6 +74,7 @@
               <ul class="product-group-head">
               </ul>
           </div>
+          {%if g.messages%}
           {% for message in g.messages['followmsg'] %}
           <div class="message1" ><a href="/t/{{message[0].content}}">{{message[1]}} followed you></a></div>
 <!--         messages['followmsg']=FollowMessageModel.query.filter(FollowMessageModel.user_id == user_id).all()-->
@@ -90,6 +91,7 @@
           <div class="message4">An alert message: {{message.content}}</div>
 <!--        messages['alertmsg']=AlertMessageModel.query.filter(AlertMessageModel.user_id == user_id).all()-->
           {% endfor %}
+          {%endif%}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

@@ -259,17 +259,18 @@ bp.add_url_rule('/forget_password/',view_func=Forget_password.as_view('forget_pa
 
 @bp.route('/t/<user_id>')
 def ta_page(user_id):
-    if user_id==session[config.FRONT_USER_ID]:
-        return redirect('/personal/')
+    if config.FRONT_USER_ID in session:
+        if user_id==session[config.FRONT_USER_ID]:
+            return redirect('/personal/')
     ta = FrontUser.query.filter(FrontUser.id==user_id).first()
     if not ta:
         abort(404)
     page = request.args.get(get_page_parameter(), type=int, default=1)
     start = (page - 1) * config.PER_PAGE
     end = start + config.PER_PAGE
-    products_obj = Product.query.order_by(Product.join_time.desc()).filter_by(user_id =user_id)
-    products=products_obj.join(product_imgs,Product.id==product_imgs.pid).slice(start, end)
-    #b=Follow.query.join(Post,Follow.followed_id==Post.author_id).filter(Follow.follower_id==2)
+    products_obj = db.session.query(Product,product_imgs).outerjoin(product_imgs).filter(Product.user_id ==user_id).filter(product_imgs.seq==0).order_by(Product.join_time.desc())
+    products=products_obj.slice(start, end)
+ 
     total = products_obj.count()
     follow=0
     if config.FRONT_USER_ID in session:
