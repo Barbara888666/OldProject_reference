@@ -145,61 +145,36 @@ def searchss(content):
         'current_sort': sort,
     }
     return render_template('front/front_search.html',**context)
-@bp.route('/searchper/')
-def searchp():
-    return render_template('front/front_personal.html')
-@bp.route('/testmain/')
+@bp.route('/personal/',methods=['GET','POST'])
 @login_required
-def tests():
-    t = g.front_user.id
-    # a = searchitems()
-    # img=searchavatar(int(session['id'])
-    # album = searchalbum(int(session['id'])
-    #
-    # itemimg =searchitemimg()
-    username = t[0][0]
-    email = t[0][1]
-    phone = t[0][2]
-    return render_template('front/htmls/maintest.html', username=username, email=email, phone=phone)
+def searchp():
+    user=FrontUser.query.filter(FrontUser.id==g.front_user.id).first()
+    userproducts=db.session.query(Product.name,Product.id,product_imgs,BoardModel.name).outerjoin(product_imgs,BoardModel).filter(Product.user_id==g.front_user.id).filter(product_imgs.seq==0).all()
+    print(userproducts)
+    return render_template('front/front_personal.html',user=user,gender=str(user.gender).strip('GenderEnum.'),product=userproducts)
 
-#卖家信息：卖家名字，卖家个人介绍，卖家信誉度，卖家qq、微信、电话
-#卖家商品列表：商品图片，商品名字，商品分类
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+@bp.route('/changeinfo/',methods=['POST'])
+@login_required
+def changeinfo():
+    name=request.form.get('uname','')
+    email=request.form.get('email','')
+    gender=request.form.get('gender','')
+    signature=request.form.get('des','')
+    avatar=request.files.get('file','')
+    info={}
+    if name!='':
+        info.update({'username':name})
+    if email!='':
+        info.update({'email':email})
+    if gender!='':
+        info.update({'gender':gender})
+    if signature!='':
+        info.update({'signature':signature})
+    if avatar!='':
+        info.update({'avatar':avatar})
+    if info!={}:
+        FrontUser.query.filter(FrontUser.id==g.front_user.id).update(info).commit()
+    return jsonify("success")
 
 @bp.route('/category/')
 def index():

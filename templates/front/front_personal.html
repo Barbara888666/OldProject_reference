@@ -43,14 +43,22 @@
                                     用户名<input type="text" name="name" class="form-control" >
                                 </div>
                                  <div class="form-group form-inline">
-                                     email<input type="text" name="age" class="form-control" >
+                                     email<input type="text" name="email" class="form-control" >
                                 </div>
                                 <div class="form-group form-inline">
-                                   手机号<input type="text" name="id" class="form-control" >
-                                </div>
+									<select name="gender" class="form-control">
+										<option value=1>Male</option>
+										<option value=2>Female</option>
+										<option value=3>Secret</option>
+										<option value=4  selected = "selected" >Unknown</option>
+									</select>
+								</div>
+								<div class="form-group form-inline">
+									Personal description<input type="text" name="singature" class="form-control" >
+							   </div>
 		 <div class="form-group">
-    <label for="exampleInputFile">File input</label>
-    <input type="file" id="exampleInputFile">
+    <label for="exampleInputFile">Avatar</label>
+    <input type="file" id="exampleInputFile" name="file">
     <p class="help-block">修改头像</p>
   </div>
                                 <!-- end-->
@@ -70,51 +78,78 @@
     <script>
       //提交表单的方法
       $(".addSure").click(function(){
-      $("#form_add").submit();
-      });
+	  var f =new FormData();
+	  f.append('uname',$("input[name='name']"));
+	  f.append('email',$("input[name='email']"));
+	  f.append('gender',$("select[name='gender']"));
+	  f.append('des',$("input[name='signature']"));
+	  f.append('file',$("#exampleInputFile").get(0).files[0]);
+	  $.post(
+		  URL="/changeinfo/",
+		  data=f,
+		  function(status){
+			  alert(status)
+		  }
+	  )
+	  });
    </script>
 
 		<div class="span6">
-
-			<h3 class="container-fluid"><div class="bg-info">username</div></h3>
-			<div class="container-fluid"><img   class="col-sm-4" alt="140x140" src="img/a.jpg" />
-
-            <div  class="col-sm-8" >introduction</div>
-
-
-			<div  class="col-sm-8" >phone number</div>
-
-
-
-            <div  class="col-sm-8" >email</div>
-
-</div>
-
+			<h3 class="col-md-8" >
+				<div  class="col-sm-9" >Username</div>
+			</h3>
+			<h3 class="col-md-8" >
+				<div  class="col-sm-6" >{{user.username}}</div>
+			</h3>
+			{%if user.avatar!=None%}
+			<img   class="col-md-4" alt="140x140" src="img/a.jpg" />
+			{%else%}
+			<img   class="col-md-4" alt="140x140" src="/static/{{user.avatar}}" />
+			{%endif%}
+			<h3 class="col-md-8" >
+				<div  class="col-sm-9" >Description</div>
+			</h3>
+            <h3 class="col-md-8" >
+				<div  class="col-sm-6" >{{user.signature}}</div>
+			</h3>
+			<h3 class="col-md-8" >
+				<div  class="col-sm-9" >Telephone</div>
+			</h3>
+			<h3 class="col-md-8" >
+				<div  class="col-sm-6" >{{user.telephone}}</div>
+			</h3>
+			<h3 class="col-md-8" >
+				<div  class="col-sm-9" >Email</div>
+			</h3>
+            <h3 class="col-md-8" >
+				<div  class="col-sm-6" >{{user.email}}</div>
+			</h3>
+			<h3 class="col-md-8" >
+				<div  class="col-sm-9" >Gender</div>
+			</h3>
+			<h3 class="col-md-8" >
+				<div  class="col-sm-6" >{{gender}}</div>
+			</h3>
 
 		</div>
 
-		<div class="span6">
-			<div class="col-md-12">
-				<div  class="bg-info" >album</div>
-				<img  alt="140x140" src="img/a.jpg" />
-				</div>
-
-
-
-		</div>
 	</div>
 	<div class="row-fluid">
 		<div class="span4">
 			<h3 class="col-md-12"><div  class="bg-info">product list</div>
 				</h3>
 
-
-			<img class="col-md-3" alt="140x140" src="img/a.jpg" />
+				{%for t in product%}
+				{%if t[1].imglink=='none'%}
+			<img class="col-md-4" alt="140x140" src="img/a.jpg" />
+			{%else%}
+			<img class="col-md-4" alt="140x140" src="/static/{{t[2].imglink}}" />
+			{%endif%}
 			<p class="col-sm-9">物品</p>
-
-
-            <div class="col-sm-9">物品分类</div>
-
+			<div  class="col-sm-6" ><li><a href="/p/{{t[1]}}">{{t[0]}}</a></li></div>
+			<div class="col-sm-9">物品分类</div>
+			<div  class="col-sm-6" >{{t[3]}}</div>
+			{%endfor%}
 
 		</div>
 
