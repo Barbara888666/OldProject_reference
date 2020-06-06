@@ -317,7 +317,7 @@ def add_comment():
             producttmp.comment = producttmp.comment + 1
             content = "Your product %s is commented by %s" % (product.name, comment.commenter.username)
             # content="Your product %s is commented by %s",product.name,comment.commenter.username
-            message=CommemtMessageModel(content=comment.commenter.id,user_id=product.user_id)
+            message=CommemtMessageModel(content=comment.commenter.id,user_id=product.user_id,pid=product_id)
             db.session.add(comment)
             db.session.add(message)
             db.session.commit()

@@ -3,7 +3,7 @@ import config
 from flask import session,g,render_template
 from .models import FrontUser
 from apps.models import FollowMessageModel,CommemtMessageModel,DeleteMessageModel,AlertMessageModel
-
+from exts import db
 
 @bp.before_request
 def my_before_request():
@@ -11,8 +11,8 @@ def my_before_request():
         user_id = session.get(config.FRONT_USER_ID)
         user = FrontUser.query.get(user_id)
         messages={}
-        messages['followmsg']=FollowMessageModel.query.filter(FollowMessageModel.user_id == user_id).all()
-        messages['commentmsg']=CommemtMessageModel.query.filter(CommemtMessageModel.user_id == user_id).all()
+        messages['followmsg']=db.session.query(FollowMessageModel,FrontUser.username).filter(FrontUser.id==FollowMessageModel.content).filter(FollowMessageModel.user_id == user_id).all()
+        messages['commentmsg']=db.session.query(CommemtMessageModel,FrontUser.username).filter(FrontUser.id==CommemtMessageModel.content).filter(CommemtMessageModel.user_id == user_id).all()
         messages['deltetmsg']=DeleteMessageModel.query.filter(DeleteMessageModel.user_id == user_id).all()
         messages['alertmsg']=AlertMessageModel.query.filter(AlertMessageModel.user_id == user_id).all()
         if user:
