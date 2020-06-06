@@ -48,13 +48,14 @@ class CommemtMessageModel(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     content = db.Column(db.String(100),db.ForeignKey('front_user.id'),nullable=False)
     create_time = db.Column(db.DateTime, default=datetime.now)
-
+    pid=db.Column(db.Integer,db.ForeignKey('product.id'))
     user_id = db.Column(db.String(100), db.ForeignKey("front_user.id"))
     srcuser = db.relationship("FrontUser", backref="follow_messages_src",foreign_keys=user_id)
     desuser = db.relationship("FrontUser", backref="follow_messages_des",foreign_keys=content)
-    def __init__(self, user_id, content):
+    def __init__(self, user_id, content,pid):
         self.user_id = user_id
-        self.content = content   
+        self.content = content
+        self.pid=pid 
 
 class DeleteMessageModel(db.Model):
     __tablename__ = 'delete_messages'

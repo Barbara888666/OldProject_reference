@@ -17,6 +17,7 @@ class SignupForm(BaseForm):
         telephone = self.telephone.data
 
         sms_captcha_mem = cache.get(telephone)
+        print('1' + sms_captcha_mem)
         if not sms_captcha_mem or sms_captcha_mem != sms_captcha:
             raise ValidationError(message='短信验证码错误！')
 
@@ -67,6 +68,9 @@ class AddLikeForm(BaseForm):
 
 class AddFollowForm(BaseForm):
     user_id = StringField(validators=[InputRequired(message='请输入用户id！')])
+
+class SearchForm(BaseForm):
+    search = StringField(validators=[InputRequired(message='请输入搜索内容！')])
 
 class ForgetPasswordForm(BaseForm):
     telephone = StringField(validators=[Regexp(r"1[345789]\d{9}",message='请输入正确格式的手机号码！')])

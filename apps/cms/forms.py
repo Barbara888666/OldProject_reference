@@ -59,14 +59,17 @@ class AddBannerForm(BaseForm):
     link_url = StringField(validators=[InputRequired(message='请输入轮播图跳转链接！')])
     priority = IntegerField(validators=[InputRequired(message='请输入轮播图优先级！')])
 
-class UpdateBannerForm(AddBannerForm):
+class UpdateBannerForm(BaseForm):
     banner_id = IntegerField(validators=[InputRequired(message='请输入轮播图的id！')])
 
 class AddBoardForm(BaseForm):
     name = StringField(validators=[InputRequired(message='请输入板块名称！')])
 
-class UpdateBoardForm(AddBoardForm):
+class UpdateBoardForm(BaseForm):
     board_id = IntegerField(validators=[InputRequired(message='请输入板块id！')])
+
+class WarnUserForm(BaseForm):
+    user_id = StringField(validators=[InputRequired(message='请输入用户id！')])
 
 class AddCmsUserForm(BaseForm):
     email = StringField(validators=[InputRequired(message='请输入cms用户邮箱！')])

@@ -6,8 +6,9 @@ from sqlalchemy import func
 from werkzeug.utils import secure_filename
 
 from apps.front.forms import SignupForm, SigninForm, AddProductForm, AddCommentForm, ForgetPasswordForm, AddLikeForm, \
-    AddFollowForm
+    AddFollowForm, SearchForm
 from exts import sms,db
+from utils import cache
 from utils import restful,safeutils,uploadproductimgs,uploadavatar,delavatar
 from utils.captcha import Captcha
 from .models import FrontUser, Product, CommentModel, LikeModel, FollowModel, product_imgs
@@ -61,6 +62,28 @@ def main_page():
 #     #由后端传送文件的示范
 #     file="/images/test.jpg"
 #     return render_template('search_web_page.html',file=file)
+# @bp.route('/search/',method=['POST','GET'])
+# def searchtest():
+#     return render_template('front/htmls/search_web_page.html')
+
+class SearchView(views.MethodView):
+    def get(self):
+        serach_content= cache.get('search')
+        print('tiaozuanhou'+serach_content)
+        return render_template('front/htmls/search_web_page.html')
+
+    def post(self):
+        form = SearchForm(request.form)
+        if form.validate():
+            search_content = form.search.data
+            print(search_content)
+            cache.set('search',search_content)
+            # return redirect(url_for('front.signin'))
+            return restful.success()
+        else:
+            print(form.get_error())
+            return restful.params_error(message=form.get_error())
+bp.add_url_rule('/search/',view_func=SearchView.as_view('search'))#work success
 
 @bp.route('/s/',methods=['POST'])
 def s():
@@ -294,7 +317,7 @@ def add_comment():
             producttmp.comment = producttmp.comment + 1
             content = "Your product %s is commented by %s" % (product.name, comment.commenter.username)
             # content="Your product %s is commented by %s",product.name,comment.commenter.username
-            message=CommemtMessageModel(content=comment.commenter.id,user_id=product.user_id)
+            message=CommemtMessageModel(content=comment.commenter.id,user_id=product.user_id,pid=product_id)
             db.session.add(comment)
             db.session.add(message)
             db.session.commit()

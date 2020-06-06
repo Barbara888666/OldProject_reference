@@ -35,24 +35,24 @@ def create_cms_user(username,password,email):
 @manager.command
 def create_role():
     # 1. visitor（CHANGE PERSONAL INFORMATION）
-    visitor = CMSRole(name='Visitor',desc='Only view')
-    visitor.permissions = CMSPermission.VISITOR
+    visitor = CMSRole(name='Visitor',desc='personal')
+    visitor.permissions = CMSPermission.PERSONAL
     # 2. operator（CHANGE PERSONAL INFORMATION，FRONT DATA）
-    operator = CMSRole(name='Front',desc='INFORMATION,PRODUCTS,USERS')
-    operator.permissions = CMSPermission.VISITOR|CMSPermission.POSTER|\
-                           CMSPermission.COMMENTER|CMSPermission.FRONTUSER|\
-                           CMSPermission.BOARDER
-    # 3. admin（MORE IS CMS USER MANAGER）
-    admin = CMSRole(name='Manager',desc='All permissions')
-    admin.permissions = CMSPermission.VISITOR|\
-                        CMSPermission.POSTER|CMSPermission.CMSUSER|\
-                        CMSPermission.COMMENTER|CMSPermission.FRONTUSER|\
-                        CMSPermission.BOARDER
+    operator = CMSRole(name='Front',desc='personal,front data')
+    operator.permissions = CMSPermission.PERSONAL|CMSPermission.PRODUCT|\
+                           CMSPermission.COMMENT|CMSPermission.FRONTUSER|\
+                           CMSPermission.BOARD
+    # 3. Manager（MORE IS CMS USER）
+    manager = CMSRole(name='Manager',desc='personal,front data,CMSuser')
+    manager.permissions = CMSPermission.PERSONAL|\
+                        CMSPermission.PRODUCT|CMSPermission.CMSUSER|\
+                        CMSPermission.COMMENT|CMSPermission.FRONTUSER|\
+                        CMSPermission.BOARD
     # 4. boss（ALL PERMISSION）
-    developer = CMSRole(name='Boss',desc='Primary power')
-    developer.permissions = CMSPermission.ALL_PERMISSION
+    boss = CMSRole(name='Boss',desc='All permissions')
+    boss.permissions = CMSPermission.ALL_PERMISSION
 
-    db.session.add_all([visitor,operator,admin,developer])
+    db.session.add_all([visitor,operator,manager,boss])
     db.session.commit()
 
 @manager.option('-e','--email',dest='email')

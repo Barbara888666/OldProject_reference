@@ -12,8 +12,8 @@ $(function () {
         }
         var priceInput = $("input[name='price']");
         var price = priceInput.val();
-        if(!price){
-            alert.alertInfoToast('请输入价格！');
+        if(!(/^[1-9]+[0-9]*]*$/).test(price)){
+            alert.alertInfoToast('请输入正确的价格！');
             return;
         }
 

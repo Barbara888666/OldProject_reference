@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     {% include "common/_heads.html" %}
     <link rel="stylesheet" href="{{ static('front/css/front_base.css') }}">
+    <script src="{{ static("front/js/front_base.js") }}"></script>
     <title>
         {% block title %}{% endblock %}
     </title>
-    {% block head %}{% endblock %}
+    {% block head %}
+    {% endblock %}
 </head>
 <body>
     <nav class="navbar navbar-default">
@@ -29,9 +31,9 @@
           </ul>
           <form action="/s/" method="post" class="navbar-form navbar-left" >
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="请输入关键字" name="search">
+              <input type="text" class="form-control" name="search-content" placeholder="请输入关键字">
             </div>
-            <button type="submit" class="btn btn-default">搜索</button>
+            <button type="submit" class="btn btn-default" id="search-submit-btn" name="search-submit-btn">搜索</button>
           </form>
           <ul class="nav navbar-nav navbar-right">
               {% if g.front_user %}
@@ -51,7 +53,7 @@
                   </li>
               {% else %}
                   <li><a href="{{ url_for('front.signin') }}">登录</a></li>
-                  <li><a href="{{ url_for("front.signup") }}">注册</a></li>
+                  <li><a href="{{ url_for('front.signup') }}">注册</a></li>
               {% endif %}
           </ul>
         </div><!-- /.navbar-collapse -->
@@ -65,19 +67,29 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">消息</h4>
+        <h4 class="modal-title" id="myModalLabel">Messages</h4>
       </div>
       <div class="modal-body">
           <div>
               <ul class="product-group-head">
-
               </ul>
           </div>
-          {% if g.front_user %}
-          {% for message in g.messages['commentmsg'] %}
-          <div>{{message.content}}</div>
+          {% for message in g.messages['followmsg'] %}
+          <div class="message1" ><a href="/t/{{message[0].content}}">{{message[1]}} followed you></a></div>
+<!--         messages['followmsg']=FollowMessageModel.query.filter(FollowMessageModel.user_id == user_id).all()-->
           {% endfor %}
-          {%endif%}
+          {% for message in g.messages['commentmsg'] %}
+          <div class="message2" ><a href=/p/{{message[0].pid}}>{{message[1]}} commented on your product</a></div>
+<!--        messages['commentmsg']=CommemtMessageModel.query.filter(CommemtMessageModel.user_id == user_id).all()-->
+          {% endfor %}
+          {% for message in g.messages['deltetmsg'] %}
+          <div class="message3">Your product with id {{message.content}} is deleted</div>
+<!--        messages['deltetmsg']=DeleteMessageModel.query.filter(DeleteMessageModel.user_id == user_id).all()-->
+          {% endfor %}
+          {% for message in g.messages['alertmsg'] %}
+          <div class="message4">An alert message: {{message.content}}</div>
+<!--        messages['alertmsg']=AlertMessageModel.query.filter(AlertMessageModel.user_id == user_id).all()-->
+          {% endfor %}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
