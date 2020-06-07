@@ -17,6 +17,7 @@ $(function () {
             alert.alertInfoToast('请输入正确的手机号码！');
             return;
         }
+
         var timestamp = (new Date).getTime();
         var sign= md5(timestamp+telephone+"q3423805gdflvbdfvhsdoa`#$%");
         zlajax.post({
@@ -52,9 +53,10 @@ $(function () {
 $(function(){
     $("#submit-btn").click(function(event){
         event.preventDefault();
+
         var telephone_input = $("input[name='telephone']");
         var sms_captcha_input = $("input[name='sms_captcha']");
-        var studentnumber = $("input[name='studentnumber']");
+        var studentnumber_input = $("input[name='studentnumber']");
         var username_input = $("input[name='username']");
         var password1_input = $("input[name='password1']");
         var password2_input = $("input[name='password2']");
@@ -62,12 +64,47 @@ $(function(){
 
         var telephone = telephone_input.val();
         var sms_captcha = sms_captcha_input.val();
-        var studentnumber = studentnumber.val();
+        var studentnumber = studentnumber_input.val();
         var username = username_input.val();
         var password1 = password1_input.val();
         var password2 = password2_input.val();
         var graph_captcha = graph_captcha_input.val();
 
+        if(!telephone){
+            console.log(telephone)
+            alert.alertInfoToast('请输入手机号！');
+            return;
+        }
+        if(!sms_captcha){
+            console.log(sms_captcha)
+            alert.alertInfoToast('请输入短信验证码！');
+            return;
+        }
+        if(!studentnumber){
+            console.log(studentnumber)
+            alert.alertInfoToast('请输入学号！');
+            return;
+        }
+        if(!username){
+            console.log(username)
+            alert.alertInfoToast('请输入用户名！');
+            return;
+        }
+        if(!password1){
+            console.log(password1)
+            alert.alertInfoToast('请输入密码！');
+            return;
+        }
+        if(!password2){
+            console.log(password2)
+            alert.alertInfoToast('请确认密码！');
+            return;
+        }
+        if(!graph_captcha){
+            console.log(graph_captcha)
+            alert.alertInfoToast('请输入图形验证码！');
+            return;
+        }
         zlajax.post({
             'url': '/signup/',
             'data': {
