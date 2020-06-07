@@ -13,19 +13,20 @@
 {% block body %}
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">personal information</h3>
+    <h3 class="panel-title">seller information</h3>
   </div>
   <div class="panel-body">
  <div class="top-ta" id="top-ta" name="top-ta" data-da="{{ta.id}}" data-follow="{{follow.id}}">
             <div class="user-avatar-group">
                 {%if ta.avatar==None%}
-              <img src="{{ ta.avatar or url_for('static',filename='common/images/logo.png') }}" alt="">
+              <img class="col-md-4" src="{{ ta.avatar or url_for('static',filename='common/images/logo.png') }}" alt="">
                 {%else%}
                 <img src="/static/{{ta.avatar}}" alt="">
                 {%endif%}
             </div>
             <div class="taname">
-                <span ><h1>username:{{ ta.username }}</h1></span>
+                <h5 class="col-md-12">username:</h5>
+                <span ><h1 class="col-md-4">{{ ta.username }}</h1></span>
             </div>
             <div>
             {% if follow == 0 %}
@@ -49,18 +50,20 @@
                 <li>
                 <div class="product-info-group1">
                     <p class="product-name">
-                        <h1><a href="{{ url_for("front.product_detail",product_id=product[0].id)}}">{{ product[0].name }}</a></h1>
+                        <h1><a  class="page-header" href="{{ url_for("front.product_detail",product_id=product[0].id)}}" >{{ product[0].name }}</a></h1>
                         {% if product[0].highlight %}
                                     <span class="label label-danger">管理员推荐</span>
                         {% endif %}
                     </p>
                     <p class="product-info1">
-                        <h4><strong>price:{{ product[0].price }}</strong></h4>
+                    <h5>price:</h5>
+                        <h3><strong>{{ product[0].price }}</strong></h3>
                     </p>
                 </div>
                 <div class="product-info-group2">
                     <p class="product-info2">
-                        <span>description:{{ product[0].description }}</span>
+                        <h5>description:</h5>
+                        <span>{{ product[0].description }}</span>
                     </p>
                     <p class="product-info3">
                         <small>read:0</small>
