@@ -39,7 +39,7 @@ $(function () {
     $("#resetpwd-link").click(function (event) {
         event.preventDefault();
         alert.alertConfirm({
-                        'msg': 'Reset password means restart signup, are you sure?',
+                        'msg': 'Are you sure?',
                         'cancelText': 'Wrong Click',
                         'confirmText': 'Sure',
                         'cancelCallback': function () {

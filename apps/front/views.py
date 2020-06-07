@@ -248,9 +248,9 @@ class Forget_password(views.MethodView):
             print(telephone)
             user = FrontUser.query.filter(FrontUser.telephone==telephone).first()
             print(user)
-            db.session.delete(user)
-            db.session.commit()
-            print("delete success")
+            session[config.FRONT_USER_ID] = user.id
+            #db.session.delete(user)
+            #db.session.commit()
             return restful.success("confirm success")
         else:
             print(form.get_error())

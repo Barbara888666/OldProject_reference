@@ -56,7 +56,7 @@ $(function(){
             },
             'success': function(data){
                 if(data['code'] == 200){
-                    window.location = '/signup/';
+                    window.location = '/';
                 }else{
                     alert.alertInfo(data['message']);
                 }
