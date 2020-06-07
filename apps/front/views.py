@@ -245,13 +245,14 @@ class Forget_password(views.MethodView):
         form = ForgetPasswordForm(request.form)
         if form.validate():
             telephone= form.telephone.data
+            newpassword=form.newpassword.data
             print(telephone)
             user = FrontUser.query.filter(FrontUser.telephone==telephone).first()
             print(user)
-            db.session.delete(user)
+            user.password = newpassword
             db.session.commit()
-            print("delete success")
-            return restful.success("confirm success")
+            print("change success")
+            return restful.success("Change success")
         else:
             print(form.get_error())
             return restful.params_error(message=form.get_error())

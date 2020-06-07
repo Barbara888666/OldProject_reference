@@ -44,19 +44,25 @@ $(function(){
         event.preventDefault();
         var telephone_input = $("input[name='telephone']");
         var sms_captcha_input = $("input[name='sms_captcha']");
+        var newpassword_input= $("input[name='newpassword']");
+        var newpassword2_input= $("input[name='newpassword2']");
 
         var telephone = telephone_input.val();
         var sms_captcha = sms_captcha_input.val();
-
+        var newpassword = newpassword_input.val();
+        var newpassword2 = newpassword2_input.val();
         zlajax.post({
             'url': '/forget_password/',
             'data': {
                 'telephone': telephone,
                 'sms_captcha': sms_captcha,
+                'newpassword': newpassword,
+                'newpassword2': newpassword2,
             },
             'success': function(data){
                 if(data['code'] == 200){
-                    window.location = '/signup/';
+                    alert.alertSuccessToast('Change Password Success!');
+                    window.location = '/signin/';
                 }else{
                     alert.alertInfo(data['message']);
                 }

@@ -75,8 +75,10 @@ class SearchForm(BaseForm):
 class ForgetPasswordForm(BaseForm):
     telephone = StringField(validators=[Regexp(r"1[345789]\d{9}",message='Please enter the correct phonenumber ！')])
     sms_captcha = StringField(validators=[Regexp(r"\w{6}",message='Please enter the correct SMS verification！')])
-
-
+    newpassword= StringField(validators=[Regexp(r"[0-9a-zA-Z_\.]{6,20}", message='Please enter the correct password！')])
+    newpassword2 = StringField(validators=[EqualTo("newpassword", message='Entered passwords differ')])
+    # password1 = StringField(validators=[Regexp(r"[0-9a-zA-Z_\.]{6,20}", message='Please enter the correct password！')])
+    # password2 = StringField(validators=[EqualTo("password1", message='Entered passwords differ')])
     def validate_sms_captcha(self,field):
         sms_captcha = field.data
         telephone = self.telephone.data
