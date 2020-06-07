@@ -47,10 +47,10 @@ def posts():
 def hpost():
     product_id = request.form.get("product_id")
     if not product_id:
-        return restful.params_error('请传入商品id！')
+        return restful.params_error('Please pass in the item ID')
     product = Product.query.get(product_id)
     if not product:
-        return restful.params_error("没有这个商品！")
+        return restful.params_error("No this product！")
 
     highlight = HighlightProductModel()
     highlight.product = product
@@ -64,10 +64,10 @@ def hpost():
 def uhpost():
     product_id = request.form.get("product_id")
     if not product_id:
-        return restful.params_error('请传入帖子id！')
+        return restful.params_error('Please pass in product ID!')
     product = Product.query.get(product_id)
     if not product:
-        return restful.params_error("没有这篇帖子！")
+        return restful.params_error("No this product！")
     highlight = HighlightProductModel.query.filter_by(product_id=product_id).first()
     db.session.delete(highlight)
     db.session.commit()
@@ -80,10 +80,10 @@ def dpost():
     product_id = request.form.get("product_id")
     print(product_id)
     if not product_id:
-        return restful.params_error('请传入板块id！')
+        return restful.params_error('Please pass in board ID!')
     product = Product.query.get(product_id)
     if not product:
-        return restful.params_error(message='没有这个板块！')
+        return restful.params_error(message='No this board！')
 
     db.session.delete(product)
     db.session.commit()
@@ -107,10 +107,10 @@ def dcomment():
     comment_id = request.form.get("comment_id")
     print(comment_id)
     if not comment_id:
-        return restful.params_error('请传入评论id！')
+        return restful.params_error('Please pass in the comment ID!')
     comment = CommentModel.query.get(comment_id)
     if not comment:
-        return restful.params_error(message='没有这个评论！')
+        return restful.params_error(message='No this comment！')
 
     db.session.delete(comment)
     db.session.commit()
@@ -155,7 +155,7 @@ def uboard():
             db.session.commit()
             return restful.success()
         else:
-            return restful.params_error(message='没有这个板块！')
+            return restful.params_error(message='No this board ！')
     else:
         return restful.params_error(message=form.get_error())
 
@@ -166,11 +166,11 @@ def uboard():
 def dboard():
     board_id = request.form.get("board_id")
     if not board_id:
-        return restful.params_error('请传入板块id！')
+        return restful.params_error('Please pass in the board ID！')
 
     board = BoardModel.query.get(board_id)
     if not board:
-        return restful.params_error(message='没有这个板块！')
+        return restful.params_error(message='No this board！')
 
     db.session.delete(board)
     db.session.commit()
@@ -222,7 +222,7 @@ def addcusers():
         #user = FrontUser.query.filter(FrontUser.telephone==telephone)
         print(emialkey)
         if emialkey:
-            return restful.params_error('该用户已存在！')
+            return restful.params_error('The CMS user already exists！')
         else:
             username = form.username.data
             permission=form.permission.data
@@ -299,7 +299,7 @@ def ubanner():
             db.session.commit()
             return restful.success()
         else:
-            return restful.params_error(message='没有这个轮播图！')
+            return restful.params_error(message='No this banner！')
     else:
         return restful.params_error(message=form.get_error())
 
@@ -308,11 +308,11 @@ def ubanner():
 def dbanner():
     banner_id = request.form.get('banner_id')
     if not banner_id:
-        return restful.params_error(message='请传入轮播图id！')
+        return restful.params_error(message='Please pass in banner id！')
 
     banner = BannerModel.query.get(banner_id)
     if not banner:
-        return restful.params_error(message='没有这个轮播图！')
+        return restful.params_error(message='No this banner！')
 
     db.session.delete(banner)
     db.session.commit()

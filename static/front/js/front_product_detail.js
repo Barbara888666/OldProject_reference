@@ -59,7 +59,7 @@ $(function () {
         event.preventDefault();
         var loginTag = $("#login-tag").attr("data-is-login");
         if(!loginTag){
-            alert.alertInfoToast("请登陆后再点赞！")
+            alert.alertInfoToast("Please login before like！")
             window.location = '/signin/';
         }else{
             var comment_id = $("#comment-info-group").attr("data-da");
@@ -90,7 +90,7 @@ $(function () {
         event.preventDefault();
         var loginTag = $("#login-tag").attr("data-is-login");
         if(!loginTag){
-            alert.alertInfoToast("请登陆后再点赞！")
+            alert.alertInfoToast("Please login before like！")
             window.location = '/signin/';
         }else{
             var like_id = $("#product-information").attr("data-like");

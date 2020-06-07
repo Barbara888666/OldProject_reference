@@ -17,7 +17,7 @@ $(function () {
             },
             'success': function (data) {
                 if(data['code'] == 200){
-                    alert.alertSuccessToast('操作成功！');
+                    alert.alertSuccessToast('Congrulations! Change Email Success!');
                     setTimeout(function () {
                         window.location.reload();
                     },500);

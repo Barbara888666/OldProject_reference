@@ -7,13 +7,13 @@ $(function () {
         console.log(name)
         if(!name){
             console.log(name)
-            alert.alertInfoToast('请输入名字！');
+            alert.alertInfoToast('Enter product name！');
             return;
         }
         var priceInput = $("input[name='price']");
         var price = priceInput.val();
         if(!(/^[1-9]+[0-9]*]*$/).test(price)){
-            alert.alertInfoToast('请输入正确的价格！');
+            alert.alertInfoToast('Enter correct product price！');
             return;
         }
 

@@ -23,7 +23,11 @@ $(function(){
                 if(data['code'] == 200){
                     var return_to = $("#return-to-span").text();
                     if(return_to){
-                        window.location = return_to;
+                        if(return_to!='/signup/'){
+                            window.location = return_to;
+                        }else{
+                            window.location = '/';
+                        }
                     }else{
                         window.location = '/';
                     }

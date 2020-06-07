@@ -2,7 +2,7 @@
 {% from "common/_macros.html" import static %}
 
 {% block title -%}
-    修改密码
+    Change Password
 {%- endblock %}
 
 {% block page_title -%}
@@ -23,24 +23,24 @@
         <div class="form-container">
             <div class="form-group">
                 <div class="input-group">
-                    <span class="input-group-addon">旧密码</span>
-                    <input type="password" class="form-control" name="oldpwd" placeholder="请输入旧密码">
+                    <span class="input-group-addon">Old Password</span>
+                    <input type="password" class="form-control" name="oldpwd" placeholder="Old Password">
                 </div>
             </div>
             <div class="form-group">
                 <div class="input-group">
-                    <span class="input-group-addon">新密码</span>
-                    <input type="password" class="form-control" name="newpwd" placeholder="请输入新密码">
+                    <span class="input-group-addon">New password</span>
+                    <input type="password" class="form-control" name="newpwd" placeholder="New password">
                 </div>
             </div>
             <div class="form-group">
                 <div class="input-group">
-                    <span class="input-group-addon">确认新密码</span>
-                    <input type="password" class="form-control" name="newpwd2" placeholder="请输入确认密码">
+                    <span class="input-group-addon">Confirm</span>
+                    <input type="password" class="form-control" name="newpwd2" placeholder="Confirm password">
                 </div>
             </div>
             <div class="form-group">
-                <button class="btn btn-primary" id="submit">立即保存</button>
+                <button class="btn btn-primary" id="submit">Save</button>
             </div>
         </div>
     </form>

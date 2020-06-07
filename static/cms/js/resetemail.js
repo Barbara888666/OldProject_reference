@@ -50,7 +50,7 @@ $(function(){
                 if(data['code'] == 200){
                     emailE.val("");
                     captchaE.val("");
-                    alert.alertSuccessToast('恭喜！邮箱修改成功！');
+                    alert.alertSuccessToast('Operate successfully!');
                 }else{
                     alert.alertInfo(data['message']);
                 }

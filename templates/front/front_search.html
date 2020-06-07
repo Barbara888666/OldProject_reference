@@ -25,10 +25,10 @@
                           {% for product in products %}
 						<div class="span4">
 							<h2 class="bg-info">
-								<a href="/p/{{product[0].id}}">物品{{ product[0].name }}</a>
+								<a href="/p/{{product[0].id}}">Item{{ product[0].name }}</a>
 							</h2>
 							<p>
-								物品描述{{ product[0].description }}
+								Description{{ product[0].description }}
 							</p>
 							<div class="span4">
 								{%if product[1].imglink=='none'%}

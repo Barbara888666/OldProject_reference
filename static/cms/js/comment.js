@@ -5,7 +5,7 @@ $(function () {
         var tr = self.parent().parent();
         var comment_id = tr.attr("data-id");
         alert.alertConfirm({
-            "msg":"您确定要删除这个评论吗？",
+            "msg":"Are you sure delete this comment?",
             'confirmCallback': function () {
                 zlajax.post({
                     'url': '/cms/dcomment/',

@@ -320,7 +320,7 @@ def add_comment():
             db.session.commit()
             return restful.success()
         else:
-            return restful.params_error('没有这篇帖子！')
+            return restful.params_error('No this product！')
     else:
         return restful.params_error(form.get_error())
 
@@ -360,7 +360,7 @@ def add_like():
             db.session.commit()
             return restful.success()
         else:
-            return restful.params_error('没有这篇帖子！')
+            return restful.params_error('No this product！')
     else:
         return restful.params_error(form.get_error())
 @bp.route('/dlike/',methods=['POST'])
@@ -401,7 +401,7 @@ def add_follow():
             db.session.commit()
             return restful.success()
         else:
-            return restful.params_error('没有这个用户！')
+            return restful.params_error('No this user！')
     else:
         return restful.params_error(form.get_error())
 
@@ -459,7 +459,7 @@ class SigninView(views.MethodView):
                     session.permanent = True
                 return restful.success()
             else:
-                return restful.params_error(message='手机号或密码错误！')
+                return restful.params_error(message='Wrong phone number or password！')
         else:
             return restful.params_error(message=form.get_error())
 bp.add_url_rule('/signin/',view_func=SigninView.as_view('signin'))

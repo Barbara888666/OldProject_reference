@@ -17,7 +17,7 @@ $(function () {
         var bannerId = self.attr("data-id");
 
         if(!name || !image_url || !link_url || !priority){
-            alert.alertInfoToast('请输入完整的轮播图数据！');
+            alert.alertInfoToast('Enter the complete banner data！');
             return;
         }
 
@@ -86,7 +86,7 @@ $(function () {
         var tr = self.parent().parent();
         var banner_id = tr.attr('data-id');
         alert.alertConfirm({
-            "msg":"您确定要删除这个轮播图吗？",
+            "msg":"Are you sure you want to delete this banner?",
             'confirmCallback': function () {
                 zlajax.post({
                     'url': '/cms/dbanner/',

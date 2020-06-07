@@ -4,13 +4,13 @@ from wtforms.validators import Regexp, EqualTo, ValidationError, InputRequired
 from utils import cache
 from .models import FrontUser 
 class SignupForm(BaseForm):
-    telephone = StringField(validators=[Regexp(r"1[345789]\d{9}",message='请输入正确格式的手机号码！')])
-    sms_captcha = StringField(validators=[Regexp(r"\w{6}",message='请输入正确格式的短信验证码！')])
-    studentnumber=StringField(validators=[Regexp(r"\w{8}",message='请输入正确格式的学号！')])
-    username = StringField(validators=[Regexp(r".{2,20}",message='请输入正确格式的用户名！')])
-    password1 = StringField(validators=[Regexp(r"[0-9a-zA-Z_\.]{6,20}",message='请输入正确格式的密码！')])
-    password2 = StringField(validators=[EqualTo("password1",message='两次输入的密码不一致！')])
-    graph_captcha = StringField(validators=[Regexp(r"\w{4}",message='请输入正确格式的短信验证码！')])
+    telephone = StringField(validators=[Regexp(r"1[345789]\d{9}",message='Please enter the correct phonenumber！')])
+    sms_captcha = StringField(validators=[Regexp(r"\w{6}",message='Please enter the correct SMS verification!')])
+    studentnumber=StringField(validators=[Regexp(r"\w{8}",message='Please enter the correct studentnumber！')])
+    username = StringField(validators=[Regexp(r".{2,20}",message='Please enter the correct username！')])
+    password1 = StringField(validators=[Regexp(r"[0-9a-zA-Z_\.]{6,20}",message='Please enter the correct password！')])
+    password2 = StringField(validators=[EqualTo("password1",message='Entered passwords differ')])
+    graph_captcha = StringField(validators=[Regexp(r"\w{4}",message='Please enter the correct graph verification!')])
 
     def validate_sms_captcha(self,field):
         sms_captcha = field.data
@@ -19,7 +19,7 @@ class SignupForm(BaseForm):
         sms_captcha_mem = cache.get(telephone)
         print('1' + sms_captcha_mem)
         if not sms_captcha_mem or sms_captcha_mem != sms_captcha:
-            raise ValidationError(message='短信验证码错误！')
+            raise ValidationError(message='Message verification error！')
 
 
     def validate_graph_captcha(self,field):
@@ -28,15 +28,15 @@ class SignupForm(BaseForm):
         print('1'+graph_captcha)
         print('2'+graph_captcha_mem)
         if not graph_captcha_mem or graph_captcha_mem.lower() != graph_captcha.lower():
-            raise ValidationError(message='图形验证码错误！')
+            raise ValidationError(message='Graphical verification error！')
 
 
 
 
 
 class SigninForm(BaseForm):
-    telephone = StringField(validators=[Regexp(r"1[345789]\d{9}", message='请输入正确格式的手机号码！')])
-    password = StringField(validators=[Regexp(r"[0-9a-zA-Z_\.]{6,20}", message='请输入正确格式的密码！')])
+    telephone = StringField(validators=[Regexp(r"1[345789]\d{9}", message='Please enter the correct phonenumber！')])
+    password = StringField(validators=[Regexp(r"[0-9a-zA-Z_\.]{6,20}", message='Please enter the correct password！')])
     remeber = StringField()
 
 class AddProductForm(BaseForm):
@@ -60,21 +60,21 @@ class AddProductForm(BaseForm):
     file = FileField()
 
 class AddCommentForm(BaseForm):
-    content = StringField(validators=[InputRequired(message='请输入评论内容！')])
-    product_id = IntegerField(validators=[InputRequired(message='请输入帖子id！')])
+    content = StringField(validators=[InputRequired(message='Please enter comment content！')])
+    product_id = IntegerField(validators=[InputRequired(message='Please enter product ID!')])
 
 class AddLikeForm(BaseForm):
-    product_id = IntegerField(validators=[InputRequired(message='请输入帖子id！')])
+    product_id = IntegerField(validators=[InputRequired(message='Please enter product ID!')])
 
 class AddFollowForm(BaseForm):
-    user_id = StringField(validators=[InputRequired(message='请输入用户id！')])
+    user_id = StringField(validators=[InputRequired(message='Please enter user ID!')])
 
 class SearchForm(BaseForm):
-    search = StringField(validators=[InputRequired(message='请输入搜索内容！')])
+    search = StringField(validators=[InputRequired(message='Please enter search content！')])
 
 class ForgetPasswordForm(BaseForm):
-    telephone = StringField(validators=[Regexp(r"1[345789]\d{9}",message='请输入正确格式的手机号码！')])
-    sms_captcha = StringField(validators=[Regexp(r"\w{6}",message='请输入正确格式的短信验证码！')])
+    telephone = StringField(validators=[Regexp(r"1[345789]\d{9}",message='Please enter the correct phonenumber ！')])
+    sms_captcha = StringField(validators=[Regexp(r"\w{6}",message='Please enter the correct SMS verification！')])
 
 
     def validate_sms_captcha(self,field):
@@ -83,7 +83,7 @@ class ForgetPasswordForm(BaseForm):
 
         sms_captcha_mem = cache.get(telephone)
         if not sms_captcha_mem or sms_captcha_mem != sms_captcha:
-            raise ValidationError(message='短信验证码错误！')
+            raise ValidationError(message='Message verification error！')
 
 
 

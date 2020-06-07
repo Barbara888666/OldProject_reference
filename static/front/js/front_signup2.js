@@ -14,7 +14,7 @@ $(function () {
         var self = $(this);//change this js to a JQ
         var telephone = $("input[name='telephone']").val();
         if(!(/^1[345879]\d{9}$/.test(telephone))){
-            alert.alertInfoToast('请输入正确的手机号码！');
+            alert.alertInfoToast('Please enter the correct phone number！');
             return;
         }
 
@@ -39,11 +39,11 @@ $(function () {
                         if(timeCount<=0){
                             self.removeAttr('disabled');
                             clearInterval(timer);
-                            self.text('发送验证码');
+                            self.text('Send code');
                         }
                     },1000);
                 }else{
-                    alert.alertInfoToast("该手机已注册");
+                    alert.alertInfoToast("The phone is registered");
                 }
             }
         });
@@ -72,37 +72,37 @@ $(function(){
 
         if(!telephone){
             console.log(telephone)
-            alert.alertInfoToast('请输入手机号！');
+            alert.alertInfoToast('Please enter phonenumber！');
             return;
         }
         if(!sms_captcha){
             console.log(sms_captcha)
-            alert.alertInfoToast('请输入短信验证码！');
+            alert.alertInfoToast('Please enter the SMS verification code！');
             return;
         }
         if(!studentnumber){
             console.log(studentnumber)
-            alert.alertInfoToast('请输入学号！');
+            alert.alertInfoToast('Please enter studentnumber！');
             return;
         }
         if(!username){
             console.log(username)
-            alert.alertInfoToast('请输入用户名！');
+            alert.alertInfoToast('Please enter username！');
             return;
         }
         if(!password1){
             console.log(password1)
-            alert.alertInfoToast('请输入密码！');
+            alert.alertInfoToast('Please enter password！');
             return;
         }
         if(!password2){
             console.log(password2)
-            alert.alertInfoToast('请确认密码！');
+            alert.alertInfoToast('Please confirm password！');
             return;
         }
         if(!graph_captcha){
             console.log(graph_captcha)
-            alert.alertInfoToast('请输入图形验证码！');
+            alert.alertInfoToast('Please enter the graphic verification code');
             return;
         }
         zlajax.post({

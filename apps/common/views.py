@@ -49,15 +49,17 @@ def sms_captcha():
     if form.validate():
         telephone = form.telephone.data
         captcha = ''.join(str(i) for i in random.sample(range(0, 9), 6))  # sample(seq, n) 从序列seq中选择n个随机且独立的元素；
+        print('发送的短信是'+captcha)
         if sms.send(telephone,code=captcha):
             cache.set(telephone,captcha)
+            print('发送成了')
             return restful.success()
         else:
             return restful.params_error()
             # cache.set(telephone,captcha)
             # return restful.success()
     else:
-        return restful.params_error(message='参数错误！')
+        return restful.params_error(message='Parameter error！')
 
 @bp.route('/sms_captcha2/',methods=['POST'])
 def sms_captcha2():
@@ -66,19 +68,20 @@ def sms_captcha2():
         telephone = form.telephone.data
         captcha = ''.join(str(i) for i in random.sample(range(0, 9), 6))  # sample(seq, n) 从序列seq中选择n个随机且独立的元素；
         # captcha = Captcha.gene_text(number=6)
-        print('发送的短信验证码是：',captcha)
+        print('SMS froget password message verification code：',captcha)
         # if sms.send(telephone,code=captcha):
         # if send_sms_captcha.delay(telephone, captcha):
-        if 1==1:
-        # if sms.send(telephone,code=captcha):
+        # if 1==1:
+        if sms.send(telephone,code=captcha):
             cache.set(telephone,captcha)
+            print('发送成了')
             return restful.success()
         else:
             return restful.params_error()
             # cache.set(telephone,captcha)
             # return restful.success()
     else:
-        return restful.params_error(message='参数错误！')
+        return restful.params_error(message='Parameter error！')
 
 @bp.route('/uptoken/')
 def uptoken(inputdata):
@@ -93,7 +96,7 @@ def uptoken(inputdata):
     print('ret2:', ret2)
 
     if ret2.status_code != 200:
-        raise Exception('文件上传失败')
+        raise Exception('File upload failed')
 
     return ret1.get('key')
 

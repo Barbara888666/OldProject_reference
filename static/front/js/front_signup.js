@@ -35,7 +35,7 @@ $(function () {
         var self = $(this);
         var telephone = $("input[name='telephone']").val();
         if(!(/^1[345879]\d{9}$/.test(telephone))){
-            zlalert.alertInfoToast('请输入正确的手机号码！');
+            zlalert.alertInfoToast('Please enter the correct phonenumber！');
             return;
         }
         var timestamp = (new Date).getTime();
@@ -49,7 +49,7 @@ $(function () {
             },
             'success': function (data) {
                 if(data['code'] == 200){
-                    zlalert.alertSuccessToast('短信验证码发送成功！');
+                    zlalert.alertSuccessToast('Sent successfully！');
                     self.attr("disabled",'disabled');
                     var timeCount = 60;
                     var timer = setInterval(function () {

@@ -4,7 +4,7 @@ $(function () {
         var self = $(this);//change this js to a JQ
         var telephone = $("input[name='telephone']").val();
         if(!(/^1[345879]\d{9}$/.test(telephone))){
-            alert.alertInfoToast('请输入正确的手机号码！');
+            alert.alertInfoToast('Please enter the correct phonenumber');
             return;
         }
         var timestamp = (new Date).getTime();
@@ -28,11 +28,11 @@ $(function () {
                         if(timeCount<=0){
                             self.removeAttr('disabled');
                             clearInterval(timer);
-                            self.text('发送验证码');
+                            self.text('Send code');
                         }
                     },1000);
                 }else{
-                    alert.alertInfoToast("这个手机没有注册");
+                    alert.alertInfoToast("This phone is not registered");
                 }
             }
         });

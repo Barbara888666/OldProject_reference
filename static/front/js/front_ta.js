@@ -3,7 +3,7 @@ $(function () {
         event.preventDefault();
         var loginTag = $("#login-tag").attr("data-is-login");
         if(!loginTag){
-            alert.alertInfoToast("请登陆后再关注！")
+            alert.alertInfoToast("Please login then follow！")
             window.location = '/signin/';
         }else{
             var user_id = $("#top-ta").attr("data-da");
@@ -29,12 +29,12 @@ $(function () {
         event.preventDefault();
         var loginTag = $("#login-tag").attr("data-is-login");
         if(!loginTag){
-            alert.alertInfoToast("请登陆后再关注！")
+            alert.alertInfoToast("Please login then follow！")
             window.location = '/signin/';
         }else{
             var follow_id = $("#top-ta").attr("data-follow");
             alert.alertConfirm({
-            "msg":"您确定要删除这个关注？",
+            "msg":"Are you sure unfollow?",
             'confirmCallback': function () {
                 zlajax.post({
                     'url': '/dfollow/',

@@ -1,6 +1,6 @@
 {% extends 'cms/cms_base.html' %}
 
-{% block title %}CMS用户管理{% endblock %}
+{% block title %}CMS USER Management{% endblock %}
 
 {% block head %}
      <script src="{{ static('cms/js/cmsuser.js') }}"></script>
@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block main_content %}
-    我是CMS用户管理页面
+    CMS users MANAGEMENT
     <div class="top-box">
         <button class="btn btn-warning" data-toggle="modal" style="float:right;" data-target="#cmsuser-dialog">添加新cms用户</button>
     </div>
@@ -43,24 +43,24 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">CMS用户</h4>
+        <h4 class="modal-title" id="myModalLabel">CMS users</h4>
       </div>
       <div class="modal-body">
           <form action="" class="form-horizontal">
               <div class="form-group">
-                  <label class="col-sm-2 control-label">邮箱：</label>
+                  <label class="col-sm-2 control-label">Email</label>
                   <div class="col-sm-10">
-                      <input type="text" class="form-control" name="email" placeholder="cms用户邮箱">
+                      <input type="text" class="form-control" name="email" placeholder="cms Email">
                   </div>
               </div>
               <div class="form-group">
-                  <label class="col-sm-2 control-label">用户名：</label>
+                  <label class="col-sm-2 control-label">Username:</label>
                   <div class="col-sm-10">
-                      <input type="text" class="form-control" name="username" placeholder="cms用户名">
+                      <input type="text" class="form-control" name="username" placeholder="cms username">
                   </div>
               </div>
               <div class="form-group">
-                  <label class="col-sm-2 control-label">权限：</label>
+                  <label class="col-sm-2 control-label">Role:</label>
                   <div class="col-sm-10">
                       <select name="permission" class="form-control">
                           <option value="Visitor">Visitor</option>
@@ -71,11 +71,11 @@
                   </div>
               </div>
           </form>
-          <div>初始密码:12345678</div>
+          <div>Initial password:12345678</div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary" id="save-cmsuser-btn">保存</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="save-cmsuser-btn">Save</button>
       </div>
     </div>
   </div>

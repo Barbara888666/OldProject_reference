@@ -15,9 +15,9 @@ class LoginForm(BaseForm):
 
 
 class ResetpwdForm(BaseForm):
-    oldpwd = StringField(validators=[Length(6,20,message='请输入正确格式的旧密码')])
-    newpwd = StringField(validators=[Length(6,20,message='请输入正确格式的新密码')])
-    newpwd2 = StringField(validators=[EqualTo("newpwd",message='确认密码必须和新密码保持一致')])
+    oldpwd = StringField(validators=[Length(6,20,message='Please enter the old password in the correct format')])
+    newpwd = StringField(validators=[Length(6,20,message='Please enter the new password in the correct format')])
+    newpwd2 = StringField(validators=[EqualTo("newpwd",message='Confirm the new password')])
 
 class ResetEmailForm(BaseForm):
     email = StringField(validators=[Email(message='Please input the correct Email'),
@@ -54,24 +54,24 @@ class ResetEmailForm(BaseForm):
 #         if user.email == email:
 #             raise ValidationError('不能修改为相同的邮箱！')
 class AddBannerForm(BaseForm):
-    name = StringField(validators=[InputRequired(message='请输入轮播图名称！')])
-    image_url = StringField(validators=[InputRequired(message='请输入轮播图图片链接！')])
-    link_url = StringField(validators=[InputRequired(message='请输入轮播图跳转链接！')])
-    priority = IntegerField(validators=[InputRequired(message='请输入轮播图优先级！')])
+    name = StringField(validators=[InputRequired(message='Please enter the banner name！')])
+    image_url = StringField(validators=[InputRequired(message='Please enter the banner link！')])
+    link_url = StringField(validators=[InputRequired(message='Please enter the banner url link！')])
+    priority = IntegerField(validators=[InputRequired(message='Please enter the banner priority！')])
 
 class UpdateBannerForm(BaseForm):
-    banner_id = IntegerField(validators=[InputRequired(message='请输入轮播图的id！')])
+    banner_id = IntegerField(validators=[InputRequired(message='Please enter the banner id！')])
 
 class AddBoardForm(BaseForm):
-    name = StringField(validators=[InputRequired(message='请输入板块名称！')])
+    name = StringField(validators=[InputRequired(message='Please enter the banner name！')])
 
 class UpdateBoardForm(BaseForm):
-    board_id = IntegerField(validators=[InputRequired(message='请输入板块id！')])
+    board_id = IntegerField(validators=[InputRequired(message='Please enter the banner id！')])
 
 class WarnUserForm(BaseForm):
-    user_id = StringField(validators=[InputRequired(message='请输入用户id！')])
+    user_id = StringField(validators=[InputRequired(message='Please enter the user id！')])
 
 class AddCmsUserForm(BaseForm):
-    email = StringField(validators=[InputRequired(message='请输入cms用户邮箱！')])
-    username = StringField(validators=[InputRequired(message='请输入cms用户名！')])
+    email = StringField(validators=[InputRequired(message='Please enter the CMS user email！')])
+    username = StringField(validators=[InputRequired(message='Please enter the CMS user username！')])
     permission = StringField()

@@ -10,7 +10,7 @@ $(function () {
             },
             'success': function (data) {
                 if(data['code'] == 200){
-                    alert.alertSuccessToast('操作成功！');
+                    alert.alertSuccessToast('Operate successfully!');
                 }else{
                     alert.alertInfo(data['message']);
                 }
