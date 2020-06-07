@@ -101,12 +101,15 @@
                             </p>
 
                         </div>
+                        {%if g.front_user%}
+                        {% if g.front_user==product.user or g.front_user==commenter %}
                         <div class="button-delete-comment">
-                                {% if g.front_user==product.user or g.front_user==commenter %}
+                                
                                 <button class="btn btn-success" data="1" id="delete-comment-btn" name="delete-comment-btn">Delete</button></td>
-                                {% endif %}
+                                
                         </div>
-
+                        {% endif %}
+                        {% endif %}
                     </li>
                     </ul>
                 {% endfor %}
