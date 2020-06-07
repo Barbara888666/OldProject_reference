@@ -124,7 +124,7 @@
         <div class="add-comment-group">
             <span>comment</span>
             <input type="text" class="form-control" id="comment-content"
-                   name="comment-content" placeholder="欢迎评论">
+                   name="comment-content" placeholder="welcome to comment">
             <div class="comment-btn-group">
                 <button class="btn btn-primary" id="comment-btn" name="comment-btn" data="1">submit</button></td>
             </div>
@@ -133,10 +133,10 @@
 
     <div class="sm-container">
         <div style="padding-bottom:10px;">
-            <div class="col-md-6"> <div class="saler"><a href="#">卖家</a></div></div>
+            <div class="col-md-6"> <div class="saler"><a href="{{ url_for("front.ta_page",user_id=product.user.id)}}">seller</a></div></div>
 
 <div class="col-md-6">
-                <button class="btn btn-warning btn-block hispage"><a href="{{ url_for("front.ta_page",user_id=product.user.id)}}">Ta的主页</a></button>
+                <button class="btn btn-default "><a href="{{ url_for("front.ta_page",user_id=product.user.id)}}">seller information</a></button>
             </div>
 <div class="col-md-12"><div class="user-avatar-group">
             {%if product.user.avatar=='none'%}
