@@ -30,23 +30,28 @@
 <!--            </div></div>-->
     <div class="lg-container">
         <div class="product-container">
-            <h1 class="bg-info">{{ product.name }}</h1>
+
             <div class="product-picture">
                 {%if productimgs[0].imglink=='none'%}
-                <img src="{{ url_for('static',filename='common/images/logo.png') }}" alt="">
+                <img class="thumbnail" src="{{ url_for('static',filename='common/images/logo.png') }}" alt="">
                 {%else%}
-                <img src="/static/{{ productimgs[0].imglink }}" alt="">
+                <img class="thumbnail" src="/static/{{ productimgs[0].imglink }}" alt="">
                 {%endif%}
             </div>
+            <mark> <h1  class= "page-header">{{ product.name }}</h1></mark>
             <div class="col-md-6"></div>
             <ul class="product-info-group" id="product-information" data-da="{{ product.id}}" data-like="{{like.id}}">
-            <li class="col-md-12"><h1>price:{{ product.price }}</h1></li>
-            <li class="col-md-4"><strong>seller：{{ product.user.username }}</strong></li>
-            <li class="col-md-4"><strong>category：{{ product.board.name }}</strong></li>
-            <li class="col-md-12"><span>description:{{ product.description }}</span></li>
+            <li class="col-md-12">price:</li>
+                <li ><h1>{{ product.price }}</h1></li>
+                <li class="col-md-12">seller：</li>
+                <li class="col-md-4"><strong><h3>{{ product.user.username }}</h3></strong></li>
+            <li class="col-md-12">category：</li>
+                <li class="col-md-4"><strong>{{ product.board.name }}</strong></li>
+            <li class="col-md-12 ">description:</li>
+                <li class="col-md-12 page-header"><span>{{ product.description }}</span></li>
 
                 <li class="col-md-12"><small>time：{{ product.join_time }}</small></li>
-            <li class="col-md-4" color="blue"><small>read: {{ product.like }}</small></li>
+            <li class="col-md-12" color="blue"><small>read: {{ product.like }}</small></li>
             <li class="col-md-4"><small>comments: {{ product.comment }}</small></li>
             </ul>
             {% if like == 0 or like==None%}
@@ -57,7 +62,7 @@
             {%if productimgs[0].imglink!='none'%}
             {%for p in productimgs%}
             <div class="product-picture">
-                <img  src="/static/{{ p.imglink }}" alt="">
+<!--                <img  src="/static/{{ p.imglink }}" alt="">-->
             </div>
             {%endfor%}
             {%endif%}
@@ -119,7 +124,7 @@
         <div class="add-comment-group">
             <span>comment</span>
             <input type="text" class="form-control" id="comment-content"
-                   name="comment-content" placeholder="欢迎评论">
+                   name="comment-content" placeholder="welcome to comment">
             <div class="comment-btn-group">
                 <button class="btn btn-primary" id="comment-btn" name="comment-btn" data="1">submit</button></td>
             </div>
@@ -128,10 +133,10 @@
 
     <div class="sm-container">
         <div style="padding-bottom:10px;">
-            <div class="col-md-6"> <div class="saler"><a href="#">卖家</a></div></div>
+            <div class="col-md-6"> <div class="saler"><a href="{{ url_for("front.ta_page",user_id=product.user.id)}}">seller</a></div></div>
 
 <div class="col-md-6">
-                <button class="btn btn-warning btn-block hispage"><a href="{{ url_for("front.ta_page",user_id=product.user.id)}}">Ta的主页</a></button>
+                <button class="btn btn-default "><a href="{{ url_for("front.ta_page",user_id=product.user.id)}}">seller information</a></button>
             </div>
 <div class="col-md-12"><div class="user-avatar-group">
             {%if product.user.avatar=='none'%}

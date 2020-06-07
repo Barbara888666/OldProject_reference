@@ -46,24 +46,24 @@
         <div class="product-group">
                 <ul class="product-group-head">
                     {% if current_sort == 1 %}
-                    <li class="active"><a href="{{ url_for("front.index",st=1,bd=current_board) }}">最新</a></li>
+                    <li class="active"><a href="{{ url_for("front.index",st=1,bd=current_board) }}">newest</a></li>
                 {% else %}
-                    <li><a href="{{ url_for("front.index",st=1,bd=current_board) }}">最新</a></li>
+                    <li><a href="{{ url_for("front.index",st=1,bd=current_board) }}">newest</a></li>
                 {% endif %}
                 {% if current_sort == 2 %}
-                    <li class="active"><a href="{{ url_for("front.index",st=2,bd=current_board) }}">官方推荐</a></li>
+                    <li class="active"><a href="{{ url_for("front.index",st=2,bd=current_board) }}">Official recommendation</a></li>
                 {% else %}
-                    <li><a href="{{ url_for("front.index",st=2,bd=current_board) }}">官方推荐</a></li>
+                    <li><a href="{{ url_for("front.index",st=2,bd=current_board) }}">Official recommendation</a></li>
                 {% endif %}
                 {% if current_sort == 3 %}
-                    <li class="active"><a href="{{ url_for("front.index",st=3,bd=current_board) }}">点赞最多</a></li>
+                    <li class="active"><a href="{{ url_for("front.index",st=3,bd=current_board) }}">popular</a></li>
                 {% else %}
-                    <li><a href="{{ url_for("front.index",st=3,bd=current_board) }}">点赞最多</a></li>
+                    <li><a href="{{ url_for("front.index",st=3,bd=current_board) }}">popular</a></li>
                 {% endif %}
                 {% if current_sort == 4 %}
-                    <li class="active"><a href="{{ url_for("front.index",st=4,bd=current_board) }}">价格最低</a></li>
+                    <li class="active"><a href="{{ url_for("front.index",st=4,bd=current_board) }}">lowest price</a></li>
                 {% else %}
-                    <li><a href="{{ url_for("front.index",st=4,bd=current_board) }}">价格最低</a></li>
+                    <li><a href="{{ url_for("front.index",st=4,bd=current_board) }}">lowest price</a></li>
                 {% endif %}
                 </ul>
             <ul class="product-list-group">
@@ -80,7 +80,7 @@
                     <p class="product-name">
                         <h2><a href="{{ url_for("front.product_detail",product_id=product[0].id)}}">{{ product[0].name }}</a></h2>
                         {% if product[0].highlight %}
-                                    <span class="label label-danger">官方推荐</span>
+                                    <span class="label label-danger">official recommendation</span>
                         {% endif %}
                     </p>
                     <p class="product-info1">
@@ -93,10 +93,10 @@
                         <span>description:{{ product[0].description }}</span>
                     </p>
                     <p class="product-info3">
-                        <span>点赞数:{{ product[0].like }}</span>
+                        <span>like:{{ product[0].like }}</span>
                     </p>
                     <p class="product-info3">
-                        <span>评论数:{{ product[0].comment }}</span>
+                        <span>comments:{{ product[0].comment }}</span>
                     </p>
                 </div>
                 <div class="product-picture">
