@@ -2,141 +2,153 @@
 {% from "common/_macros.html" import static %}
 
 {% block title %}
-    {{ product.name }}
+{{ product.name }}
 {% endblock %}
 
 {% block head %}
-    <script src="{{ static('front/js/front_product_detail.js') }}"></script>
-    <link rel="stylesheet" href="{{ static('front/css/front_product_detail.css') }}">
+<script src="{{ static('front/js/front_product_detail.js') }}"></script>
+<link rel="stylesheet" href="{{ static('front/css/front_product_detail.css') }}">
 {% endblock %}
 
 {% block body %}
 <div class="col-md-6">
-                <button class="btn btn-default "><a href="{{ url_for("front.ta_page",user_id=product.user.id)}}">seller information</a></button>
-            </div>
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">product information</h3>
-  </div>
-  <div class="panel-body">
-
-    <div class="sm-container col-md-6">
-        <div style="padding-bottom:10px;">
-<!--            <div class="col-md-6"> <div class="saler"><a href="#">卖家</a></div></div>-->
-
-
-<!--<div class="col-md-12"><div class="user-avatar-group">-->
-<!--                <img src="{{ url_for('static',filename='common/images/logo.png') }}" alt="">-->
-<!--            </div></div>-->
-    <div class="lg-container">
-        <div class="product-container">
-            <h1 class="bg-info">{{ product.name }}</h1>
-            <div class="product-picture">
-                {%if productimgs[0].imglink=='none'%}
-                <img src="{{ url_for('static',filename='common/images/logo.png') }}" alt="">
-                {%else%}
-                <img src="/static/{{ productimgs[0].imglink }}" alt="">
-                {%endif%}
-            </div>
-            <div class="col-md-6"></div>
-            <ul class="product-info-group" id="product-information" data-da="{{ product.id}}" data-like="{{like.id}}">
-            <li class="col-md-12"><h1>price:{{ product.price }}</h1></li>
-            <li class="col-md-4"><strong>seller：{{ product.user.username }}</strong></li>
-            <li class="col-md-4"><strong>category：{{ product.board.name }}</strong></li>
-            <li class="col-md-12"><span>description:{{ product.description }}</span></li>
-
-                <li class="col-md-12"><small>time：{{ product.join_time }}</small></li>
-            <li class="col-md-4" color="blue"><small>read: {{ product.like }}</small></li>
-            <li class="col-md-4"><small>comments: {{ product.comment }}</small></li>
-            </ul>
-            {% if like == 0 or like==None%}
-            <button class="btn btn-warning" id="like-btn" name="like-btn" data="0">Like</button></td>
-            {% else %}
-            <button class="btn btn-success" data="1"  id="have-like-btn">Cancel Liked</button></td>
-            {% endif %}
-            {%if productimgs[0].imglink!='none'%}
-            {%for p in productimgs%}
-            <div class="product-picture">
-                <img  src="/static/{{ p.imglink }}" alt="">
-            </div>
-            {%endfor%}
-            {%endif%}
-        </div>
-<div class="col-md-12" ></div>
-
-    </div>
-
-
-        </div>
-
-    </div>
-  </div>
+    <button class="btn btn-default "><a href="{{ url_for("front.ta_page",user_id=product.user.id)}}">seller
+        information</a></button>
 </div>
-<div class="col-md-12">       </div>
-        <div class="col-md-12">         </div>
-        <div class="col-md-12">        </div>
-    <div class="lg-container">
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">product information</h3>
+    </div>
+    <div class="panel-body">
 
-<div class="col-md-12" ></div>
-        <div class="comment-group">
-            <h3>comment list</h3>
-            <ul class="comment-list-group">
-                {% for comment in product.comments %}
-                <ul class="comment-info-group" id="comment-info-group" data-da="{{comment.id}}">
-                    <li>
-                        <div class="avatar-group">
-                            <img src="{{ comment.commenter.avatar or static('common/images/logo.png') }}" alt="">
+        <div class="sm-container col-md-6">
+            <div style="padding-bottom:10px;">
+                <!--            <div class="col-md-6"> <div class="saler"><a href="#">卖家</a></div></div>-->
+
+
+                <!--<div class="col-md-12"><div class="user-avatar-group">-->
+                <!--                <img src="{{ url_for('static',filename='common/images/logo.png') }}" alt="">-->
+                <!--            </div></div>-->
+                <div class="lg-container">
+                    <div class="product-container">
+                        <h1 class="bg-info">{{ product.name }}</h1>
+                        <div class="product-picture">
+                            {%if productimgs[0].imglink=='none'%}
+                            <img src="{{ url_for('static',filename='common/images/logo.png') }}" alt="">
+                            {%else%}
+                            <img src="/static/{{ productimgs[0].imglink }}" alt="">
+                            {%endif%}
                         </div>
-                        <div class="comment-content">
-                            <p class="user-info">
-                                <strong class="col-md-6">{{ comment.commenter.username }}</strong>
-                                <small class="col-md-6">{{ comment.create_time }}</small>
-                            </p>
-                            <p class="comment-txt"><small class="col-md-12">{{ comment.content|safe }}</small>
+                        <div class="col-md-6"></div>
+                        <ul class="product-info-group" id="product-information" data-da="{{ product.id}}"
+                            data-like="{{like.id}}">
+                            <li class="col-md-12"><h1>price:{{ product.price }}</h1></li>
+                            <li class="col-md-4"><strong>seller：{{ product.user.username }}</strong></li>
+                            <li class="col-md-4"><strong>category：{{ product.board.name }}</strong></li>
+                            <li class="col-md-12"><span>description:{{ product.description }}</span></li>
 
-                            </p>
-
+                            <li class="col-md-12"><small>time：{{ product.join_time }}</small></li>
+                            <li class="col-md-4" color="blue"><small>read: {{ product.like }}</small></li>
+                            <li class="col-md-4"><small>comments: {{ product.comment }}</small></li>
+                        </ul>
+                        {% if like == 0 or like==None%}
+                        <button class="btn btn-warning" id="like-btn" name="like-btn" data="0">Like</button>
+                        </td>
+                        {% else %}
+                        <button class="btn btn-success" data="1" id="have-like-btn">Cancel Liked</button>
+                        </td>
+                        {% endif %}
+                        {%if productimgs[0].imglink!='none'%}
+                        {%for p in productimgs%}
+                        <div class="product-picture">
+                            <img src="/static/{{ p.imglink }}" alt="">
                         </div>
-                        <div class="button-delete-comment">
-                                {% if g.front_user==product.user or g.front_user==commenter %}
-                                <button class="btn btn-success" data="1" id="delete-comment-btn" name="delete-comment-btn">Delete</button></td>
-                                {% endif %}
-                        </div>
+                        {%endfor%}
+                        {%endif%}
+                    </div>
+                    <div class="col-md-12"></div>
 
-                    </li>
-                    </ul>
-                {% endfor %}
-            </ul>
-        </div>
+                </div>
 
-        <div class="add-comment-group">
-            <span>comment</span>
-            <input type="text" class="form-control" id="comment-content"
-                   name="comment-content" placeholder="欢迎评论">
-            <div class="comment-btn-group">
-                <button class="btn btn-primary" id="comment-btn" name="comment-btn" data="1">submit</button></td>
+
             </div>
+
         </div>
     </div>
+</div>
+<div class="col-md-12"></div>
+<div class="col-md-12"></div>
+<div class="col-md-12"></div>
+<div class="lg-container">
 
-    <div class="sm-container">
-        <div style="padding-bottom:10px;">
-            <div class="col-md-6"> <div class="saler"><a href="#">卖家</a></div></div>
+    <div class="col-md-12"></div>
+    <div class="comment-group">
+        <h3>comment list</h3>
+        <ul class="comment-list-group">
+            {% for comment in product.comments %}
+            <ul class="comment-info-group" id="comment-info-group" data-da="{{comment.id}}">
+                <li>
+                    <div class="avatar-group">
+                        <img src="{{ comment.commenter.avatar or static('common/images/logo.png') }}" alt="">
+                    </div>
+                    <div class="comment-content">
+                        <p class="user-info">
+                            <strong class="col-md-6">{{ comment.commenter.username }}</strong>
+                            <small class="col-md-6">{{ comment.create_time }}</small>
+                        </p>
+                        <p class="comment-txt"><small class="col-md-12">{{ comment.content|safe }}</small>
 
-<div class="col-md-6">
-                <button class="btn btn-warning btn-block hispage"><a href="{{ url_for("front.ta_page",user_id=product.user.id)}}">Ta的主页</a></button>
-            </div>
-<div class="col-md-12"><div class="user-avatar-group">
-            {%if product.user.avatar=='none'%}
+                        </p>
+
+                    </div>
+                    <div class="button-delete-comment">
+                        {% if g.front_user==product.user or g.front_user==commenter %}
+                        <button class="btn btn-success" data="1" id="delete-comment-btn" name="delete-comment-btn">
+                            Delete
+                        </button>
+                        </td>
+                        {% endif %}
+                    </div>
+
+                </li>
+            </ul>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="add-comment-group">
+        <span>comment</span>
+        <input type="text" class="form-control" id="comment-content"
+               name="comment-content" placeholder="欢迎评论">
+        <div class="comment-btn-group">
+            <button class="btn btn-primary" id="comment-btn" name="comment-btn" data="1">submit</button>
+            </td>
+        </div>
+    </div>
+</div>
+
+<div class="sm-container">
+    <div style="padding-bottom:10px;">
+        <div class="col-md-6">
+            <div class="saler"><a href="#">卖家</a></div>
+        </div>
+
+        <div class="col-md-6">
+            <button class="btn btn-warning btn-block hispage"><a href="{{ url_for('front.ta_page',user_id=product.user.id)}}">Ta的主页</a>
+            </button>
+        </div>
+        <div class="col-md-12">
+            <div class="user-avatar-group">
+                {%if product.user.avatar=='none'%}
                 <img src="{{ url_for('static',filename='common/images/logo.png') }}" alt="">
                 {%else%}
                 <img src="/static/{{product.user.avatar}}" alt="">
                 {%endif%}
-            </div></div>
-
-
-
+            </div>
         </div>
 
+
     </div>
+
+</div>
 {% endblock %}
