@@ -49,18 +49,20 @@
                 <li>
                 <div class="product-info-group1">
                     <p class="product-name">
-                        <h1><a href="{{ url_for("front.product_detail",product_id=product[0].id)}}">{{ product[0].name }}</a></h1>
+                        <h1><a  href="{{ url_for("front.product_detail",product_id=product[0].id)}}">{{ product[0].name }}</a></h1>
                         {% if product[0].highlight %}
                                     <span class="label label-danger">管理员推荐</span>
                         {% endif %}
                     </p>
                     <p class="product-info1">
-                        <h4><strong>price:{{ product[0].price }}</strong></h4>
+                    <h5>price:</h5>
+                        <h4><strong>{{ product[0].price }}</strong></h4>
                     </p>
                 </div>
                 <div class="product-info-group2">
                     <p class="product-info2">
-                        <span>description:{{ product[0].description }}</span>
+                        <h5>description:</h5>
+                        <span>{{ product[0].description }}</span>
                     </p>
                     <p class="product-info3">
                         <small>read:0</small>
